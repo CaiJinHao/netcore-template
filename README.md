@@ -4,7 +4,7 @@
  * @Author: Hawking
  * @Date: 2020-05-10 13:49:35
  * @LastEditors: Hawking
- * @LastEditTime: 2020-05-11 22:25:56
+ * @LastEditTime: 2020-05-11 23:09:55
  -->
 注意：解决方案.sln不要提交
 
@@ -17,6 +17,7 @@
 Dev分支测试
 
 开始使用：
+删掉YourNameSln.sln文件，重新创建
 先修改文件夹及文件名称：
 services文件夹下的<YourNameSln>
 YourWebApiName.ApiServices

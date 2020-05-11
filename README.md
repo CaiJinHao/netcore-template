@@ -9,3 +9,4 @@
 这是一个通用的基本型的webapi程序
 包括：用户管理、权限管理、菜单管理
 前端使用：vue-elementui
+后台使用：.net core 3.1 + sqlserver|mysql|mongodb + Dapper

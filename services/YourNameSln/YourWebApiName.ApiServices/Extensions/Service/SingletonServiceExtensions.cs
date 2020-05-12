@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace YourWebApiName.ApiServices.Extensions.Service
 {
+    /// <summary>
+    /// 自定义单例
+    /// </summary>
     public static class SingletonServiceExtensions
     {
         /// <summary>

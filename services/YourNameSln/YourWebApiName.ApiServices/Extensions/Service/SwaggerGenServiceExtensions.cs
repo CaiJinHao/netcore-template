@@ -11,6 +11,9 @@ using System.Threading.Tasks;
 
 namespace YourWebApiName.ApiServices.Extensions.Service
 {
+    /// <summary>
+    /// SwaggerGenServic
+    /// </summary>
     public static class SwaggerGenServiceExtensions
     {
         /// <summary>
@@ -43,10 +46,10 @@ namespace YourWebApiName.ApiServices.Extensions.Service
                 //options.OperationFilter<SwaggerDefaultValues>();
 
                 var basePath = Microsoft.DotNet.PlatformAbstractions.ApplicationEnvironment.ApplicationBasePath;
-                var xmlPath = Path.Combine(basePath, "Swagger/CloudBox.App.xml");
+                var xmlPath = Path.Combine(basePath, "Swagger/YourWebApiName.ApiServices.xml");
                 options.IncludeXmlComments(xmlPath, true);
 
-                var xmlModelPath = Path.Combine(basePath, "Swagger/CloudBox.Models.xml");
+                var xmlModelPath = Path.Combine(basePath, "Swagger/YourWebApiName.Models.xml");
                 options.IncludeXmlComments(xmlModelPath);
 
 

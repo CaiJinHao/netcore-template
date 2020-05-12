@@ -7,8 +7,16 @@ using System.Threading.Tasks;
 
 namespace YourWebApiName.ApiServices.Extensions.Service
 {
+    /// <summary>
+    /// 跨域设置
+    /// </summary>
     public static class CorsServiceExtensions
     {
+        /// <summary>
+        /// 添加跨域策略
+        /// </summary>
+        /// <param name="services"></param>
+        /// <returns></returns>
         public static IServiceCollection AddCorsService(this IServiceCollection services)
         {
             return services.AddCors(options =>

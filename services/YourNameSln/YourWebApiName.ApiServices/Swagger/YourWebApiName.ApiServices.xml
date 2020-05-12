@@ -1,0 +1,233 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>YourWebApiName.ApiServices</name>
+    </assembly>
+    <members>
+        <member name="T:YourWebApiName.ApiServices.Extensions.ConfigurationsModel">
+            <summary>
+            配置文件集合
+            </summary>
+        </member>
+        <member name="F:YourWebApiName.ApiServices.Extensions.ConfigurationsModel.AppSettings">
+            <summary>
+            应用程序配置文件
+            </summary>
+        </member>
+        <member name="F:YourWebApiName.ApiServices.Extensions.ConfigurationsModel.HostSettings">
+            <summary>
+            WEB 主机启动配置
+            </summary>
+        </member>
+        <member name="F:YourWebApiName.ApiServices.Extensions.ConfigurationsModel.Log4netConfig">
+            <summary>
+            Log4net 配置
+            </summary>
+        </member>
+        <member name="T:YourWebApiName.ApiServices.Extensions.MiddlewareExtension">
+            <summary>
+            MiddlewareExtension
+            </summary>
+        </member>
+        <member name="M:YourWebApiName.ApiServices.Extensions.MiddlewareExtension.UseMiddleware(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            引入所有组件中间件
+            </summary>
+            <param name="app"></param>
+            <returns></returns>
+        </member>
+        <member name="M:YourWebApiName.ApiServices.Extensions.MiddlewareExtension.UseAppMiddleware(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            引入所有APP中间件
+            </summary>
+            <param name="app"></param>
+            <returns></returns>
+        </member>
+        <member name="M:YourWebApiName.ApiServices.Extensions.MiddlewareExtension.UseStaticHttpContextMiddleware(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            全局HTTP中间件 线程安全
+            </summary>
+            <param name="app"></param>
+            <returns></returns>
+        </member>
+        <member name="M:YourWebApiName.ApiServices.Extensions.MiddlewareExtension.UseStaticFilesMiddleware(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            引入静态文件中间件
+            </summary>
+            <param name="app"></param>
+            <returns></returns>
+        </member>
+        <member name="M:YourWebApiName.ApiServices.Extensions.MiddlewareExtension.StartHostedService(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            启动后台托管服务
+            </summary>
+            <param name="app"></param>
+            <returns></returns>
+        </member>
+        <member name="T:YourWebApiName.ApiServices.Extensions.Middleware.SwaggerMiddlewareExtensions">
+            <summary>
+            SwaggerMiddlewareExtensions
+            </summary>
+        </member>
+        <member name="M:YourWebApiName.ApiServices.Extensions.Middleware.SwaggerMiddlewareExtensions.UseSwaggerMiddleware(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Mvc.ApiExplorer.IApiVersionDescriptionProvider)">
+            <summary>
+            Swagger组件
+            </summary>
+            <param name="app"></param>
+            <param name="provider"></param>
+            <returns></returns>
+        </member>
+        <member name="T:YourWebApiName.ApiServices.Extensions.ServiceCollectionExtension">
+            <summary>
+            ServiceCollectionExtension
+            </summary>
+        </member>
+        <member name="M:YourWebApiName.ApiServices.Extensions.ServiceCollectionExtension.AddAppServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            初始化所有服务
+            </summary>
+            <param name="services"></param>
+            <returns></returns>
+        </member>
+        <member name="M:YourWebApiName.ApiServices.Extensions.ServiceCollectionExtension.AddOtherService(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            添加其他组件
+            </summary>
+            <param name="services"></param>
+            <returns></returns>
+        </member>
+        <member name="M:YourWebApiName.ApiServices.Extensions.ServiceCollectionExtension.AddBackgroundTasks(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            添加后台任务执行服务
+            </summary>
+            <param name="services"></param>
+            <returns></returns>
+        </member>
+        <member name="T:YourWebApiName.ApiServices.Extensions.Service.AuthorizationServiceExtensions">
+            <summary>
+            授权认证
+            </summary>
+        </member>
+        <member name="M:YourWebApiName.ApiServices.Extensions.Service.AuthorizationServiceExtensions.AddAuthorizationService(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            添加授权策略
+            </summary>
+            <param name="services"></param>
+            <returns></returns>
+        </member>
+        <member name="M:YourWebApiName.ApiServices.Extensions.Service.AuthorizationServiceExtensions.AddAuthenticationService(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            添加认证服务
+            </summary>
+            <param name="services"></param>
+            <returns></returns>
+        </member>
+        <member name="T:YourWebApiName.ApiServices.Extensions.Service.CorsServiceExtensions">
+            <summary>
+            跨域设置
+            </summary>
+        </member>
+        <member name="M:YourWebApiName.ApiServices.Extensions.Service.CorsServiceExtensions.AddCorsService(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            添加跨域策略
+            </summary>
+            <param name="services"></param>
+            <returns></returns>
+        </member>
+        <member name="T:YourWebApiName.ApiServices.Extensions.Service.MiniProfilerServiceExtensions">
+            <summary>
+            MiniProfilerServiceExtensions
+            </summary>
+        </member>
+        <member name="M:YourWebApiName.ApiServices.Extensions.Service.MiniProfilerServiceExtensions.AddMiniProfilerService(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            AddMiniProfilerService
+            </summary>
+            <param name="services"></param>
+            <returns></returns>
+        </member>
+        <member name="T:YourWebApiName.ApiServices.Extensions.Service.MvcServiceExtensions">
+            <summary>
+            MVC服务
+            </summary>
+        </member>
+        <member name="M:YourWebApiName.ApiServices.Extensions.Service.MvcServiceExtensions.AddMvcService(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            添加MVC组件
+            </summary>
+            <param name="services"></param>
+            <returns></returns>
+        </member>
+        <member name="T:YourWebApiName.ApiServices.Extensions.Service.SingletonServiceExtensions">
+            <summary>
+            自定义单例
+            </summary>
+        </member>
+        <member name="M:YourWebApiName.ApiServices.Extensions.Service.SingletonServiceExtensions.AddCustomSingletonService(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            添加自定义单例
+            </summary>
+            <param name="services"></param>
+        </member>
+        <member name="T:YourWebApiName.ApiServices.Extensions.Service.SwaggerGenServiceExtensions">
+            <summary>
+            SwaggerGenServic
+            </summary>
+        </member>
+        <member name="M:YourWebApiName.ApiServices.Extensions.Service.SwaggerGenServiceExtensions.AddSwaggerGenService(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            添加SwaggerGen组件
+            </summary>
+            <param name="services"></param>
+            <returns></returns>
+        </member>
+        <member name="T:YourWebApiName.ApiServices.Extensions.Service.WebApiVersionServiceExtensions">
+            <summary>
+            WebApiVersionServiceExtensions
+            </summary>
+        </member>
+        <member name="M:YourWebApiName.ApiServices.Extensions.Service.WebApiVersionServiceExtensions.AddWebApiVersionService(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            添加版本控制组件
+            </summary>
+            <param name="services"></param>
+            <returns></returns>
+        </member>
+        <member name="T:YourWebApiName.ApiServices.Program">
+            <summary>
+            Program
+            </summary>
+        </member>
+        <member name="M:YourWebApiName.ApiServices.Program.Main(System.String[])">
+            <summary>
+            主程序入口
+            </summary>
+            <param name="args"></param>
+        </member>
+        <member name="M:YourWebApiName.ApiServices.Program.CreateHostBuilder(System.String[])">
+            <summary>
+            创建web主机
+            </summary>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
+        <member name="T:YourWebApiName.ApiServices.Startup">
+            <summary>
+            启动类
+            </summary>
+        </member>
+        <member name="M:YourWebApiName.ApiServices.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            配置服务
+            </summary>
+            <param name="services"></param>
+        </member>
+        <member name="M:YourWebApiName.ApiServices.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+            <summary>
+            This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+            </summary>
+            <param name="app"></param>
+            <param name="env"></param>
+        </member>
+    </members>
+</doc>

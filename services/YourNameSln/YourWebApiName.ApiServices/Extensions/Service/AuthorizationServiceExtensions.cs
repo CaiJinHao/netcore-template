@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace YourWebApiName.ApiServices.Extensions.Service
 {
+    /// <summary>
+    /// 授权认证
+    /// </summary>
     public static class AuthorizationServiceExtensions
     {
         /// <summary>

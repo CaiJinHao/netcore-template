@@ -10,6 +10,9 @@ using System.Reflection;
 
 namespace YourWebApiName.ApiServices.Extensions.Middleware
 {
+    /// <summary>
+    /// SwaggerMiddlewareExtensions
+    /// </summary>
     public static class SwaggerMiddlewareExtensions
     {
         /// <summary>
@@ -34,10 +37,10 @@ namespace YourWebApiName.ApiServices.Extensions.Middleware
                 }
 
                 //将swagger首页，设置成我们自定义的页面，记得这个字符串的写法：解决方案名.index.html
-                //这里是配合MiniProfiler进行性能监控的CloudBox.App namespace
+                //这里是配合MiniProfiler进行性能监控的YourWebApiName.ApiServices namespace
                 //index.html页面修改需要重新生成项目
                 ui.IndexStream = () => typeof(Startup).GetTypeInfo().Assembly
-                .GetManifestResourceStream("CloudBox.App.Swagger.index.html");
+                .GetManifestResourceStream("YourWebApiName.ApiServices.Swagger.index.html");
                 //路由地址
                 ui.RoutePrefix = "restapi";
 

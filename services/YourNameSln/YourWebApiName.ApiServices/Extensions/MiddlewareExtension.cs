@@ -14,6 +14,9 @@ using System.Threading.Tasks;
 
 namespace YourWebApiName.ApiServices.Extensions
 {
+    /// <summary>
+    /// MiddlewareExtension
+    /// </summary>
     public static class MiddlewareExtension
     {
         /// <summary>

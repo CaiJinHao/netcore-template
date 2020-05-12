@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CloudBox.App.Extensions
+namespace YourWebApiName.ApiServices.Extensions
 {
     /// <summary>
     /// 配置文件集合

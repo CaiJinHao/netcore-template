@@ -6,8 +6,16 @@ using System.Threading.Tasks;
 
 namespace YourWebApiName.ApiServices.Extensions.Service
 {
+    /// <summary>
+    /// MiniProfilerServiceExtensions
+    /// </summary>
     public static class MiniProfilerServiceExtensions
     {
+        /// <summary>
+        /// AddMiniProfilerService
+        /// </summary>
+        /// <param name="services"></param>
+        /// <returns></returns>
         public static IServiceCollection AddMiniProfilerService(this IServiceCollection services)
         {
             services.AddMiniProfiler(options =>

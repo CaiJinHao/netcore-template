@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace YourWebApiName.ApiServices.Extensions.Service
 {
+    /// <summary>
+    /// WebApiVersionServiceExtensions
+    /// </summary>
     public static class WebApiVersionServiceExtensions
     {
         /// <summary>

@@ -1,0 +1,7 @@
+{
+  "ConsulAddress": "http://192.168.12.151:8500",
+  "ServiceId": "5e1888de833f0a1b8c579f4b",
+  "ServiceName": "1StoreHouse",
+  "HealthCheck": "/Health",
+  "LocalServerAddress": "http://192.168.12.151:9016"
+}

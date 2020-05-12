@@ -1,4 +1,4 @@
-﻿using CloudBox.App.Extensions;
+﻿using YourWebApiName.ApiServices.Extensions;
 using Common.NetCoreWebUtility.Extension;
 using Common.Utility.Models.Config;
 using Microsoft.AspNetCore.Builder;
@@ -13,6 +13,9 @@ using YourWebApiName.ApiServices.Extensions.Service;
 
 namespace YourWebApiName.ApiServices.Extensions
 {
+    /// <summary>
+    /// ServiceCollectionExtension
+    /// </summary>
     public static class ServiceCollectionExtension
     {
         private static IServiceCollection InitAppSettings(this IServiceCollection services)

@@ -11,6 +11,9 @@ using System.Threading.Tasks;
 
 namespace YourWebApiName.ApiServices.Extensions.Service
 {
+    /// <summary>
+    /// MVC服务
+    /// </summary>
     public static class MvcServiceExtensions
     {
         /// <summary>

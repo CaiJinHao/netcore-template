@@ -3,7 +3,27 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29911.84
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YourWebApiName.ApiServices", "YourWebApiName.ApiServices\YourWebApiName.ApiServices.csproj", "{03020EDC-BE3F-40DC-A68B-7470DEE06F0D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YourWebApiName.ApiServices", "YourWebApiName.ApiServices\YourWebApiName.ApiServices.csproj", "{03020EDC-BE3F-40DC-A68B-7470DEE06F0D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "common", "common", "{772A6AEC-AD6A-408D-8B90-A3DA065033DF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Utility", "common\Common.Utility\Common.Utility.csproj", "{3322DED1-E670-4006-A53D-B051D8E3AE46}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.NetCoreWebUtility", "common\Common.NetCoreWebUtility\Common.NetCoreWebUtility.csproj", "{5649767A-6733-420E-84CD-6F37479A2193}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "database", "database", "{035D7570-E9D4-4FB6-BFB9-491EAB099504}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataBase.IDataBase", "database\DataBase.IDataBase\DataBase.IDataBase.csproj", "{5F1898D8-F19D-424A-91A2-7197D3957971}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NoSqlDataBase", "NoSqlDataBase", "{5A23FDEB-40DB-43A3-8DFF-FC68DFA9599F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SqlDataBase", "SqlDataBase", "{81AEAF0A-023A-4658-B3D9-868BE82EE485}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataBse.MySqlFromDapper", "database\SqlDataBase\DataBse.MySqlFromDapper\DataBse.MySqlFromDapper.csproj", "{18C4D2C0-0DCB-48F1-9927-57D8A6166126}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataBase.MySqlFromSqlSugar", "database\SqlDataBase\DataBase.MySqlFromSqlSugar\DataBase.MySqlFromSqlSugar.csproj", "{C0FB0F8E-1AA1-4D1D-BB93-B2ADAB4A12AC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataBase.MongoDb", "database\NoSqlDataBase\DataBase.MongoDb\DataBase.MongoDb.csproj", "{931E4298-ABBE-4897-9F41-C002AC6543BF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,9 +35,43 @@ Global
 		{03020EDC-BE3F-40DC-A68B-7470DEE06F0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{03020EDC-BE3F-40DC-A68B-7470DEE06F0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{03020EDC-BE3F-40DC-A68B-7470DEE06F0D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3322DED1-E670-4006-A53D-B051D8E3AE46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3322DED1-E670-4006-A53D-B051D8E3AE46}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3322DED1-E670-4006-A53D-B051D8E3AE46}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3322DED1-E670-4006-A53D-B051D8E3AE46}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5649767A-6733-420E-84CD-6F37479A2193}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5649767A-6733-420E-84CD-6F37479A2193}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5649767A-6733-420E-84CD-6F37479A2193}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5649767A-6733-420E-84CD-6F37479A2193}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F1898D8-F19D-424A-91A2-7197D3957971}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F1898D8-F19D-424A-91A2-7197D3957971}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F1898D8-F19D-424A-91A2-7197D3957971}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F1898D8-F19D-424A-91A2-7197D3957971}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18C4D2C0-0DCB-48F1-9927-57D8A6166126}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18C4D2C0-0DCB-48F1-9927-57D8A6166126}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18C4D2C0-0DCB-48F1-9927-57D8A6166126}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18C4D2C0-0DCB-48F1-9927-57D8A6166126}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0FB0F8E-1AA1-4D1D-BB93-B2ADAB4A12AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0FB0F8E-1AA1-4D1D-BB93-B2ADAB4A12AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0FB0F8E-1AA1-4D1D-BB93-B2ADAB4A12AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0FB0F8E-1AA1-4D1D-BB93-B2ADAB4A12AC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{931E4298-ABBE-4897-9F41-C002AC6543BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{931E4298-ABBE-4897-9F41-C002AC6543BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{931E4298-ABBE-4897-9F41-C002AC6543BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{931E4298-ABBE-4897-9F41-C002AC6543BF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3322DED1-E670-4006-A53D-B051D8E3AE46} = {772A6AEC-AD6A-408D-8B90-A3DA065033DF}
+		{5649767A-6733-420E-84CD-6F37479A2193} = {772A6AEC-AD6A-408D-8B90-A3DA065033DF}
+		{5F1898D8-F19D-424A-91A2-7197D3957971} = {035D7570-E9D4-4FB6-BFB9-491EAB099504}
+		{5A23FDEB-40DB-43A3-8DFF-FC68DFA9599F} = {035D7570-E9D4-4FB6-BFB9-491EAB099504}
+		{81AEAF0A-023A-4658-B3D9-868BE82EE485} = {035D7570-E9D4-4FB6-BFB9-491EAB099504}
+		{18C4D2C0-0DCB-48F1-9927-57D8A6166126} = {81AEAF0A-023A-4658-B3D9-868BE82EE485}
+		{C0FB0F8E-1AA1-4D1D-BB93-B2ADAB4A12AC} = {81AEAF0A-023A-4658-B3D9-868BE82EE485}
+		{931E4298-ABBE-4897-9F41-C002AC6543BF} = {5A23FDEB-40DB-43A3-8DFF-FC68DFA9599F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EB39E9D9-BD77-467A-8B43-8A0FC01AF5BD}

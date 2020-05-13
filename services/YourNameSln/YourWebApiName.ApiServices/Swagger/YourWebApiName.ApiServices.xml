@@ -4,6 +4,17 @@
         <name>YourWebApiName.ApiServices</name>
     </assembly>
     <members>
+        <member name="T:YourWebApiName.ApiServices.Extensions.AutofacDefaultModule">
+            <summary>
+            第三方AutofacModule
+            </summary>
+        </member>
+        <member name="M:YourWebApiName.ApiServices.Extensions.AutofacDefaultModule.Load(Autofac.ContainerBuilder)">
+            <summary>
+            加载
+            </summary>
+            <param name="builder"></param>
+        </member>
         <member name="T:YourWebApiName.ApiServices.Extensions.ConfigurationsModel">
             <summary>
             配置文件集合
@@ -81,6 +92,13 @@
             <summary>
             ServiceCollectionExtension
             </summary>
+        </member>
+        <member name="M:YourWebApiName.ApiServices.Extensions.ServiceCollectionExtension.InitAppSettings(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            初始化appsettings
+            </summary>
+            <param name="services"></param>
+            <returns></returns>
         </member>
         <member name="M:YourWebApiName.ApiServices.Extensions.ServiceCollectionExtension.AddAppServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
@@ -211,10 +229,21 @@
             <param name="args"></param>
             <returns></returns>
         </member>
+        <member name="M:YourWebApiName.ApiServices.Program.InitDirectory">
+            <summary>
+            初始化目录
+            </summary>
+        </member>
         <member name="T:YourWebApiName.ApiServices.Startup">
             <summary>
             启动类
             </summary>
+        </member>
+        <member name="M:YourWebApiName.ApiServices.Startup.#ctor(Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+            <summary>
+            启动构造函数DI
+            </summary>
+            <param name="env"></param>
         </member>
         <member name="M:YourWebApiName.ApiServices.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
@@ -222,12 +251,20 @@
             </summary>
             <param name="services"></param>
         </member>
-        <member name="M:YourWebApiName.ApiServices.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+        <member name="M:YourWebApiName.ApiServices.Startup.ConfigureContainer(Autofac.ContainerBuilder)">
+            <summary>
+            AutoFac调用
+            </summary>
+            <param name="builder"></param>
+        </member>
+        <member name="M:YourWebApiName.ApiServices.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment,Microsoft.Extensions.Hosting.IHost,Microsoft.AspNetCore.Mvc.ApiExplorer.IApiVersionDescriptionProvider)">
             <summary>
             This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
             </summary>
             <param name="app"></param>
             <param name="env"></param>
+            <param name="host"></param>
+            <param name="provider"></param>
         </member>
     </members>
 </doc>

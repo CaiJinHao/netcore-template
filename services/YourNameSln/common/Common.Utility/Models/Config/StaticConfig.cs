@@ -11,7 +11,7 @@ namespace Common.Utility.Models.Config
     public class StaticConfig
     {
         /// <summary>
-        /// Env.ContentRootPath 启动时赋值
+        /// Env.ContentRootPath 项目目录 启动时赋值
         /// </summary>
         public static string ContentRootPath { get; set; }
         /// <summary>

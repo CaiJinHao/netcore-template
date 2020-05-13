@@ -45,12 +45,13 @@ namespace YourWebApiName.ApiServices.Extensions.Service
                 // add a custom operation filter which sets default values
                 //options.OperationFilter<SwaggerDefaultValues>();
 
-                var basePath = Microsoft.DotNet.PlatformAbstractions.ApplicationEnvironment.ApplicationBasePath;
+                var basePath = StaticConfig.ContentRootPath;//Directory.GetCurrentDirectory();
                 var xmlPath = Path.Combine(basePath, "Swagger/YourWebApiName.ApiServices.xml");
                 options.IncludeXmlComments(xmlPath, true);
 
-                var xmlModelPath = Path.Combine(basePath, "Swagger/YourWebApiName.Models.xml");
-                options.IncludeXmlComments(xmlModelPath);
+                //TODO:暂时没有Models的注释文档
+                //var xmlModelPath = Path.Combine(basePath, "Swagger/YourWebApiName.Models.xml");
+                //options.IncludeXmlComments(xmlModelPath);
 
 
                 #region Swagger添加授权验证服务

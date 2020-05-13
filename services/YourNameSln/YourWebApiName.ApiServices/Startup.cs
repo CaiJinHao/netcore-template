@@ -2,11 +2,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Autofac;
+using Common.Utility.Models.Config;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using YourWebApiName.ApiServices.Extensions;
+using YourWebApiName.ApiServices.Extensions.Middleware;
 
 namespace YourWebApiName.ApiServices
 {
@@ -15,6 +20,15 @@ namespace YourWebApiName.ApiServices
    /// </summary>
     public class Startup
     {
+        /// <summary>
+        /// 启动构造函数DI
+        /// </summary>
+        /// <param name="env"></param>
+        public Startup(IWebHostEnvironment env)
+        {
+            StaticConfig.ContentRootPath = env.ContentRootPath;
+        }
+
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         /// <summary>
@@ -23,6 +37,16 @@ namespace YourWebApiName.ApiServices
         /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAppServices();
+        }
+
+        /// <summary>
+        /// AutoFac调用
+        /// </summary>
+        /// <param name="builder"></param>
+        public void ConfigureContainer(ContainerBuilder builder)
+        {
+            builder.RegisterModule<AutofacDefaultModule>();
         }
 
         /// <summary>
@@ -30,22 +54,39 @@ namespace YourWebApiName.ApiServices
         /// </summary>
         /// <param name="app"></param>
         /// <param name="env"></param>
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        /// <param name="host"></param>
+        /// <param name="provider"></param>
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IHost host
+            , IApiVersionDescriptionProvider provider)
         {
+
+            app.UseSwaggerMiddleware(provider)
+               .UseMiddleware();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseRouting();
-
             app.UseEndpoints(endpoints =>
             {
+                /*endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");*/
+
                 endpoints.MapGet("/", async context =>
                 {
                     await context.Response.WriteAsync("Hello World!");
                 });
             });
+
+
+            /*
+             * // 使用服务提供者获取服务
+            using (var container = host.Services.CreateScope())
+            {
+                container.ServiceProvider.GetService<IEmailWarningService>();
+            }*/
         }
     }
 }

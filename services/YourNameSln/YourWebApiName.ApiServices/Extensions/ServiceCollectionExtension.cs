@@ -18,6 +18,11 @@ namespace YourWebApiName.ApiServices.Extensions
     /// </summary>
     public static class ServiceCollectionExtension
     {
+        /// <summary>
+        /// 初始化appsettings
+        /// </summary>
+        /// <param name="services"></param>
+        /// <returns></returns>
         private static IServiceCollection InitAppSettings(this IServiceCollection services)
         {
             var configurationAppConfig = new ConfigurationBuilder()

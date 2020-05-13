@@ -28,3 +28,9 @@ YourWebApiName.ApiServices.csproj
 
 配置忽略文件：.gitignore
 使用vs2019，右键解决方案，将解决方案添加到代码管理。之后就自动生成了.gitignore。好了现在就可以使用git命令操作了
+
+
+项目使用了：
+依赖倒置原则（DIP）设计
+控制反转（Ioc）设计
+依赖注入（DI）设计

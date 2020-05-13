@@ -5,7 +5,7 @@ using System.Text;
 namespace Common.Utility.RequestModels
 {
     /// <summary>
-    /// 身份验证 获取TOKEN
+    /// 请求身份验证 获取TOKEN
     /// </summary>
     public class RequestAuthModel
     {

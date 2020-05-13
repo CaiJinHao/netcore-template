@@ -4,6 +4,24 @@
         <name>YourWebApiName.ApiServices</name>
     </assembly>
     <members>
+        <member name="T:YourWebApiName.ApiServices.DefaultApi.RestAdminController">
+            <summary>
+            RESTapi 用户登录
+            </summary>
+        </member>
+        <member name="M:YourWebApiName.ApiServices.DefaultApi.RestAdminController.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            DI
+            </summary>
+            <param name="configuration"></param>
+        </member>
+        <member name="M:YourWebApiName.ApiServices.DefaultApi.RestAdminController.Post(Common.Utility.RequestModels.RequestAuthModel)">
+            <summary>
+            登录验证
+            </summary>
+            <param name="authModel"></param>
+            <returns></returns>
+        </member>
         <member name="T:YourWebApiName.ApiServices.Extensions.AutofacDefaultModule">
             <summary>
             第三方AutofacModule
@@ -233,6 +251,17 @@
             <summary>
             初始化目录
             </summary>
+        </member>
+        <member name="T:YourWebApiName.ApiServices.RestApi.v1.TestController">
+            <summary>
+            临时测试控制器
+            </summary>
+        </member>
+        <member name="M:YourWebApiName.ApiServices.RestApi.v1.TestController.Get">
+            <summary>
+            获取作者信息
+            </summary>
+            <returns></returns>
         </member>
         <member name="T:YourWebApiName.ApiServices.Startup">
             <summary>

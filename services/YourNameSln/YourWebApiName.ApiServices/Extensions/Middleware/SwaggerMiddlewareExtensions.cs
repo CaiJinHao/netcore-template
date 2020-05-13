@@ -23,6 +23,7 @@ namespace YourWebApiName.ApiServices.Extensions.Middleware
         /// <returns></returns>
         public static IApplicationBuilder UseSwaggerMiddleware(this IApplicationBuilder app, IApiVersionDescriptionProvider provider)
         {
+
             return app.UseSwagger(c => {
                 c.PreSerializeFilters.Add((swagger, httpReq) =>
                 {
@@ -36,11 +37,12 @@ namespace YourWebApiName.ApiServices.Extensions.Middleware
                     ui.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", description.GroupName.ToUpperInvariant());
                 }
 
-                //将swagger首页，设置成我们自定义的页面，记得这个字符串的写法：解决方案名.index.html
-                //这里是配合MiniProfiler进行性能监控的YourWebApiName.ApiServices namespace
-                //index.html页面修改需要重新生成项目
-                ui.IndexStream = () => typeof(Startup).GetTypeInfo().Assembly
-                .GetManifestResourceStream("YourWebApiName.ApiServices.Swagger.index.html");
+
+                /*index.html 为嵌入的资源，不复制
+                将swagger首页，设置成我们自定义的页面，记得这个字符串的写法：解决方案名.index.html
+                这里是配合MiniProfiler进行性能监控的YourWebApiName.ApiServices namespace
+                index.html页面修改需要重新生成项目*/
+                ui.IndexStream = () => typeof(Startup).GetTypeInfo().Assembly.GetManifestResourceStream("YourWebApiName.ApiServices.Swagger.index.html");
                 //路由地址
                 ui.RoutePrefix = "restapi";
 

@@ -4,7 +4,8 @@
 
 <Workspace>
 	<Local Expanded="Yes" Name="ApplicationWeb">
-		<Model Expanded="Yes" ID="{141D87AD-EBC7-4F38-B5DF-B3E03CB710BF}" Name="WebApiCommon" Selected="Yes" Type="{1E597170-9350-11D1-AB3C-0020AF71E433}" URL="WebApiCommon.cdm"/>
+		<Model Expanded="Yes" ID="{141D87AD-EBC7-4F38-B5DF-B3E03CB710BF}" Loaded="No" Name="WebApiCommon" Type="{1E597170-9350-11D1-AB3C-0020AF71E433}" URL="WebApiCommon.cdm"/>
+		<Model Expanded="Yes" ID="{D63D71F9-2EC0-42E3-8638-5778AC2C8E0C}" Name="WebApiCommonForMysql" Selected="Yes" Type="{CDE44E21-9669-11D1-9914-006097355D9B}" URL="WebApiCommonForMysql.pdm"/>
 	</Local>
 	<BrowserModule Name="Repository"/>
 </Workspace>

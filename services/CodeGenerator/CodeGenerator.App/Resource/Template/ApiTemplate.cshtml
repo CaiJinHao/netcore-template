@@ -1,0 +1,155 @@
+﻿@{
+    var table = Model;
+    var table_name = table.table_name;
+    var columns = table.columns;//列集合
+
+    var name_space = table.name_space;
+    var table_name_pascal = table.table_name_pascal;
+    var table_name_camel = table.table_name_camel;
+    var table_name_lower = table.table_name_lower;
+    var primary_key_name = table.primary_key_name;
+    var primary_key_data_type = table.primary_key_data_type;
+
+    var api_version = "1";
+}
+
+using CloudBox.IServices.IDbServices;
+using CloudBox.Models.DbModels;
+using CloudBox.Models.RequestModels;
+using Common.Utility.Models;
+using Common.Utility.Models.App;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Common.Utility.Extension;
+
+
+namespace @(name_space).App.InternalApi.v1
+{
+    /// <summary>
+    /// @table.table_comment
+    /// </summary>
+    public enum Enum@(table_name_pascal)ControllerOptions
+    {
+        /// <summary>
+        /// 默认分页
+        /// </summary>
+        [Description("分页")]
+        Paging = 0,
+        /// <summary>
+        /// 所有数据，用于导出数据
+        /// </summary>
+        [Description("所有数据")]
+        AllData = 1,
+    }
+
+    /// <summary>
+    /// @table.table_comment
+    /// </summary>
+    [ApiVersion("@(api_version)")]
+    [Route("api/v{version:apiVersion}/@(table_name_lower)")]
+    [ApiController]
+    public class @(table_name_pascal)Controller : ControllerBase
+    {
+        private string route = "api/v@(api_version)/@(table_name_lower)";
+        public I@(table_name_pascal)Service @(table_name_camel)Service { get; set; }
+
+        [HttpGet]
+        public async Task<IActionResult> Get([FromQuery]Enum@(table_name_pascal)ControllerOptions option,[FromQuery]PagingModel paging, [FromQuery]@(table_name_pascal)RequestModel queryParameter)
+        {
+            var apiResult = new ApiResultModel(ErrorCodeType.Success);
+            switch (option)
+            {
+                case Enum@(table_name_pascal)ControllerOptions.AllData:
+                    {
+                        apiResult.Result = await @(table_name_camel)Service.GetModelsAsync(queryParameter);
+                        return Ok(apiResult);
+                    }
+                default:
+                    {
+                        var data = await @(table_name_camel)Service.GetModelsAsync(paging, queryParameter);
+                        apiResult.Result = new
+                        {
+                            paging,
+                            data
+                        };
+                        return Ok(apiResult);
+                    }
+            }
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(@(primary_key_data_type) id)
+        {
+            var _data = await @(table_name_camel)Service.GetModelAsync(id);
+            var apiResult = new ApiResultModel(ErrorCodeType.Success, _data);
+            return Ok(apiResult);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Post([FromBody]@(table_name_pascal)RequestModel parameter)
+        {
+            var apiResult = new ApiResultModel(ErrorCodeType.Success);
+            var model = new @(table_name_pascal)Model();
+            parameter.CloneTo(model);
+            if (await @(table_name_camel)Service.CreateAsync(model))
+            {
+                return Created($"{route}/{parameter._id}", apiResult);
+            }
+            apiResult.Code = ErrorCodeType.PostError;
+            return BadRequest(apiResult);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(@(primary_key_data_type) id, [FromBody]@(table_name_pascal)RequestModel parameter)
+        {
+            var apiResult = new ApiResultModel(ErrorCodeType.Success);
+            var model = new @(table_name_pascal)Model();
+            parameter.CloneTo(model);
+            var c = await @(table_name_camel)Service.UpdateModelAsync(id, model);
+            if (c > 0)
+            {
+                return Ok(apiResult);
+            }
+            apiResult.Code = ErrorCodeType.PutError;
+            return BadRequest(apiResult);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(@(primary_key_data_type) id)
+        {
+            var apiResult = new ApiResultModel(ErrorCodeType.Success);
+            if (string.IsNullOrEmpty(id))
+            {
+                apiResult.Code = ErrorCodeType.ParamsError;
+                return BadRequest(apiResult);
+            }
+            var c = await @(table_name_camel)Service.DeleteAsync(new string[] { id });
+            if (c > 0)
+            {
+                return Ok(apiResult);
+            }
+            apiResult.Code = ErrorCodeType.DeleteError;
+            return BadRequest(apiResult);
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> Delete([FromBody]string[] idList)
+        {
+            var apiResult = new ApiResultModel(ErrorCodeType.Success);
+            if (idList == null || idList.Length < 1)
+            {
+                apiResult.Code = ErrorCodeType.ParamsError;
+                return BadRequest(apiResult);
+            }
+            var c = await @(table_name_camel)Service.DeleteAsync(idList);
+            if (c > 0)
+            {
+                return Ok(apiResult);
+            }
+            apiResult.Code = ErrorCodeType.DeleteError;
+            return BadRequest(apiResult);
+        }
+    }
+}

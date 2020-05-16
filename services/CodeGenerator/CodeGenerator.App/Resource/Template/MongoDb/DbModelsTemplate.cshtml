@@ -1,0 +1,71 @@
+﻿@{ 
+    var table = Model;
+    var table_name=table.table_name;
+    var columns = table.columns;//列集合
+
+    var name_space = table.name_space;
+    var table_name_pascal = table.table_name_pascal;
+    var table_name_camel = table.table_name_camel;
+    var primary_key_name = table.primary_key_name;
+    var primary_key_data_type = table.primary_key_data_type;
+}
+
+using CloudBox.Models.Enums;
+using Common.Utility.Attributes;
+using Common.Utility.JsonConverter;
+using MongoDB.Bson;
+using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
+
+namespace @(name_space).Models.DbModels
+{
+    /// <summary>
+    /// Db Entity @table.table_comment
+    /// </summary>
+    [Table("@(table_name)")]
+    public class @(table_name_pascal)Model
+    {
+        @foreach (var col in columns)
+        {
+         @:/// <summary>
+         @:/// @col.column_comment
+         @:/// </summary>
+         if (col.primary_key)
+         {
+         @:[Key]
+         @:[JsonConverter(typeof(ObjectIdConverter))]
+         @:[SwaggerQueryParameterProperty(false)]
+         @:[SwaggerBodyParameterProperty(false)]
+         @:public ObjectId @(col.column_name) { get; set; }
+         }
+         else 
+         { 
+            if(col.nullable&&col.data_type!="DateTime"&&col.data_type!="int")
+            {
+         @:[Required]
+            }
+            if(col.data_type=="DateTime")
+            {
+         @:[SwaggerQueryParameterProperty(false)]
+         @:[SwaggerBodyParameterProperty(false)]
+         @:[JsonConverter(typeof(JhDateTimeConverter))]
+            }
+
+
+            if(col.column_name.EndsWith("id")&&!col.primary_key)
+            {
+         @:[JsonConverter(typeof(ObjectIdConverter))]
+         @:[SwaggerQueryParameterProperty(false)]
+         @:[SwaggerBodyParameterProperty(false)]
+         @:public ObjectId @(col.column_name) { get; set; }
+            }
+            else
+            {
+         @:public @(col.data_type) @(col.column_name) { get; set; }
+            }
+         }
+        }
+    }
+}

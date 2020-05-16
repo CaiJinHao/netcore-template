@@ -1,0 +1,100 @@
+﻿@{ 
+    var table = Model;
+    var table_name=table.table_name;
+    var columns = table.columns;//列集合
+
+    var name_space = table.name_space;
+    var table_name_pascal = table.table_name_pascal;
+    var table_name_camel = table.table_name_camel;
+    var primary_key_name = table.primary_key_name;
+    var primary_key_data_type = table.primary_key_data_type;
+}
+
+
+using CloudBox.IRepository.IDbRepository;
+using CloudBox.IServices.IDbServices;
+using CloudBox.Models.DbModels;
+using CloudBox.Models.RequestModels;
+using CloudBox.Models.ResponeModels;
+using Common.Utility.Models.App;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+namespace @(table.name_space).Services.DbServices
+{
+    public class @(table_name_pascal)Service : I@(table_name_pascal)Service
+    {
+        /// <summary>
+        /// 服务 DbServices @table.table_comment
+        /// </summary>
+        public @(table_name_pascal)Service()
+        {
+        
+        }        
+    
+        public I@(table_name_pascal)Repository @(table_name_camel)Repository { get; set; }
+
+
+        public async Task<bool> CreateAsync(@(table_name_pascal)Model model)
+        {
+            return await @(table_name_camel)Repository.CreateAsync(model);
+        }
+
+        public Task<bool> CreateAsync(@(table_name_pascal)Model[] models)
+        {
+            throw new NotImplementedException();
+            //return await @(table_name_camel)Repository.CreateAsync(models);
+        }
+
+        public async Task<long> DeleteAsync(@(primary_key_data_type)[] id)
+        {
+            return await @(table_name_camel)Repository.DeleteAsync(id);
+        }
+
+        public async Task<long> DeleteAsync(@(table_name_pascal)Model model)
+        {
+            return await @(table_name_camel)Repository.DeleteAsync(model);
+        }
+
+        public @(table_name_pascal)Model GetModel(string id)
+        {
+            return @(table_name_camel)Repository.GetModel(id);
+        }
+
+        public async Task<@(table_name_pascal)Model> GetModelAsync(@(primary_key_data_type) id)
+        {
+            return await @(table_name_camel)Repository.GetModelAsync(id);
+        }
+
+        public async Task<IEnumerable<@(table_name_pascal)Model>> GetModelsAsync()
+        {
+            return await @(table_name_camel)Repository.GetModelsAsync();
+        }
+
+        public async Task<IEnumerable<dynamic>> GetNamesAsync(@(table_name_pascal)RequestModel queryParameter)
+        {
+            return await @(table_name_camel)Repository.GetNamesAsync(queryParameter);
+        }
+
+        public async Task<IEnumerable<@(table_name_pascal)ResponeModel>> GetModelsAsync(@(table_name_pascal)RequestModel queryParameter)
+        {
+            return await @(table_name_camel)Repository.GetModelsAsync(queryParameter);
+        }
+
+        public async Task<IEnumerable<@(table_name_pascal)ResponeModel>> GetModelsAsync(PagingModel pagingModel, @(table_name_pascal)RequestModel queryParameter)
+        {
+            return await @(table_name_camel)Repository.GetModelsAsync(pagingModel, queryParameter);
+        }
+
+        public async Task<long> UpdateModelAsync(@(primary_key_data_type) id, @(table_name_pascal)Model model)
+        {
+            return await @(table_name_camel)Repository.UpdateModelAsync(id, model);
+        }
+
+        public Task<@(table_name_pascal)Model> GetFirstAsync(@(table_name_pascal)RequestModel queryParameter)
+        {
+            throw new NotImplementedException();
+        }
+    }
+}

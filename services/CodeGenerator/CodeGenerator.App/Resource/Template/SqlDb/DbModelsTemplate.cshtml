@@ -1,0 +1,47 @@
+﻿@{ 
+    var table = Model;
+    var table_name=table.table_name;
+    var columns = table.columns;//列集合
+
+    var name_space = table.name_space;
+    var table_name_pascal = table.table_name_pascal;
+    var table_name_camel = table.table_name_camel;
+    var primary_key_name = table.primary_key_name;
+    var primary_key_data_type = table.primary_key_data_type;
+}
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace @(name_space).Models.DbModels
+{
+    /// <summary>
+    /// Db Entity @table.table_comment
+    /// </summary>
+    [Table("@(table_name)")]
+    public class @(table_name_pascal)Model
+    {
+        @foreach (var col in columns)
+        {
+         @:/// <summary>
+         @:/// @col.column_comment
+         @:/// </summary>
+         if (col.primary_key)
+         { 
+         @:[Key]
+         }
+         if(col.nullable)
+         {
+         @:[Required]
+         }
+         if(col.data_type=="string")
+         {
+         @:[StringLength(@(col.character_maximum_length))]
+         }
+         @:public @(col.data_type) @(col.column_name) { get; set; }
+        }
+    }
+}

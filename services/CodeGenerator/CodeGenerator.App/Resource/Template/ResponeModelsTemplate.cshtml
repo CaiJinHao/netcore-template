@@ -1,0 +1,27 @@
+﻿@{ 
+    var table = Model;
+    var table_name=table.table_name;
+    var columns = table.columns;//列集合
+
+    var name_space = table.name_space;
+    var table_name_pascal = table.table_name_pascal;
+    var table_name_camel = table.table_name_camel;
+    var primary_key_name = table.primary_key_name;
+    var primary_key_data_type = table.primary_key_data_type;
+}
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+using CloudBox.Models.DbModels;
+
+namespace @(name_space).Models.ResponeModels
+{
+    /// <summary>
+    /// Respone Entity @table.table_comment
+    /// </summary>
+    public class @(table_name_pascal)ResponeModel : @(table_name_pascal)Model
+    {
+       
+    }
+}

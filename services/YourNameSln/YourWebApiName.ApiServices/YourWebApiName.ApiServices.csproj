@@ -30,7 +30,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\common\Common.NetCoreWebUtility\Common.NetCoreWebUtility.csproj" />
+    <ProjectReference Include="..\..\common\Common.NetCoreWebUtility\Common.NetCoreWebUtility.csproj" />
+    <ProjectReference Include="..\..\database\SqlDataBase\DataBse.MySqlFromDapper\DataBse.MySqlFromDapper.csproj" />
   </ItemGroup>
 
   <ItemGroup>

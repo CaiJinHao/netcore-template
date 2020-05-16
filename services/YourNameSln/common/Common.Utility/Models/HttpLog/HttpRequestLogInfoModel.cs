@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Common.Utility.Models.Log
+namespace Common.Utility.Models.HttpLog
 {
     /// <summary>
     /// INFO 日志

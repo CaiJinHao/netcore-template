@@ -30,7 +30,7 @@ FileName 的后缀命名 需要跟NamingFormat格式一致
 {
   "Template": {
     "SaveFilesPath": "D:\\CodematicDemo",//要保存的电脑路径
-    "NameSpace": "CloudBox",//生成文件使用的命名空间 存在变量 name_space
+    "NameSpace": "YourWebApiName",//生成文件使用的命名空间 存在变量 name_space
     "NamingFormat": 1,// 命名格式
     "TemplateFiles": [ //模板文件集合
       {

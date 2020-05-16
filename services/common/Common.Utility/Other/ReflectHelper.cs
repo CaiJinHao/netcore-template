@@ -4,7 +4,6 @@ using System.Text;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
-using MongoDB.Bson;
 
 namespace Common.Utility.Other
 {
@@ -79,10 +78,6 @@ namespace Common.Utility.Other
             else if (PropertyType == typeof(DateTime))
             {
                 return (DateTime)_v < new DateTime(1900, 1, 1);
-            }
-            else if (PropertyType == typeof(ObjectId))
-            {
-                return string.IsNullOrEmpty(_v.ToString().Replace("0", ""));
             }
             return false;
         }

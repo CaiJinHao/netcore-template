@@ -3,13 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Common.Utility.Extension
+namespace DataBse.Extensions
 {
     public static class ObjectIdExtension
     {
         public static bool IsNull(this ObjectId pObjectId)
         {
-            if (pObjectId.Increment>0)
+            if (pObjectId.Increment > 0)
             {
                 return true;
             }

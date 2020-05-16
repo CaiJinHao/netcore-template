@@ -25,6 +25,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataBse.MySqlFromDapper", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataBase.MongoDb", "..\database\NoSqlDataBase\DataBase.MongoDb\DataBase.MongoDb.csproj", "{A9458FF4-C3E6-463C-8722-6F608825686F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{90405399-8AF6-493E-83B6-3E1E6BC5A751}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiServices.Test", "test\ApiServices.Test\ApiServices.Test.csproj", "{F41B0570-9E37-46C8-96E7-3E514068DE20}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,6 +63,10 @@ Global
 		{A9458FF4-C3E6-463C-8722-6F608825686F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A9458FF4-C3E6-463C-8722-6F608825686F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A9458FF4-C3E6-463C-8722-6F608825686F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F41B0570-9E37-46C8-96E7-3E514068DE20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F41B0570-9E37-46C8-96E7-3E514068DE20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F41B0570-9E37-46C8-96E7-3E514068DE20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F41B0570-9E37-46C8-96E7-3E514068DE20}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -72,6 +80,7 @@ Global
 		{F2F6C2AA-E149-43CE-B25D-E4299EBC13D4} = {81AEAF0A-023A-4658-B3D9-868BE82EE485}
 		{87213CF1-F8DD-45A6-BE92-B4587B431E2D} = {81AEAF0A-023A-4658-B3D9-868BE82EE485}
 		{A9458FF4-C3E6-463C-8722-6F608825686F} = {5A23FDEB-40DB-43A3-8DFF-FC68DFA9599F}
+		{F41B0570-9E37-46C8-96E7-3E514068DE20} = {90405399-8AF6-493E-83B6-3E1E6BC5A751}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EB39E9D9-BD77-467A-8B43-8A0FC01AF5BD}

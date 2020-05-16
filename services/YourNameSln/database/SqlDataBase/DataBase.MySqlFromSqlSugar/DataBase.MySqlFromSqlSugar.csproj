@@ -1,7 +1,21 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
+	  <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
+	  <Version>0.0.1</Version>
+	  <AssemblyName>DataBase.MySqlFromSqlSugar</AssemblyName>
+	  <RootNamespace>DataBse</RootNamespace>
+	  <Description>
+		  DataBse.MySqlFromSqlSugar is a class library tool that connects to MySql database by using Dapper driver
+	  </Description>
+	  <Authors>CaiJinHao</Authors>
+	  <Owners>CaiJinHao</Owners>
+	  <PackageTags>C#,lib,utility</PackageTags>
+	  <Title>Common.Utility: The class library tools</Title>
+	  <Summary>
+		  DataBse.MySqlFromDapper is a class library tool that connects to MySql database by using Dapper driver
+	  </Summary>
+	  <Copyright>Copyright © 2020~2021</Copyright>
   </PropertyGroup>
 
   <ItemGroup>

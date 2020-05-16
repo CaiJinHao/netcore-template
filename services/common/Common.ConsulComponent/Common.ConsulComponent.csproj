@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Consul" Version="0.7.2.6" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.HealthChecks" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Hosting.Server.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks" Version="3.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Options" Version="3.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Common.Utility\Common.Utility.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="System.Configuration">
+      <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.Configuration.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

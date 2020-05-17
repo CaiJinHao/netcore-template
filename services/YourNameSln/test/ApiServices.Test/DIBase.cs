@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using Common.Utility.Autofac;
 using Common.Utility.Models.Config;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -16,7 +17,7 @@ namespace ApiServices.Test
         {
             StaticConfig.ContentRootPath = @"E:\Coding\2020\webapicommon\services\YourNameSln\YourWebApiName.ApiServices";
             container = DICollections();
-
+            AutofacHelper.Container = container;
         }
 
         public IContainer DICollections()

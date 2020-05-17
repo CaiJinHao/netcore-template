@@ -252,6 +252,60 @@
             初始化目录
             </summary>
         </member>
+        <member name="T:YourWebApiName.ApiServices.RestApi.v1.sys.SysRolesController">
+            <summary>
+            系统_角色
+            </summary>
+        </member>
+        <member name="P:YourWebApiName.ApiServices.RestApi.v1.sys.SysRolesController.sysRolesService">
+            <summary>
+            服务
+            </summary>
+        </member>
+        <member name="M:YourWebApiName.ApiServices.RestApi.v1.sys.SysRolesController.Get(Common.Utility.Models.App.PagingModel,YourWebApiName.Models.RequestModels.SysRolesRequestModel)">
+            <summary>
+            查询多条数据
+            </summary>
+            <param name="paging"></param>
+            <param name="queryParameter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:YourWebApiName.ApiServices.RestApi.v1.sys.SysRolesController.Get(System.String)">
+            <summary>
+            获取实体
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:YourWebApiName.ApiServices.RestApi.v1.sys.SysRolesController.Post(YourWebApiName.Models.RequestModels.SysRolesRequestModel)">
+            <summary>
+            新增一条
+            </summary>
+            <param name="parameter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:YourWebApiName.ApiServices.RestApi.v1.sys.SysRolesController.Put(System.String,YourWebApiName.Models.RequestModels.SysRolesRequestModel)">
+            <summary>
+            修改实体
+            </summary>
+            <param name="id">主键</param>
+            <param name="parameter">修改的字段</param>
+            <returns></returns>
+        </member>
+        <member name="M:YourWebApiName.ApiServices.RestApi.v1.sys.SysRolesController.Delete(System.String)">
+            <summary>
+            删除实体
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:YourWebApiName.ApiServices.RestApi.v1.sys.SysRolesController.Delete(System.String[])">
+            <summary>
+            删除多条
+            </summary>
+            <param name="idList"></param>
+            <returns></returns>
+        </member>
         <member name="T:YourWebApiName.ApiServices.RestApi.v1.TestController">
             <summary>
             临时测试控制器

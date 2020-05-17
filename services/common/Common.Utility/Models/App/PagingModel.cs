@@ -61,5 +61,12 @@ namespace Common.Utility.Models.App
         /// 前端排序字段
         /// </summary>
         public string OrderByFiled { get; set; }
+
+        /// <summary>
+        /// 要做的操作
+        /// 0：分页数据
+        /// 1：所有数据查询，不带分页
+        /// </summary>
+        public int Oprator { get; set; }
     }
 }

@@ -1,45 +1,31 @@
-﻿@{
-    var table = Model;
-    var table_name = table.table_name;
-    var columns = table.columns;//列集合
-
-    var name_space = table.name_space;
-    var table_name_pascal = table.table_name_pascal;
-    var table_name_camel = table.table_name_camel;
-    var table_name_lower = table.table_name_lower;
-    var primary_key_name = table.primary_key_name;
-    var primary_key_data_type = table.primary_key_data_type;
-
-    var api_version = "1";
-}
-
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Common.Utility.Extension;
+using Common.Utility.Models;
+using Common.Utility.Models.App;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using YourWebApiName.IServices.IDbServices;
 using YourWebApiName.Models.DbModels;
 using YourWebApiName.Models.RequestModels;
-using Common.Utility.Models;
-using Common.Utility.Models.App;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Routing;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Common.Utility.Extension;
 
-//请只复制类的body
-namespace @(name_space).App.InternalApi.v1
+namespace YourWebApiName.ApiServices.RestApi.v1.sys
 {
     /// <summary>
-    /// @table.table_comment
+    /// 系统_角色
     /// </summary>
-    [ApiVersion("@(api_version)")]
-    [Route("api/v{version:apiVersion}/@(table_name_lower)")]
+    [ApiVersion("1")]
+    [Route("api/v{version:apiVersion}/sysroles")]
     [ApiController]
-    public class @(table_name_pascal)Controller : ControllerBase
+    public class SysRolesController : ControllerBase
     {
-        private string route = "api/v@(api_version)/@(table_name_lower)";
+        private string route = "api/v1/sysroles";
         /// <summary>
         /// 服务
         /// </summary>
-        public I@(table_name_pascal)Service @(table_name_camel)Service { get; set; }
+        public ISysRolesService sysRolesService { get; set; }
 
         /// <summary>
         /// 查询多条数据
@@ -48,14 +34,14 @@ namespace @(name_space).App.InternalApi.v1
         /// <param name="queryParameter"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> Get([FromQuery]PagingModel paging, [FromQuery]@(table_name_pascal)RequestModel queryParameter)
+        public async Task<IActionResult> Get([FromQuery]PagingModel paging, [FromQuery]SysRolesRequestModel queryParameter)
         {
             var apiResult = new ApiResultModel(ErrorCodeType.Success);
             switch (paging.Oprator)
             {
                 default:
                     {
-                        var data = await @(table_name_camel)Service.GetModelsAsync(paging, queryParameter);
+                        var data = await sysRolesService.GetModelsAsync(paging, queryParameter);
                         apiResult.Result = new
                         {
                             paging,
@@ -72,9 +58,9 @@ namespace @(name_space).App.InternalApi.v1
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(@(primary_key_data_type) id)
+        public async Task<IActionResult> Get(string id)
         {
-            var _data = await @(table_name_camel)Service.GetModelAsync(id);
+            var _data = await sysRolesService.GetModelAsync(id);
             var apiResult = new ApiResultModel(ErrorCodeType.Success, _data);
             return Ok(apiResult);
         }
@@ -85,14 +71,14 @@ namespace @(name_space).App.InternalApi.v1
         /// <param name="parameter"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody]@(table_name_pascal)RequestModel parameter)
+        public async Task<IActionResult> Post([FromBody]SysRolesRequestModel parameter)
         {
             var apiResult = new ApiResultModel(ErrorCodeType.Success);
-            var model = new @(table_name_pascal)Model();
+            var model = new SysRolesModel();
             parameter.CloneTo(model);
-            if (await @(table_name_camel)Service.CreateAsync(model))
+            if (await sysRolesService.CreateAsync(model))
             {
-                return Created($"{route}/{parameter.primary_key_name}", apiResult);
+                return Created($"{route}/{parameter.role_id}", apiResult);
             }
             apiResult.Code = ErrorCodeType.PostError;
             return BadRequest(apiResult);
@@ -105,12 +91,12 @@ namespace @(name_space).App.InternalApi.v1
         /// <param name="parameter">修改的字段</param>
         /// <returns></returns>
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(@(primary_key_data_type) id, [FromBody]@(table_name_pascal)RequestModel parameter)
+        public async Task<IActionResult> Put(string id, [FromBody]SysRolesRequestModel parameter)
         {
             var apiResult = new ApiResultModel(ErrorCodeType.Success);
-            var model = new @(table_name_pascal)Model();
+            var model = new SysRolesModel();
             parameter.CloneTo(model);
-            var c = await @(table_name_camel)Service.UpdateModelAsync(id, model);
+            var c = await sysRolesService.UpdateModelAsync(id, model);
             if (c > 0)
             {
                 return Ok(apiResult);
@@ -125,7 +111,7 @@ namespace @(name_space).App.InternalApi.v1
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(@(primary_key_data_type) id)
+        public async Task<IActionResult> Delete(string id)
         {
             var apiResult = new ApiResultModel(ErrorCodeType.Success);
             if (string.IsNullOrEmpty(id))
@@ -133,7 +119,7 @@ namespace @(name_space).App.InternalApi.v1
                 apiResult.Code = ErrorCodeType.ParamsError;
                 return BadRequest(apiResult);
             }
-            var c = await @(table_name_camel)Service.DeleteAsync(new string[] { id });
+            var c = await sysRolesService.DeleteAsync(new string[] { id });
             if (c > 0)
             {
                 return Ok(apiResult);
@@ -156,7 +142,7 @@ namespace @(name_space).App.InternalApi.v1
                 apiResult.Code = ErrorCodeType.ParamsError;
                 return BadRequest(apiResult);
             }
-            var c = await @(table_name_camel)Service.DeleteAsync(idList);
+            var c = await sysRolesService.DeleteAsync(idList);
             if (c > 0)
             {
                 return Ok(apiResult);

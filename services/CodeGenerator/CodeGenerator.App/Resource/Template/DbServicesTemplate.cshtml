@@ -41,40 +41,14 @@ namespace @(table.name_space).Services.DbServices
             return await @(table_name_camel)Repository.CreateAsync(model);
         }
 
-        public Task<bool> CreateAsync(@(table_name_pascal)Model[] models)
-        {
-            throw new NotImplementedException();
-            //return await @(table_name_camel)Repository.CreateAsync(models);
-        }
-
         public async Task<long> DeleteAsync(@(primary_key_data_type)[] id)
         {
             return await @(table_name_camel)Repository.DeleteAsync(id);
         }
 
-        public async Task<long> DeleteAsync(@(table_name_pascal)Model model)
-        {
-            return await @(table_name_camel)Repository.DeleteAsync(model);
-        }
-
-        public @(table_name_pascal)Model GetModel(string id)
-        {
-            return @(table_name_camel)Repository.GetModel(id);
-        }
-
         public async Task<@(table_name_pascal)Model> GetModelAsync(@(primary_key_data_type) id)
         {
             return await @(table_name_camel)Repository.GetModelAsync(id);
-        }
-
-        public async Task<IEnumerable<@(table_name_pascal)Model>> GetModelsAsync()
-        {
-            return await @(table_name_camel)Repository.GetModelsAsync();
-        }
-
-        public async Task<IEnumerable<dynamic>> GetNamesAsync(@(table_name_pascal)RequestModel queryParameter)
-        {
-            return await @(table_name_camel)Repository.GetNamesAsync(queryParameter);
         }
 
         public async Task<IEnumerable<@(table_name_pascal)ResponeModel>> GetModelsAsync(@(table_name_pascal)RequestModel queryParameter)
@@ -90,11 +64,6 @@ namespace @(table.name_space).Services.DbServices
         public async Task<long> UpdateModelAsync(@(primary_key_data_type) id, @(table_name_pascal)Model model)
         {
             return await @(table_name_camel)Repository.UpdateModelAsync(id, model);
-        }
-
-        public Task<@(table_name_pascal)Model> GetFirstAsync(@(table_name_pascal)RequestModel queryParameter)
-        {
-            throw new NotImplementedException();
         }
     }
 }

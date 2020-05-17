@@ -32,6 +32,9 @@
   <ItemGroup>
     <ProjectReference Include="..\..\common\Common.NetCoreWebUtility\Common.NetCoreWebUtility.csproj" />
     <ProjectReference Include="..\..\database\SqlDataBase\DataBse.MySqlFromDapper\DataBse.MySqlFromDapper.csproj" />
+    <ProjectReference Include="..\api_services\YourWebApiName.Repository\YourWebApiName.Repository.csproj" />
+    <ProjectReference Include="..\api_services\YourWebApiName.Services\YourWebApiName.Services.csproj" />
+    <ProjectReference Include="..\YourWebApiName.IServices\YourWebApiName.IServices.csproj" />
   </ItemGroup>
 
   <ItemGroup>

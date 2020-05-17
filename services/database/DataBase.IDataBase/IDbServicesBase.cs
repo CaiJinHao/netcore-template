@@ -1,0 +1,57 @@
+﻿using Common.Utility.Models.App;
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DataBase
+{
+    /// <summary>
+    /// 逻辑层使用的接口、给控制器层调用的接口
+    /// </summary>
+    /// <typeparam name="TTableModel"></typeparam>
+    /// <typeparam name="TResponeModel"></typeparam>
+    /// <typeparam name="TRequestModel"></typeparam>
+    /// <typeparam name="Tid"></typeparam>
+    public interface IDbServicesBase<TTableModel, TResponeModel, TRequestModel, Tid>
+    {
+        /// <summary>
+        /// 创建一个对象
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        Task<bool> CreateAsync(TTableModel model);
+        /// <summary>
+        /// 删除存在id的所有对象
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Task<long> DeleteAsync(Tid[] id);
+        /// <summary>
+        /// 根据主键更新对象中的指定属性
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        Task<long> UpdateModelAsync(Tid id, TTableModel model);
+        /// <summary>
+        /// 获取指定
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Task<TTableModel> GetModelAsync(Tid id);
+        /// <summary>
+        /// 获取表中有条件的数据
+        /// </summary>
+        /// <param name="queryParameter"></param>
+        /// <returns></returns>
+        Task<IEnumerable<TResponeModel>> GetModelsAsync(TRequestModel queryParameter);
+        /// <summary>
+        /// 获取分页数据
+        /// </summary>
+        /// <param name="pagingModel">分页器</param>
+        /// <param name="queryParameter">查询对象</param>
+        /// <returns></returns>
+        Task<IEnumerable<TResponeModel>> GetModelsAsync(PagingModel pagingModel, TRequestModel queryParameter);
+    }
+}

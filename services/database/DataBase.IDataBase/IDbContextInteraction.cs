@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace DataBase.IDataBase
 {
     /// <summary>
-    /// 数据库上下文基础操作
+    /// 数据库上下文基础操作,由DbContext继承
     /// 所有数据库方法：NoSql(非关系型代表)/Sql(关系型代表)
     /// </summary>
     public interface IDbContextInteraction<TPrimaryKey>
@@ -61,8 +61,6 @@ namespace DataBase.IDataBase
         /// </summary>
         /// <returns></returns>
         Task<IEnumerable<TTableModel>> GetModelsAsync<TTableModel>() where TTableModel : class, new();
-
-     
 
 
         /*

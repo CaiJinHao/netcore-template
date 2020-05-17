@@ -34,9 +34,9 @@ namespace YourWebApiName.ApiServices.Extensions
             builder.
                 RegisterDefaultModuleImplementedInterfaces(
                 aopServices.ToArray()
-                //, typeof(CloudBoxServicesAssembly).Assembly
-                //, typeof(CloudBoxServicesIotAssembly).Assembly
-                //, typeof(CloudBoxMongoRepositoryAssembly).Assembly
+                //, typeof(你需要注入的程序集的类).Assembly
+                , typeof(Services.ServicesAssembly).Assembly
+                , typeof(Repository.RepositoryAssembly).Assembly
                 );
 
 

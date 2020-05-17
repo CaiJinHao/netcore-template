@@ -11,5 +11,25 @@ namespace DataBase.IDataBase
     public interface IDbContext<TDbConnection> 
     {
         TDbConnection CreateConnection();
+
+        /// <summary>
+        /// 获取class对应的表明
+        /// </summary>
+        /// <typeparam name="TTableModel"></typeparam>
+        /// <returns></returns>
+        string GetTableName<TTableModel>();
+        /// <summary>
+        /// 获取主键
+        /// </summary>
+        /// <typeparam name="TTableModel"></typeparam>
+        /// <returns></returns>
+        string GetKeyName<TTableModel>();
+        /// <summary>
+        /// 获取table字段集合
+        /// </summary>
+        /// <typeparam name="TTableModel"></typeparam>
+        /// <param name="notInFields"></param>
+        /// <returns></returns>
+        IEnumerable<string> GetFields<TTableModel>(List<string> notInFields = null);
     }
 }

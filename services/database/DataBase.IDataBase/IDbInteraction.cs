@@ -11,19 +11,18 @@ namespace DataBase.IDataBase
     /// TTableModel的名称必须和数据库表名称一致
     /// 继承者：所有IRepository,IDbContext
     /// </summary>
-    public interface IDbInteraction<TTableModel, TResponeModel, TRequestModel, Tid>
+    public interface IDbInteraction<TTableModel, TResponeModel, TRequestModel, Tid>: IDbServicesBase<TTableModel, TResponeModel, TRequestModel, Tid>
     {
+        /// <summary>
+        /// 当前数据仓库的表名称
+        /// </summary>
+        string tableName { get; set; }
         /*
          Create 
          创建一个对象
          创建一个数组对象
              */
-        /// <summary>
-        /// 创建一个对象
-        /// </summary>
-        /// <param name="model"></param>
-        /// <returns></returns>
-        Task<bool> CreateAsync(TTableModel model);
+       
         /// <summary>
         /// 创建一个数组对象
         /// </summary>
@@ -40,11 +39,10 @@ namespace DataBase.IDataBase
          获取表中所有数据总数量
              */
         /// <summary>
-        /// 获取指定
+        /// 同步调用
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        Task<TTableModel> GetModelAsync(Tid id);
         TTableModel GetModel(Tid id);
         /// <summary>
         /// 获取表中所有数据
@@ -64,42 +62,25 @@ namespace DataBase.IDataBase
         /// <returns></returns>
         Task<TTableModel> GetFirstAsync(TRequestModel queryParameter);
         /// <summary>
-        /// 获取表中有条件的数据
+        /// 获取当前model表
         /// </summary>
         /// <param name="queryParameter"></param>
         /// <returns></returns>
-        Task<IEnumerable<TResponeModel>> GetModelsAsync(TRequestModel queryParameter);
-        /// <summary>
-        /// 获取分页数据
-        /// </summary>
-        /// <param name="pagingModel">分页器</param>
-        /// <param name="queryParameter">查询对象</param>
-        /// <returns></returns>
-        Task<IEnumerable<TResponeModel>> GetModelsAsync(PagingModel pagingModel, TRequestModel queryParameter);
+        Task<IEnumerable<TTableModel>> GetCurrentModelsAsync(TRequestModel queryParameter);
+
 
         /*
          U
          根据主键更新对象中的指定属性
          */
-        /// <summary>
-        /// 根据主键更新对象中的指定属性
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="model"></param>
-        /// <returns></returns>
-        Task<long> UpdateModelAsync(Tid id, TTableModel model);
+        
 
 
         /*
          Delete 
          删除存在id的所有对象
              */
-        /// <summary>
-        /// 删除存在id的所有对象
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        Task<long> DeleteAsync(Tid[] id);
+        
         /// <summary>
         /// 根据条件删除多条数据
         /// </summary>

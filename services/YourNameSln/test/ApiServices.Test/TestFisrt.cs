@@ -1,4 +1,9 @@
+using Common.Utility.Autofac;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Linq;
+using System.Threading.Tasks;
+using YourWebApiName.IServices.IDbServices;
+using YourWebApiName.Models.RequestModels;
 
 namespace ApiServices.Test
 {
@@ -6,9 +11,13 @@ namespace ApiServices.Test
     public class TestFisrt:DIBase
     {
         [TestMethod]
-        public void TestMethod1()
+        public async Task TestMethod1()
         {
-            //AutofacHelper.GetService<IGrainThermonetryTaskTimingService>();
+            var roleService = AutofacHelper.GetService<ISysRolesService>();
+            var dataList = await roleService.GetModelsAsync(new SysRolesRequestModel()
+            {
+            });
+            Assert.IsTrue(dataList.ToList().Count > 0);
         }
     }
 }

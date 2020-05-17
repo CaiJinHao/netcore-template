@@ -31,5 +31,30 @@ namespace Common.Utility.Extension
                 }
             }
         }
+        
+        /// <summary>
+        /// 判断对象是否为null
+        /// </summary>
+        /// <param name="sourceObj"></param>
+        /// <returns></returns>
+        public static bool IsNotNull(this object sourceObj)
+        {
+            if (sourceObj==null)
+            {
+                return false;
+            }
+            var _type = sourceObj.GetType();
+            switch (_type.Name)
+            {
+                case "String":
+                    {
+                        var _value = (string)sourceObj;
+                        return !string.IsNullOrEmpty(_value);
+                    }
+                default:
+                    break;
+            }
+            return false;
+        }
     }
 }

@@ -10,18 +10,19 @@
     var primary_key_data_type = table.primary_key_data_type;
 }
 
-using DataBase;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Text;
 using YourWebApiName.Models.DbModels;
-using YourWebApiName.Models.RequestModels;
-using YourWebApiName.Models.ResponeModels;
 
-namespace @(name_space).IServices.IDbServices
+namespace @(name_space).Models.RequestModels
 {
     /// <summary>
-    /// 服务 IDbServices @table.table_comment
+    /// Request Entity @table.table_comment
     /// </summary>
-    public interface I@(table_name_pascal)Service : IDbServicesBase<@(table_name_pascal)Model,@(table_name_pascal)ResponeModel,@(table_name_pascal)RequestModel, @(primary_key_data_type)>
+    public class @(table_name_pascal)RequestModel : @(table_name_pascal)Model
     {
+    
     }
 }
-

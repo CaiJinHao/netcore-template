@@ -56,5 +56,10 @@ namespace Common.Utility.Models.App
         }
 
         #endregion
+
+        /// <summary>
+        /// 前端排序字段
+        /// </summary>
+        public string OrderByFiled { get; set; }
     }
 }

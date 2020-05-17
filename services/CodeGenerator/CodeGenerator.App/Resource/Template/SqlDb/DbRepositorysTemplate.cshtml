@@ -1,0 +1,177 @@
+﻿@{ 
+    var table = Model;
+    var table_name=table.table_name;
+    var columns = table.columns;//列集合
+
+    var name_space = table.name_space;
+    var table_name_pascal = table.table_name_pascal;
+    var table_name_camel = table.table_name_camel;
+    var primary_key_name = table.primary_key_name;
+    var primary_key_data_type = table.primary_key_data_type;
+}
+
+using YourWebApiName.IRepository.IDbRepository;
+using YourWebApiName.Models.DbModels;
+using YourWebApiName.Models.RequestModels;
+using YourWebApiName.Models.ResponeModels;
+using Common.Utility.Extension;
+using Common.Utility.Models.App;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using DataBse.MySqlFromDapper;
+using System.Text;
+using Dapper;
+
+namespace @(name_space).MongoRepository.DbRepository
+{
+    public class @(table_name_pascal)Repository : I@(table_name_pascal)Repository
+    {
+        /// <summary>
+        /// 表名称
+        /// </summary>
+        public string tableName { get; set; }
+
+       /// <summary>
+       /// 资源 DbRepository @table.table_comment
+       /// </summary>
+       public @(table_name_pascal)Repository()
+       {
+            tableName = "@(table_name)";
+       }
+
+        public IMySqlDbContext DbContext { get; set; }
+
+        public async Task<bool> CreateAsync(@(table_name_pascal)Model model)
+        {
+    @foreach (var col in columns)
+        {
+         if(col.data_type=="DateTime")
+         {
+          @:model.@(col.column_name) = DateTime.Now.Utc();
+         }
+        }
+            return await DbContext.CreateAsync(model);
+        }
+
+        public async Task<bool> CreateAsync(@(table_name_pascal)Model[] models)
+        {
+            return await DbContext.CreateAsync(models);
+        }
+
+        public async Task<long> DeleteAsync(@(primary_key_data_type)[] id)
+        {
+            return await DbContext.DeleteAsync<@(primary_key_data_type), @(table_name_pascal)Model>(id);
+        }
+
+        public async Task<long> DeleteAsync(@(table_name_pascal)Model model)
+        {
+            return await DbContext.DeleteAsync(model);
+        }
+
+        public @(table_name_pascal)Model GetModel(string id)
+        {
+            return DbContext.GetModel<string, @(table_name_pascal)Model>(id);
+        }
+
+        public async Task<@(table_name_pascal)Model> GetModelAsync(@(primary_key_data_type) id)
+        {
+            return await DbContext.GetModelAsync<@(primary_key_data_type), @(table_name_pascal)Model>(id);
+        }
+
+        public async Task<IEnumerable<@(table_name_pascal)Model>> GetModelsAsync()
+        {
+            return await DbContext.GetModelsAsync<@(table_name_pascal)Model>();
+        }
+
+        public Task<IEnumerable<dynamic>> GetNamesAsync(@(table_name_pascal)RequestModel queryParameter)
+        {
+            throw new NotImplementedException();
+        }
+
+        private string GetQuery(@(table_name_pascal)RequestModel queryParameter, Action<StringBuilder> appendSqlWhere)
+        {
+            var sqlWhere = new StringBuilder();//查询条件
+    @foreach (var col in columns)
+        {
+        if (col.column_name.EndsWith("id"))
+        { 
+            @:if (queryParameter.@(col.column_name).IsNotNull())
+            @:{
+            @:    sqlWhere.Append(" AND b1.@(col.column_name) = @@@(col.column_name)");
+            @:}
+        }
+        else if(col.data_type=="string"&&!col.primary_key)
+         {
+            @:if (!string.IsNullOrEmpty(queryParameter.@(col.column_name)))
+            @:{
+            @:    sqlWhere.Append(" AND b1.@(col.column_name) LIKE @@@(col.column_name)");
+            @:    queryParameter.@(col.column_name) += "%";
+            @:}
+         }
+         else if(col.data_type=="int")
+         {
+            @:if (queryParameter.@(col.column_name)>0)
+            @:{
+            @:    sqlWhere.Append(" AND b1.@(col.column_name) = @@@(col.column_name)");
+            @:}
+         }
+    }
+            appendSqlWhere(sqlWhere);
+            return sqlWhere.ToString();
+        }
+
+        public async Task<IEnumerable<@(table_name_pascal)Model>> GetCurrentModelsAsync(@(table_name_pascal)RequestModel queryParameter)
+        {
+            var strWhere = GetQuery(queryParameter, (sb) => { });
+            var dataQuery = $"SELECT b1.* FROM {tableName} b1 WHERE 1=1 " + strWhere;
+            return await DbContext.CreateConnection().QueryAsync<@(table_name_pascal)Model>(dataQuery, queryParameter);
+        }
+
+        public async Task<IEnumerable<@(table_name_pascal)ResponeModel>> GetModelsAsync(@(table_name_pascal)RequestModel queryParameter)
+        {
+            var strWhere = GetQuery(queryParameter, (sb) => {
+                //ViewModel 的条件过滤
+                //if (!string.IsNullOrEmpty(queryParameter.xxx))
+                //{
+                //    sb.Append(" AND b2.xxx LIKE xxxx");
+                //    queryObj.xxx += "%";
+                //}
+            });
+            var dataQuery = $"SELECT b1.* FROM {tableName} b1 WHERE 1=1 " + strWhere;
+            return await DbContext.CreateConnection().QueryAsync<@(table_name_pascal)ResponeModel>(dataQuery, queryParameter);
+        }
+
+        public async Task<IEnumerable<@(table_name_pascal)ResponeModel>> GetModelsAsync(PagingModel pagingModel, @(table_name_pascal)RequestModel queryParameter)
+        {
+            var strWhere = GetQuery(queryParameter, (sb) => {
+                //ViewModel 的条件过滤
+                //if (!string.IsNullOrEmpty(queryParameter.xxx))
+                //{
+                //    sb.Append(" AND b2.xxx LIKE xxxx");
+                //    queryObj.xxx += "%";
+                //}
+            });
+            var querySql = "SELECT {0} FROM "+ tableName + " b1 WHERE 1=1 " + strWhere;
+
+            var countQuery = string.Format(querySql, "COUNT(1)");
+            pagingModel.TotalCount = await DbContext.CreateConnection().ExecuteScalarAsync<long>(countQuery,queryParameter);
+
+            var pagingSql = $" LIMIT {pagingModel.StartIndex()},{pagingModel.PageSize}";//分页
+            var dataQuery = string.Format(querySql, "b1.*") + pagingSql;
+            return await DbContext.GetModelsAsync<@(table_name_pascal)ResponeModel, @(table_name_pascal)RequestModel>(dataQuery,queryParameter);
+        }
+
+        public async Task<long> UpdateModelAsync(@(primary_key_data_type) id, @(table_name_pascal)Model model)
+        {
+            return await DbContext.UpdateModelAsync(id, model);
+        }
+
+        public async Task<@(table_name_pascal)Model> GetFirstAsync(@(table_name_pascal)RequestModel queryParameter)
+        {
+            var tq = await GetModelsAsync(queryParameter);
+            return tq.FirstOrDefault();
+        }
+    }
+}

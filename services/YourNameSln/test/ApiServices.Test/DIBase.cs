@@ -14,7 +14,7 @@ namespace ApiServices.Test
         public IContainer container { get; set; }
         public DIBase()
         {
-            StaticConfig.ContentRootPath = @"E:\Cngrain\IotCloudBox\trunk\src\CloudBoxServer\CloudBox.App";
+            StaticConfig.ContentRootPath = @"E:\Coding\2020\webapicommon\services\YourNameSln\YourWebApiName.ApiServices";
             container = DICollections();
 
         }

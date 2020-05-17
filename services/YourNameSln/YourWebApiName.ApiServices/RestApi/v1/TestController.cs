@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using YourWebApiName.IServices.IDbServices;
 
 namespace YourWebApiName.ApiServices.RestApi.v1
 {
@@ -17,14 +18,16 @@ namespace YourWebApiName.ApiServices.RestApi.v1
     [AllowAnonymous]//允许匿名访问
     public class TestController : ControllerBase
     {
+        public ISysRolesService sysRolesService { get; set; }
         /// <summary>
         /// 获取作者信息
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
-            return Ok(new { Name="Hawking",Age=26});
+            var data = await sysRolesService.GetModelsAsync(new Models.RequestModels.SysRolesRequestModel() { });
+            return Ok(new { Name = "Hawking", Age = 26, Data = data });
             //return Ok(from c in User.Claims select new { c.Type, c.Value });
         }
     }

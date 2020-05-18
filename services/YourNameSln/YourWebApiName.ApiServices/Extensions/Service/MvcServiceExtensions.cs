@@ -53,7 +53,7 @@ namespace YourWebApiName.ApiServices.Extensions.Service
                 options.JsonSerializerOptions.PropertyNameCaseInsensitive = JsonExtension.jsOptions.PropertyNameCaseInsensitive;
                 options.JsonSerializerOptions.PropertyNamingPolicy = JsonExtension.jsOptions.PropertyNamingPolicy;
                 options.JsonSerializerOptions.AllowTrailingCommas = JsonExtension.jsOptions.AllowTrailingCommas;
-                options.JsonSerializerOptions.Converters.Add(new Common.Utility.JsonConverter.JhDateTimeConverter());
+                options.JsonSerializerOptions.Converters.Add(new Common.Utility.JsonConverter.JsonDateTimeConverter());
                 /*
                  options.SerializerSettings.ContractResolver = new NullToEmptyStringResolver();//自动将Null自动换位空字符串
                  */

@@ -30,18 +30,33 @@ namespace @(name_space).Models.DbModels
          @:/// @col.column_comment
          @:/// </summary>
          if (col.primary_key)
-         { 
+         {
          @:[Key]
-         }
-         if(col.nullable)
-         {
-         @:[Required]
-         }
-         if(col.data_type=="string")
-         {
-         @:[StringLength(@(col.character_maximum_length))]
-         }
+         @:[SwaggerQueryParameterProperty(false)]
+         @:[SwaggerBodyParameterProperty(true)]
          @:public @(col.data_type) @(col.column_name) { get; set; }
+         }
+         else 
+         { 
+            if(col.nullable&&col.data_type!="DateTime"&&col.data_type!="int")
+            {
+         @:[Required]
+            }
+            if(col.column_name.EndsWith("id")&&!col.primary_key)
+            {
+         @:[SwaggerQueryParameterProperty(false)]
+         @:[SwaggerBodyParameterProperty(true)]
+         @:public @(col.data_type) @(col.column_name) { get; set; }
+            }
+            else
+            {
+                if(col.data_type=="DateTime")
+                {
+         @:[JsonConverter(typeof(JsonDateTimeConverter))]
+                }
+         @:public @(col.data_type) @(col.column_name) { get; set; }
+            }
+         }
         }
     }
 }

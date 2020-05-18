@@ -1,6 +1,7 @@
 ﻿using Common.NetCoreWebUtility.Filters;
 using Common.Utility.Extension;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -36,7 +37,7 @@ namespace YourWebApiName.ApiServices.Extensions.Service
                 options.MaxModelValidationErrors = 10;//达到该值时验证停止
                 options.Filters.Add(typeof(ParametersValidationAttribute));
 
-                //全局授权过滤器，不允许匿名访问
+                //全局授权过滤器，不允许匿名访问，只能通过Token进行授权访问
 #if !DEBUG
                 options.Filters.Add(new AuthorizeFilter("all_access"));
                 options.Conventions.Insert(0, new RouteAuthorizeConvention());

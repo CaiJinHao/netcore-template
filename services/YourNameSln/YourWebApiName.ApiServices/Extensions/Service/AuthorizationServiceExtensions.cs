@@ -22,6 +22,7 @@ namespace YourWebApiName.ApiServices.Extensions.Service
             var jwtBearer = StaticConfig.AppSettings.ServiceCollectionExtension.IdentityJwt.JwtBearer;
             return services.AddAuthorization(options =>
             {
+                //在AddMvcService中添加授权过滤器
                 //根据TOKEN携带的信息控制是否有权限
                 {
                     //只要token携带就通过

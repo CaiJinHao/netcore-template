@@ -42,8 +42,6 @@ namespace YourWebApiName.ApiServices.Extensions.Service
                         Description = _doc?.Description
                     });
                 }
-                // add a custom operation filter which sets default values
-                //options.OperationFilter<SwaggerDefaultValues>();
 
                 var basePath = StaticConfig.ContentRootPath;//Directory.GetCurrentDirectory();
                 var xmlPath = Path.Combine(basePath, "Swagger/YourWebApiName.ApiServices.xml");
@@ -84,6 +82,7 @@ namespace YourWebApiName.ApiServices.Extensions.Service
 
                 options.SchemaFilter<SwaggerSchemaFilter>();
                 //options.ParameterFilter<SwaggerParameterFilter>();
+                // add a custom operation filter which sets default values
                 options.OperationFilter<SwaggerOperationFilter>();
             });
         }

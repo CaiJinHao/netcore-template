@@ -13,23 +13,22 @@
     var api_version = "1";
 }
 
-using YourWebApiName.IServices.IDbServices;
-using YourWebApiName.Models.DbModels;
-using YourWebApiName.Models.RequestModels;
+using Common.Utility.Extension;
 using Common.Utility.Models;
 using Common.Utility.Models.App;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Routing;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using Common.Utility.Extension;
+using YourWebApiName.IServices.IDbServices;
+using YourWebApiName.Models.DbModels;
+using YourWebApiName.Models.RequestModels;
 
 //请只复制类的body
 namespace @(name_space).App.InternalApi.v1
 {
     /// <summary>
     /// @table.table_comment
-    /// </summary>
+    ///
+</summary>
     [ApiVersion("@(api_version)")]
     [Route("api/v{version:apiVersion}/@(table_name_lower)")]
     [ApiController]
@@ -37,132 +36,147 @@ namespace @(name_space).App.InternalApi.v1
     {
         private string route = "api/v@(api_version)/@(table_name_lower)";
         /// <summary>
-        /// 服务
-        /// </summary>
+    /// 服务
+    ///
+</summary>
         public I@(table_name_pascal)Service @(table_name_camel)Service { get; set; }
 
         /// <summary>
-        /// 查询多条数据
-        /// </summary>
-        /// <param name="paging"></param>
-        /// <param name="queryParameter"></param>
+    /// 查询多条数据
+    ///
+</summary>
+        ///
+<param name="paging"></param>
+        ///
+<param name="queryParameter"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> Get([FromQuery]PagingModel paging, [FromQuery]@(table_name_pascal)RequestModel queryParameter)
-        {
-            var apiResult = new ApiResultModel(ErrorCodeType.Success);
-            switch (paging.Oprator)
-            {
-                default:
-                    {
-                        var data = await @(table_name_camel)Service.GetModelsAsync(paging, queryParameter);
-                        apiResult.Result = new
-                        {
-                            paging,
-                            data
-                        };
-                        return Ok(apiResult);
-                    }
-            }
-        }
+        public async Task<IActionResult>
+    Get([FromQuery]PagingModel paging, [FromQuery]@(table_name_pascal)RequestModel queryParameter)
+    {
+    var apiResult = new ApiResultModel(ErrorCodeType.Success);
+    switch (paging.Oprator)
+    {
+    default:
+    {
+    var data = await @(table_name_camel)Service.GetModelsAsync(paging, queryParameter);
+    apiResult.Result = new
+    {
+    paging,
+    data
+    };
+    return Ok(apiResult);
+    }
+    }
+    }
 
-        /// <summary>
+    /// <summary>
         /// 获取实体
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        [HttpGet("{id}")]
-        public async Task<IActionResult> Get(@(primary_key_data_type) id)
+        ///
+    </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    [HttpGet("{id}")]
+    public async Task<IActionResult>
+        Get(@(primary_key_data_type) id)
         {
-            var _data = await @(table_name_camel)Service.GetModelAsync(id);
-            var apiResult = new ApiResultModel(ErrorCodeType.Success, _data);
-            return Ok(apiResult);
+        var _data = await @(table_name_camel)Service.GetModelAsync(id);
+        var apiResult = new ApiResultModel(ErrorCodeType.Success, _data);
+        return Ok(apiResult);
         }
 
         /// <summary>
-        /// 新增一条
-        /// </summary>
+            /// 新增一条
+            ///
+        </summary>
         /// <param name="parameter"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody]@(table_name_pascal)RequestModel parameter)
-        {
+        public async Task<IActionResult>
+            Post([FromBody]@(table_name_pascal)RequestModel parameter)
+            {
             var apiResult = new ApiResultModel(ErrorCodeType.Success);
             var model = new @(table_name_pascal)Model();
             parameter.CloneTo(model);
             if (await @(table_name_camel)Service.CreateAsync(model))
             {
-                return Created($"{route}/{parameter.primary_key_name}", apiResult);
+            return Created($"{route}/{parameter.primary_key_name}", apiResult);
             }
             apiResult.Code = ErrorCodeType.PostError;
             return BadRequest(apiResult);
-        }
-
-        /// <summary>
-        /// 修改实体
-        /// </summary>
-        /// <param name="id">主键</param>
-        /// <param name="parameter">修改的字段</param>
-        /// <returns></returns>
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Put(@(primary_key_data_type) id, [FromBody]@(table_name_pascal)RequestModel parameter)
-        {
-            var apiResult = new ApiResultModel(ErrorCodeType.Success);
-            var model = new @(table_name_pascal)Model();
-            parameter.CloneTo(model);
-            var c = await @(table_name_camel)Service.UpdateModelAsync(id, model);
-            if (c > 0)
-            {
-                return Ok(apiResult);
             }
-            apiResult.Code = ErrorCodeType.PutError;
-            return BadRequest(apiResult);
-        }
 
-        /// <summary>
-        /// 删除实体
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(@(primary_key_data_type) id)
-        {
-            var apiResult = new ApiResultModel(ErrorCodeType.Success);
-            if (string.IsNullOrEmpty(id))
-            {
-                apiResult.Code = ErrorCodeType.ParamsError;
+            /// <summary>
+                /// 修改实体
+                ///
+            </summary>
+            /// <param name="id">主键</param>
+            /// <param name="parameter">修改的字段</param>
+            /// <returns></returns>
+            [HttpPut("{id}")]
+            public async Task<IActionResult>
+                Put(@(primary_key_data_type) id, [FromBody]@(table_name_pascal)RequestModel parameter)
+                {
+                var apiResult = new ApiResultModel(ErrorCodeType.Success);
+                var model = new @(table_name_pascal)Model();
+                parameter.CloneTo(model);
+                var c = await @(table_name_camel)Service.UpdateModelAsync(id, model);
+                if (c > 0)
+                {
+                return Ok(apiResult);
+                }
+                apiResult.Code = ErrorCodeType.PutError;
                 return BadRequest(apiResult);
-            }
-            var c = await @(table_name_camel)Service.DeleteAsync(new string[] { id });
-            if (c > 0)
-            {
-                return Ok(apiResult);
-            }
-            apiResult.Code = ErrorCodeType.DeleteError;
-            return BadRequest(apiResult);
-        }
+                }
 
-        /// <summary>
-        /// 删除多条
-        /// </summary>
-        /// <param name="idList"></param>
-        /// <returns></returns>
-        [HttpDelete]
-        public async Task<IActionResult> Delete([FromBody]string[] idList)
-        {
-            var apiResult = new ApiResultModel(ErrorCodeType.Success);
-            if (idList == null || idList.Length < 1)
-            {
-                apiResult.Code = ErrorCodeType.ParamsError;
-                return BadRequest(apiResult);
-            }
-            var c = await @(table_name_camel)Service.DeleteAsync(idList);
-            if (c > 0)
-            {
-                return Ok(apiResult);
-            }
-            apiResult.Code = ErrorCodeType.DeleteError;
-            return BadRequest(apiResult);
-        }
-    }
-}
+                /// <summary>
+                    /// 删除实体
+                    ///
+                </summary>
+                /// <param name="id"></param>
+                /// <returns></returns>
+                [HttpDelete("{id}")]
+                public async Task<IActionResult>
+                    Delete(@(primary_key_data_type) id)
+                    {
+                    var apiResult = new ApiResultModel(ErrorCodeType.Success);
+                    if (string.IsNullOrEmpty(id))
+                    {
+                    apiResult.Code = ErrorCodeType.ParamsError;
+                    return BadRequest(apiResult);
+                    }
+                    var c = await @(table_name_camel)Service.DeleteAsync(new string[] { id });
+                    if (c > 0)
+                    {
+                    return Ok(apiResult);
+                    }
+                    apiResult.Code = ErrorCodeType.DeleteError;
+                    return BadRequest(apiResult);
+                    }
+
+                    /// <summary>
+                        /// 删除多条
+                        ///
+                    </summary>
+                    /// <param name="idList"></param>
+                    /// <returns></returns>
+                    [HttpDelete]
+                    public async Task<IActionResult>
+                        Delete([FromBody]string[] idList)
+                        {
+                        var apiResult = new ApiResultModel(ErrorCodeType.Success);
+                        if (idList == null || idList.Length < 1)
+                        {
+                        apiResult.Code = ErrorCodeType.ParamsError;
+                        return BadRequest(apiResult);
+                        }
+                        var c = await @(table_name_camel)Service.DeleteAsync(idList);
+                        if (c > 0)
+                        {
+                        return Ok(apiResult);
+                        }
+                        apiResult.Code = ErrorCodeType.DeleteError;
+                        return BadRequest(apiResult);
+                        }
+                        }
+                        }

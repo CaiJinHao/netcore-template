@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Common.Utility.Extension;
+﻿using Common.Utility.Extension;
 using Common.Utility.Models;
 using Common.Utility.Models.App;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 using YourWebApiName.IServices.IDbServices;
 using YourWebApiName.Models.DbModels;
 using YourWebApiName.Models.RequestModels;

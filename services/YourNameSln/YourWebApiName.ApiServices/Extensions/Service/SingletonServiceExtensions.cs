@@ -1,6 +1,7 @@
 ﻿using Common.Utility.Models.Config;
 using Common.Utility.Models.User;
-using DataBse.MySqlFromDapper;
+using DataBase.DapperForSqlServer;
+using DataBase.IDataBase;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -25,10 +26,14 @@ namespace YourWebApiName.ApiServices.Extensions.Service
             var dbConfig = StaticConfig.AppSettings.ServiceCollectionExtension.DbConnection;
             return services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>()//全局HTTP
                     .AddSingleton<IHttpInfo, HttpInfo>()
-                    .AddSingleton<IMySqlDbContext>(s =>
+                    .AddSingleton<ISqlServerDbContext>(s =>
                     {
-                        return new MySqlDbContext(dbConfig.ConnectionString);
+                        return new SqlServerDbContext(dbConfig.ConnectionString);
                     })
+                    //.AddSingleton<IMySqlDbContext>(s =>
+                    //{
+                    //    return new MySqlDbContext(dbConfig.ConnectionString);
+                    //})
                     //.AddSingleton<IMongoDbContext>(s =>
                     //{
                     //    var mongoDb = dbConfig.MongoDB;

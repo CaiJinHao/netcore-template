@@ -8,7 +8,7 @@ namespace DataBase.IDataBase
     /// 数据库上下文 连接
     /// 需要使用应用程序级生命周期单例Singleton
     /// </summary>
-    public interface IDbContext<TDbConnection> 
+    public interface IDbContext<TDbConnection>
     {
         TDbConnection CreateConnection();
 

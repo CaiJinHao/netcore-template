@@ -20,7 +20,7 @@ namespace DataBase.MySqlFromSqlSugar
         private string ConnectionString { get; set; }
         private ILogger Logger { get; set; }
 
-        public string PrimaryKey => throw new NotImplementedException();
+        public string PrimaryKey => Guid.NewGuid().ToString("n");
 
         public MySqlSqlSugarDbContext(string connectionString) { 
             ConnectionString = connectionString;

@@ -1,18 +1,18 @@
 
 
+using Common.Utility.Extension;
+using Common.Utility.Models.App;
+using Dapper;
+using DataBase.DapperForSqlServer;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using YourWebApiName.IRepository.IDbRepository;
 using YourWebApiName.Models.DbModels;
 using YourWebApiName.Models.RequestModels;
 using YourWebApiName.Models.ResponeModels;
-using Common.Utility.Extension;
-using Common.Utility.Models.App;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using DataBse.MySqlFromDapper;
-using System.Text;
-using Dapper;
 
 namespace YourWebApiName.MongoRepository.DbRepository
 {
@@ -31,7 +31,7 @@ namespace YourWebApiName.MongoRepository.DbRepository
             tableName = "sys_roles";
        }
 
-        public IMySqlDbContext DbContext { get; set; }
+        public ISqlServerDbContext DbContext { get; set; }
 
         public async Task<bool> CreateAsync(SysRolesModel model)
         {

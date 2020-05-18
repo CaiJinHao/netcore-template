@@ -5,7 +5,7 @@ using System.Text;
 namespace Common.Utility.Attributes
 {
     /// <summary>
-    /// 查询参数属性处理
+    /// 查询参数属性是否显示
     /// </summary>
     [AttributeUsage(AttributeTargets.Property)]
     public class SwaggerQueryParameterPropertyAttribute : Attribute

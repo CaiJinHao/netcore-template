@@ -12,22 +12,22 @@ namespace Common.NetCoreWebUtility.Swagger
     {
         public void Apply(OpenApiSchema schema, SchemaFilterContext context)
         {
-            if (schema.Properties.Count == 0)
-                return;
-
             #region 删除请求body参数
 
-            foreach (var property in context.Type.GetProperties())
+            if (schema.Properties.Count > 0)
             {
-                var _t = property.GetCustomAttributes(typeof(SwaggerBodyParameterPropertyAttribute), false).FirstOrDefault();
-                if (_t != null)
+                foreach (var property in context.Type.GetProperties())
                 {
-                    var swaggerParameterProperty = (SwaggerBodyParameterPropertyAttribute)_t;
-                    if (!swaggerParameterProperty.Visible)
+                    var _t = property.GetCustomAttributes(typeof(SwaggerBodyParameterPropertyAttribute), false).FirstOrDefault();
+                    if (_t != null)
                     {
-                        if (schema.Properties.ContainsKey(property.Name))
+                        var swaggerParameterProperty = (SwaggerBodyParameterPropertyAttribute)_t;
+                        if (!swaggerParameterProperty.Visible)
                         {
-                            schema.Properties.Remove(property.Name);
+                            if (schema.Properties.ContainsKey(property.Name))
+                            {
+                                schema.Properties.Remove(property.Name);
+                            }
                         }
                     }
                 }

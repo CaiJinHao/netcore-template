@@ -17,37 +17,41 @@ namespace Common.NetCoreWebUtility.Swagger
         {
             #region 删除查询参数
 
-            foreach (var model in context.ApiDescription.ActionDescriptor.Parameters)
+            if (operation.Parameters.Count > 0)
             {
-                foreach (var property in model.ParameterType.GetProperties())
+                foreach (var model in context.ApiDescription.ActionDescriptor.Parameters)
                 {
-                    var _t = property.GetCustomAttributes(typeof(SwaggerQueryParameterPropertyAttribute), false).FirstOrDefault();
-                    if (_t != null)
+                    foreach (var property in model.ParameterType.GetProperties())
                     {
-                        var swaggerParameterProperty = (SwaggerQueryParameterPropertyAttribute)_t;
-                        var _p = operation.Parameters.Where(a => a.Name == property.Name).FirstOrDefault();
-                        if (_p != null)
+                        var _t = property.GetCustomAttributes(typeof(SwaggerQueryParameterPropertyAttribute), false).FirstOrDefault();
+                        if (_t != null)
                         {
-                            if (!swaggerParameterProperty.Visible)
+                            var swaggerParameterProperty = (SwaggerQueryParameterPropertyAttribute)_t;
+                            var _p = operation.Parameters.Where(a => a.Name == property.Name).FirstOrDefault();
+                            if (_p != null)
                             {
-                                operation.Parameters.Remove(_p);
-                            }
-                        }
-                        else
-                        {
-                            //针对对象的处理，对象字段名称是查不到的
-                            if (!swaggerParameterProperty.Visible)
-                            {
-                                var obj_fiels = operation.Parameters.Where(a => a.Name.StartsWith(property.Name)).ToList();
-                                foreach (var _field in obj_fiels)
+                                if (!swaggerParameterProperty.Visible)
                                 {
-                                    operation.Parameters.Remove(_field);
+                                    operation.Parameters.Remove(_p);
+                                }
+                            }
+                            else
+                            {
+                                //针对对象的处理，对象字段名称是查不到的
+                                if (!swaggerParameterProperty.Visible)
+                                {
+                                    var obj_fiels = operation.Parameters.Where(a => a.Name.StartsWith(property.Name)).ToList();
+                                    foreach (var _field in obj_fiels)
+                                    {
+                                        operation.Parameters.Remove(_field);
+                                    }
                                 }
                             }
                         }
                     }
                 }
             }
+
 
             #endregion
 

@@ -54,8 +54,8 @@ namespace DataBase.DapperForSqlServer
             var fields = GetFields<TTableModel>();
             var strFieldNames = string.Join(",", fields);
             var keyName = GetKeyName<TTableModel>();
-            var sql = $"SELECT {strFieldNames} FROM {GetTableName<TTableModel>()} AS A WHERE {keyName}=@key";
-            var models= await CreateConnection().QueryAsync<TTableModel>(sql, new { key = id });
+            var sql = $"SELECT {strFieldNames} FROM {GetTableName<TTableModel>()} AS A";// WHERE {keyName}=@key
+            var models= await CreateConnection().QueryAsync<TTableModel>(sql);//, new { key = id }
             return models.FirstOrDefault();
         }
 

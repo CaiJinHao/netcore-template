@@ -1,10 +1,9 @@
+
+
+using Common.Utility.JsonConverter;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Common.Utility.Attributes;
-using Common.Utility.JsonConverter;
 using System.Text.Json.Serialization;
 
 namespace YourWebApiName.Models.DbModels
@@ -19,15 +18,12 @@ namespace YourWebApiName.Models.DbModels
          /// user_id
          /// </summary>
          [Key]
-         [SwaggerQueryParameterProperty(false)]
-         [SwaggerBodyParameterProperty(true)]
+         [Required]
          public string user_id { get; set; }
          /// <summary>
          /// role_id
          /// </summary>
          [Required]
-         [SwaggerQueryParameterProperty(false)]
-         [SwaggerBodyParameterProperty(true)]
          public string role_id { get; set; }
          /// <summary>
          /// user_账号

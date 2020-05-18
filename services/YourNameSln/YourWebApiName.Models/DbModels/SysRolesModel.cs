@@ -1,10 +1,9 @@
+
+
+using Common.Utility.JsonConverter;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Common.Utility.Attributes;
-using Common.Utility.JsonConverter;
 using System.Text.Json.Serialization;
 
 namespace YourWebApiName.Models.DbModels
@@ -19,15 +18,13 @@ namespace YourWebApiName.Models.DbModels
          /// role_id
          /// </summary>
          [Key]
-        [Required]
-        [SwaggerQueryParameterProperty(true)]
+         [Required]
          public string role_id { get; set; }
          /// <summary>
          /// role_名称
          /// </summary>
          [Required]
-        [SwaggerQueryParameterProperty(true)]
-        public string role_name { get; set; }
+         public string role_name { get; set; }
          /// <summary>
          /// role_附注
          /// </summary>
@@ -48,8 +45,5 @@ namespace YourWebApiName.Models.DbModels
          /// role_角色是否启用
          /// </summary>
          public int role_is_enable { get; set; }
-
-        [SwaggerQueryParameterProperty(false)]
-        public SysMenusModel sysMenus { get; set; }
     }
 }

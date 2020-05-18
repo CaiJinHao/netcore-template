@@ -84,6 +84,7 @@ namespace YourWebApiName.ApiServices.Extensions.Service
                 //options.ParameterFilter<SwaggerParameterFilter>();
                 // add a custom operation filter which sets default values
                 options.OperationFilter<SwaggerOperationFilter>();
+                options.OperationFilter<QueryParamsSwaggerOprationFilter>();
             });
         }
     }

@@ -13,10 +13,10 @@ namespace Common.Utility.Attributes
         /// <summary>
         /// true 显示 false 不显示
         /// </summary>
-        /// <param name="visible"></param>
-        public SwaggerQueryParameterPropertyAttribute(bool visible)
+        /// <param name="visible">是否显示字段</param>
+        public SwaggerQueryParameterPropertyAttribute(bool _visible)
         {
-            Visible = visible;
+            Visible = _visible;
         }
         private bool _visible = true;
         /// <summary>

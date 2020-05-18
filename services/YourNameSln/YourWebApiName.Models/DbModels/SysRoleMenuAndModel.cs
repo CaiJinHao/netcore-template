@@ -5,6 +5,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Common.Utility.Attributes;
+using Common.Utility.JsonConverter;
+using System.Text.Json.Serialization;
 
 namespace YourWebApiName.Models.DbModels
 {
@@ -18,25 +21,27 @@ namespace YourWebApiName.Models.DbModels
          /// rma_id
          /// </summary>
          [Key]
-         [Required]
-         [StringLength(50)]
+         [SwaggerQueryParameterProperty(false)]
+         [SwaggerBodyParameterProperty(true)]
          public string rma_id { get; set; }
          /// <summary>
          /// menu_id
          /// </summary>
          [Required]
-         [StringLength(50)]
+         [SwaggerQueryParameterProperty(false)]
+         [SwaggerBodyParameterProperty(true)]
          public string menu_id { get; set; }
          /// <summary>
          /// role_id
          /// </summary>
          [Required]
-         [StringLength(50)]
+         [SwaggerQueryParameterProperty(false)]
+         [SwaggerBodyParameterProperty(true)]
          public string role_id { get; set; }
          /// <summary>
          /// rma_time
          /// </summary>
-         [Required]
+         [JsonConverter(typeof(JsonDateTimeConverter))]
          public DateTime rma_time { get; set; }
     }
 }

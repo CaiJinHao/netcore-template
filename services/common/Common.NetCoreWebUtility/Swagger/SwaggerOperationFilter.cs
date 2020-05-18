@@ -9,7 +9,7 @@ using System.Linq;
 namespace Common.NetCoreWebUtility.Swagger
 {
     /// <summary>
-    /// Swagger操作过滤
+    /// 查询参数是否显示
     /// </summary>
     public class SwaggerOperationFilter : IOperationFilter
     {
@@ -25,21 +25,24 @@ namespace Common.NetCoreWebUtility.Swagger
                     if (_t != null)
                     {
                         var swaggerParameterProperty = (SwaggerQueryParameterPropertyAttribute)_t;
-                        if (!swaggerParameterProperty.Visible)
+                        var _p = operation.Parameters.Where(a => a.Name == property.Name).FirstOrDefault();
+                        if (_p != null)
                         {
-                            var _p = operation.Parameters.Where(a => a.Name == property.Name).FirstOrDefault();
-                            if (_p == null)
+                            if (!swaggerParameterProperty.Visible)
                             {
-                                //针对对象的处理，对象字段名称是查不到的
+                                operation.Parameters.Remove(_p);
+                            }
+                        }
+                        else
+                        {
+                            //针对对象的处理，对象字段名称是查不到的
+                            if (!swaggerParameterProperty.Visible)
+                            {
                                 var obj_fiels = operation.Parameters.Where(a => a.Name.StartsWith(property.Name)).ToList();
                                 foreach (var _field in obj_fiels)
                                 {
                                     operation.Parameters.Remove(_field);
                                 }
-                            }
-                            else
-                            {
-                                operation.Parameters.Remove(_p);
                             }
                         }
                     }

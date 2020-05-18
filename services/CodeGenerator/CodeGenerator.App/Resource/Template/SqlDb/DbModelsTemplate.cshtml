@@ -15,6 +15,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Common.Utility.Attributes;
+using Common.Utility.JsonConverter;
+using System.Text.Json.Serialization;
 
 namespace @(name_space).Models.DbModels
 {
@@ -32,6 +35,7 @@ namespace @(name_space).Models.DbModels
          if (col.primary_key)
          {
          @:[Key]
+         @:[Required]
          @:[SwaggerQueryParameterProperty(false)]
          @:[SwaggerBodyParameterProperty(true)]
          @:public @(col.data_type) @(col.column_name) { get; set; }

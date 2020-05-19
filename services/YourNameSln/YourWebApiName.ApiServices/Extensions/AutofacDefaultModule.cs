@@ -3,7 +3,8 @@ using Common.Utility.AOP;
 using System;
 using System.Collections.Generic;
 using Common.Utility.Autofac;
-
+using System.Reflection;
+using System.IO;
 
 namespace YourWebApiName.ApiServices.Extensions
 {
@@ -24,19 +25,22 @@ namespace YourWebApiName.ApiServices.Extensions
             //aopServices.Add(typeof(LogAOP));
 
             /*
-             * 可以直接引用程序集，每次都要重新生成很麻烦 上线时可以这么搞
-             * var basePath = Microsoft.DotNet.PlatformAbstractions.ApplicationEnvironment.ApplicationBasePath;
-            var assemblysServices = Assembly.LoadFrom(Path.Combine(basePath, "netstandard2.0/CloudBox.Services.dll"));
-            var assemblysRepository = Assembly.LoadFrom(Path.Combine(basePath, "netstandard2.0/CloudBox.Repository.dll"));
-                其他程序集只有继承接口才会自动注入,非依赖程序集的需要通过构造函数注入、如common
-             */
+             可以直接引用程序集，每次都要重新生成很麻烦 上线时可以这么搞
+             其他程序集只有继承接口才会自动注入,非依赖程序集的需要通过构造函数注入、如common
+            */
+            var basePath = Microsoft.DotNet.PlatformAbstractions.ApplicationEnvironment.ApplicationBasePath;
+            var assemblysServices = Assembly.LoadFrom(Path.Combine(basePath, "netstandard2.0/YourWebApiName.Services.dll"));
+            var assemblysRepository = Assembly.LoadFrom(Path.Combine(basePath, "netstandard2.0/YourWebApiName.Repository.dll"));
+             
 
             builder.
                 RegisterDefaultModuleImplementedInterfaces(
                 aopServices.ToArray()
-                //, typeof(你需要注入的程序集的类).Assembly
-                , typeof(Services.ServicesAssembly).Assembly
-                , typeof(Repository.RepositoryAssembly).Assembly
+                , assemblysServices
+                , assemblysRepository
+                //, typeof(你需要注入的程序集的类).Assembly //或者使用上面的dll加载的方式
+                //, typeof(Services.ServicesAssembly).Assembly
+                //, typeof(Repository.RepositoryAssembly).Assembly
                 );
 
 

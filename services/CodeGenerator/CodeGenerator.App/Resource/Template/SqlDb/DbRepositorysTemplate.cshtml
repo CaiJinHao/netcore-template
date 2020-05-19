@@ -10,19 +10,19 @@
     var primary_key_data_type = table.primary_key_data_type;
 }
 
+using Common.Utility.Extension;
+using Common.Utility.Models.App;
+using Dapper;
+using DataBase.DapperForSqlServer;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using YourWebApiName.IRepository.IDbRepository;
 using YourWebApiName.Models.DbModels;
 using YourWebApiName.Models.RequestModels;
 using YourWebApiName.Models.ResponeModels;
-using Common.Utility.Extension;
-using Common.Utility.Models.App;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using DataBse.MySqlFromDapper;
-using System.Text;
-using Dapper;
 
 namespace @(name_space).MongoRepository.DbRepository
 {
@@ -41,7 +41,7 @@ namespace @(name_space).MongoRepository.DbRepository
             tableName = "@(table_name)";
        }
 
-        public IMySqlDbContext DbContext { get; set; }
+        public ISqlServerDbContext DbContext { get; set; }
 
         public async Task<bool> CreateAsync(@(table_name_pascal)Model model)
         {
@@ -90,9 +90,14 @@ namespace @(name_space).MongoRepository.DbRepository
             throw new NotImplementedException();
         }
 
-        private string GetQuery(@(table_name_pascal)RequestModel queryParameter, Action<StringBuilder> appendSqlWhere)
+        private string GetQuery(@(table_name_pascal)RequestModel queryParameter, string table = null)
         {
-            var sqlWhere = new StringBuilder();//查询条件
+
+          switch (table)
+            {
+                default:
+                    {
+                        var sqlWhere = new StringBuilder();//查询条件
     @foreach (var col in columns)
         {
         if (col.column_name.EndsWith("id"))
@@ -118,49 +123,35 @@ namespace @(name_space).MongoRepository.DbRepository
             @:}
          }
     }
-            appendSqlWhere(sqlWhere);
             return sqlWhere.ToString();
+     }
+            }
         }
 
         public async Task<IEnumerable<@(table_name_pascal)Model>> GetCurrentModelsAsync(@(table_name_pascal)RequestModel queryParameter)
         {
-            var strWhere = GetQuery(queryParameter, (sb) => { });
+            var strWhere = GetQuery(queryParameter);
             var dataQuery = $"SELECT b1.* FROM {tableName} b1 WHERE 1=1 " + strWhere;
             return await DbContext.CreateConnection().QueryAsync<@(table_name_pascal)Model>(dataQuery, queryParameter);
         }
 
         public async Task<IEnumerable<@(table_name_pascal)ResponeModel>> GetModelsAsync(@(table_name_pascal)RequestModel queryParameter)
         {
-            var strWhere = GetQuery(queryParameter, (sb) => {
-                //ViewModel 的条件过滤
-                //if (!string.IsNullOrEmpty(queryParameter.xxx))
-                //{
-                //    sb.Append(" AND b2.xxx LIKE xxxx");
-                //    queryObj.xxx += "%";
-                //}
-            });
-            var dataQuery = $"SELECT b1.* FROM {tableName} b1 WHERE 1=1 " + strWhere;
+            var strWhere = GetQuery(queryParameter);
+            var dataQuery = $"SELECT b1_result.* FROM (SELECT b1.* FROM {tableName}  b1 WHERE 1=1 {strWhere}) b1_result";//内查询，可以做连接查询 直接join
             return await DbContext.CreateConnection().QueryAsync<@(table_name_pascal)ResponeModel>(dataQuery, queryParameter);
         }
 
         public async Task<IEnumerable<@(table_name_pascal)ResponeModel>> GetModelsAsync(PagingModel pagingModel, @(table_name_pascal)RequestModel queryParameter)
         {
-            var strWhere = GetQuery(queryParameter, (sb) => {
-                //ViewModel 的条件过滤
-                //if (!string.IsNullOrEmpty(queryParameter.xxx))
-                //{
-                //    sb.Append(" AND b2.xxx LIKE xxxx");
-                //    queryObj.xxx += "%";
-                //}
-            });
-            var querySql = "SELECT {0} FROM "+ tableName + " b1 WHERE 1=1 " + strWhere;
-
+            var strWhere = GetQuery(queryParameter);
+            var querySql = "SELECT {0} " + $"FROM (SELECT b1.* FROM {tableName}  b1 WHERE 1=1 {strWhere}) b1_result";//内查询，可以做连接查询 直接join
             var countQuery = string.Format(querySql, "COUNT(1)");
             pagingModel.TotalCount = await DbContext.CreateConnection().ExecuteScalarAsync<long>(countQuery,queryParameter);
 
-            var pagingSql = $" LIMIT {pagingModel.StartIndex()},{pagingModel.PageSize}";//分页
-            var dataQuery = string.Format(querySql, "b1.*") + pagingSql;
-            return await DbContext.GetModelsAsync<@(table_name_pascal)ResponeModel, @(table_name_pascal)RequestModel>(dataQuery,queryParameter);
+            var pagingQuerySql = string.Format(querySql, "ROW_NUMBER() OVER(ORDER BY @(primary_key_name) ASC) AS RowNum,b1_result.*");//按带索引的字段排序，否则很慢
+            var dataQuery = $"SELECT * FROM ({pagingQuerySql}) tdata WHERE tdata.RowNum BETWEEN {pagingModel.StartIndex()} and {pagingModel.PageSize * pagingModel.Page}";
+            return await DbContext.GetModelsAsync<@(table_name_pascal)ResponeModel, @(table_name_pascal)RequestModel>(dataQuery, queryParameter);
         }
 
         public async Task<long> UpdateModelAsync(@(primary_key_data_type) id, @(table_name_pascal)Model model)

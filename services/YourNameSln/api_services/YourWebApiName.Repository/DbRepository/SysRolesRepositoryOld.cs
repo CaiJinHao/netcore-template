@@ -16,20 +16,20 @@ using YourWebApiName.Models.ResponeModels;
 
 namespace YourWebApiName.MongoRepository.DbRepository
 {
-    public class SysRolesRepository : ISysRolesRepository
+    public class SysRolesRepositoryOld : ISysRolesRepository
     {
         /// <summary>
         /// 表名称
         /// </summary>
         public string tableName { get; set; }
 
-        /// <summary>
-        /// 资源 DbRepository 系统_角色
-        /// </summary>
-        public SysRolesRepository()
-        {
+       /// <summary>
+       /// 资源 DbRepository 系统_角色
+       /// </summary>
+       public SysRolesRepositoryOld()
+       {
             tableName = "sys_roles";
-        }
+       }
 
         public ISqlServerDbContext DbContext { get; set; }
 
@@ -73,9 +73,14 @@ namespace YourWebApiName.MongoRepository.DbRepository
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// 根据表名获取查询条件
+        /// </summary>
+        /// <param name="queryParameter"></param>
+        /// <param name="table">表名</param>
+        /// <returns></returns>
         private string GetQuery(SysRolesRequestModel queryParameter, string table = null)
         {
-
             switch (table)
             {
                 default:
@@ -127,6 +132,7 @@ namespace YourWebApiName.MongoRepository.DbRepository
         public async Task<IEnumerable<SysRolesResponeModel>> GetModelsAsync(SysRolesRequestModel queryParameter)
         {
             var strWhere = GetQuery(queryParameter);
+            //这样做性能是一样的
             var dataQuery = $"SELECT b1_result.* FROM (SELECT b1.* FROM {tableName}  b1 WHERE 1=1 {strWhere}) b1_result";//内查询，可以做连接查询 直接join
             return await DbContext.CreateConnection().QueryAsync<SysRolesResponeModel>(dataQuery, queryParameter);
         }
@@ -136,7 +142,7 @@ namespace YourWebApiName.MongoRepository.DbRepository
             var strWhere = GetQuery(queryParameter);
             var querySql = "SELECT {0} " + $"FROM (SELECT b1.* FROM {tableName}  b1 WHERE 1=1 {strWhere}) b1_result";//内查询，可以做连接查询 直接join
             var countQuery = string.Format(querySql, "COUNT(1)");
-            pagingModel.TotalCount = await DbContext.CreateConnection().ExecuteScalarAsync<long>(countQuery, queryParameter);
+            pagingModel.TotalCount = await DbContext.CreateConnection().ExecuteScalarAsync<long>(countQuery,queryParameter);
 
             var pagingQuerySql = string.Format(querySql, "ROW_NUMBER() OVER(ORDER BY role_id ASC) AS RowNum,b1_result.*");//按带索引的字段排序，否则很慢
             var dataQuery = $"SELECT * FROM ({pagingQuerySql}) tdata WHERE tdata.RowNum BETWEEN {pagingModel.StartIndex()} and {pagingModel.PageSize * pagingModel.Page}";

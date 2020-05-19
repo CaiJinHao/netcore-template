@@ -3,7 +3,7 @@
 using Common.Utility.Extension;
 using Common.Utility.Models.App;
 using Dapper;
-using DataBase.DapperForMySql;
+using DataBase.DapperForSqlServer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,7 +31,7 @@ namespace YourWebApiName.MongoRepository.DbRepository
             tableName = "sys_role_menu_and";
        }
 
-        public IMySqlDbContext DbContext { get; set; }
+        public ISqlServerDbContext DbContext { get; set; }
 
         public async Task<bool> CreateAsync(SysRoleMenuAndModel model)
         {
@@ -101,27 +101,27 @@ namespace YourWebApiName.MongoRepository.DbRepository
         public async Task<IEnumerable<SysRoleMenuAndModel>> GetCurrentModelsAsync(SysRoleMenuAndRequestModel queryParameter)
         {
             var strWhere = GetQuery(queryParameter);
-            var dataQuery = $"SELECT b1.* FROM {tableName} b1 WHERE 1=1 {strWhere} ORDER BY rma_id ASC";
+            var dataQuery = $"SELECT b1.* FROM {tableName} b1 WHERE 1=1 {strWhere} ORDER BY b1.rma_id ASC";
             return await DbContext.CreateConnection().QueryAsync<SysRoleMenuAndModel>(dataQuery, queryParameter);
         }
 
         public async Task<IEnumerable<SysRoleMenuAndResponeModel>> GetModelsAsync(SysRoleMenuAndRequestModel queryParameter)
         {
             var strWhere = GetQuery(queryParameter);
-            var dataQuery = $"SELECT b1_result.* FROM (SELECT b1.* FROM {tableName}  b1 WHERE 1=1 {strWhere} ORDER BY rma_id ASC) b1_result";//内查询，可以做连接查询 直接join
+            var dataQuery = $"SELECT b1_result.* FROM (SELECT b1.* FROM {tableName}  b1 WHERE 1=1 {strWhere}) b1_result ORDER BY b1_result.rma_id ASC";//内查询，可以做连接查询 直接join
             return await DbContext.CreateConnection().QueryAsync<SysRoleMenuAndResponeModel>(dataQuery, queryParameter);
         }
 
         public async Task<IEnumerable<SysRoleMenuAndResponeModel>> GetModelsAsync(PagingModel pagingModel, SysRoleMenuAndRequestModel queryParameter)
         {
             var strWhere = GetQuery(queryParameter);
-            var querySql = "SELECT {0} " + $"FROM (SELECT b1.* FROM {tableName}  b1 WHERE 1=1 {strWhere} ORDER BY rma_id ASC) b1_result";//内查询，可以做连接查询 直接join
+            var querySql = "SELECT {0} " + $"FROM (SELECT b1.* FROM {tableName}  b1 WHERE 1=1 {strWhere}) b1_result";//内查询，可以做连接查询 直接join
             var countQuery = string.Format(querySql, "COUNT(1)");
             pagingModel.TotalCount = await DbContext.CreateConnection().ExecuteScalarAsync<long>(countQuery,queryParameter);
 
-            var pagingSql = $" LIMIT {pagingModel.StartIndex()},{pagingModel.PageSize}";//分页
-            var dataQuery = string.Format(querySql, "b1_result.*") + pagingSql;
-            return await DbContext.GetModelsAsync<SysRoleMenuAndResponeModel, SysRoleMenuAndRequestModel>(dataQuery,queryParameter);
+            var pagingQuerySql = string.Format(querySql, "ROW_NUMBER() OVER(ORDER BY b1_result.rma_id ASC) AS RowNum,b1_result.*");//按带索引的字段排序，否则很慢
+            var dataQuery = $"SELECT * FROM ({pagingQuerySql}) tdata WHERE tdata.RowNum BETWEEN {pagingModel.StartIndex()} and {pagingModel.PageSize * pagingModel.Page}";
+            return await DbContext.GetModelsAsync<SysRoleMenuAndResponeModel, SysRoleMenuAndRequestModel>(dataQuery, queryParameter);
         }
 
         public async Task<long> UpdateModelAsync(string id, SysRoleMenuAndModel model)

@@ -83,7 +83,7 @@ namespace DataBase.DapperForSqlServer
 
         public async Task<long> DeleteAsync<Tid, TTableModel>(Tid[] id) where TTableModel : class, new()
         {
-            return await CreateConnection().ExecuteAsync($"DELETE FROM {GetTableName<TTableModel>()} WHERE A.{GetKeyName<TTableModel>()}=@key", new { key = id });
+            return await CreateConnection().ExecuteAsync($"DELETE FROM {GetTableName<TTableModel>()} WHERE {GetKeyName<TTableModel>()} in @key", new { key = id });
         }
 
         public async Task<IEnumerable<TTableModel>> GetModelsAsync<TTableModel, TParameter>(string sql, TParameter modelParameter) where TTableModel : class, new()

@@ -142,13 +142,12 @@ namespace YourWebApiName.MongoRepository.DbRepository
                 //    queryObj.xxx += "%";
                 //}
             });
-            var querySql = "SELECT {0} FROM "+ tableName + " b1 WHERE 1=1 " + strWhere;
-
+            var querySql = "SELECT {0} FROM " + tableName + " b1 WHERE 1=1 " + strWhere;
             var countQuery = string.Format(querySql, "COUNT(1)");
             pagingModel.TotalCount = await DbContext.CreateConnection().ExecuteScalarAsync<long>(countQuery,queryParameter);
 
-            var pagingSql = $" LIMIT {pagingModel.StartIndex()},{pagingModel.PageSize}";//分页
-            var dataQuery = string.Format(querySql, "b1.*") + pagingSql;
+            var querySqlJoin = $"({string.Format(querySql,"b1.*")}) b1_result";//内查询，可以做连接查询
+            var dataQuery = $"SELECT * FROM (SELECT ROW_NUMBER() OVER(ORDER BY role_grade ASC) AS RowNum,* FROM {querySqlJoin}) tdata WHERE tdata.RowNum BETWEEN {pagingModel.StartIndex()} and {pagingModel.PageSize * pagingModel.Page}";
             return await DbContext.GetModelsAsync<SysRolesResponeModel, SysRolesRequestModel>(dataQuery,queryParameter);
         }
 

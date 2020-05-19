@@ -10,6 +10,9 @@ using System.Data.SqlClient;
 
 namespace DataBase.DapperForSqlServer
 {
+    /// <summary>
+    /// 该类可以继承mysqlDbContext，如果有不一样的可以重写，但是需要引入没有必要的MySql.Data，可以衡量一下是否需要
+    /// </summary>
     public class SqlServerDbContext : DbContextAbstract, ISqlServerDbContext
     {
         private string ConnectionString { get; set; }

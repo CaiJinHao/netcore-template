@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
+		<Version>0.0.1</Version>
+		<AssemblyName>DataBse.DapperForMySql</AssemblyName>
+		<RootNamespace>DataBse</RootNamespace>
+		<Description>
+			DataBse.DapperForMySql is a class library tool that connects to MySql database by using Dapper driver
+		</Description>
+		<Authors>CaiJinHao</Authors>
+		<Owners>CaiJinHao</Owners>
+		<PackageTags>C#,lib,utility</PackageTags>
+		<Title>Common.Utility: The class library tools</Title>
+		<Summary>
+			DataBase.DapperForMySql is a class library tool that connects to MySql database by using Dapper driver
+		</Summary>
+		<Copyright>Copyright © 2020~2021</Copyright>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="Dapper" Version="2.0.35" />
+	  <PackageReference Include="MySql.Data" Version="8.0.20" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\..\DataBase.IDataBase\DataBase.IDataBase.csproj" />
+	</ItemGroup>
+
+</Project>

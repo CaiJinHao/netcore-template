@@ -6,14 +6,14 @@
 		<AssemblyName>DataBse.DapperForSqlServer</AssemblyName>
 		<RootNamespace>DataBse</RootNamespace>
 		<Description>
-			DataBse.DapperForSqlServer is a class library tool that connects to MySql database by using Dapper driver
+			DataBse.DapperForSqlServer is a class library tool that connects to SqlServer database by using Dapper driver
 		</Description>
 		<Authors>CaiJinHao</Authors>
 		<Owners>CaiJinHao</Owners>
 		<PackageTags>C#,lib,utility</PackageTags>
 		<Title>Common.Utility: The class library tools</Title>
 		<Summary>
-			DataBse.DapperForSqlServer is a class library tool that connects to MySql database by using Dapper driver
+			DataBse.DapperForSqlServer is a class library tool that connects to SqlServer database by using Dapper driver
 		</Summary>
 		<Copyright>Copyright © 2020~2021</Copyright>
 	</PropertyGroup>

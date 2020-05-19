@@ -14,9 +14,15 @@ namespace Common.NetCoreWebUtility.Filters
     {
         public void OnException(ExceptionContext context)
         {
-            typeof(MvcExceptionsFilter).Logger().LogError(context.Exception);
-            context.Result = new ObjectResult(new ApiResultModel(ErrorCodeType.ServerError, context.Exception?.Message))
-            { StatusCode = (int)HttpStatusCodeType.ServerError };
+            if (!context.ExceptionHandled)
+            {
+                typeof(MvcExceptionsFilter).Logger().LogError("CustomExceptionFilterAttribute:" + context.Exception);
+                context.Result = new ObjectResult(new ApiResultModel(ErrorCodeType.ServerError, context.Exception?.Message))
+                {
+                    StatusCode = (int)HttpStatusCodeType.ServerError
+                };
+                context.ExceptionHandled = true;//标记为已处理
+            }
         }
     }
 }

@@ -22,21 +22,14 @@ namespace Common.NetCoreWebUtility.Extension
         public static IApplicationBuilder UseNetCoreWebUtilityMiddleware(this IApplicationBuilder app)
         {
             return app
-                .UseExceptionHandlerMiddleware()
                 .UseHttpRequstRecordMiddleware();
         }
 
         /// <summary>
-        /// 异常处理中间件
-        /// 放在最上边能够捕获全局所有异常
+        /// 记录HTTP请求
         /// </summary>
         /// <param name="app"></param>
         /// <returns></returns>
-        private static IApplicationBuilder UseExceptionHandlerMiddleware(this IApplicationBuilder app)
-        {
-            return app.UseMiddleware<ExceptionHandlerMiddleware>();
-        }
-
         private static IApplicationBuilder UseHttpRequstRecordMiddleware(this IApplicationBuilder app)
         {
             return app

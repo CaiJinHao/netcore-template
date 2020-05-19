@@ -26,6 +26,7 @@ namespace YourWebApiName.ApiServices.RestApi.v1
         [HttpGet]
         public async Task<IActionResult> Get()
         {
+            throw new Exception("throw one Exception");
             var data = await sysRolesService.GetModelsAsync(new Models.RequestModels.SysRolesRequestModel() { });
             return Ok(new { Name = "Hawking", Age = 26, Data = data });
             //return Ok(from c in User.Claims select new { c.Type, c.Value });

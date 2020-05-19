@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Common.NetCoreWebUtility.Middleware
@@ -116,6 +117,25 @@ namespace Common.NetCoreWebUtility.Middleware
                     logger.LogInfo(rlInfo);
                 });
             }
+        }
+
+        /// <summary>
+        /// 直接响应
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="e"></param>
+        /// <returns></returns>
+        private static async Task WriteExceptionAsync(HttpContext context, Exception e)
+        {
+            if (e is UnauthorizedAccessException)
+                context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+            else if (e is Exception)
+                context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+
+            context.Response.ContentType = "application/json";
+
+            context.Response.StatusCode = 200;
+            await context.Response.WriteAsync("这里写要返回的json对象字符串").ConfigureAwait(false);
         }
     }
 }

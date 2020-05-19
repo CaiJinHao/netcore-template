@@ -29,7 +29,7 @@ namespace YourWebApiName.ApiServices.Extensions.Service
             //此方法将不注册用于视图或页面的服务
             services.AddControllers(options =>
             {
-                //全局异常过滤器
+                //全局异常过滤器,谁最后添加先执行谁
                 options.Filters.Add(typeof(MvcExceptionsFilter));
 
                 //Model参数验证

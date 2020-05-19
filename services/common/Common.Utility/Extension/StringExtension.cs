@@ -16,23 +16,14 @@ namespace Common.Utility.Extension
         /// <returns></returns>
         public static byte[] ConvertBytes(this string InString)
         {
-            byte[] buffer2;
-            try
+            string[] strArray = InString.Trim().Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            byte[] buffer = new byte[strArray.Length];
+            for (int i = 0; i < strArray.Length; i++)
             {
-                string[] strArray = InString.Trim().Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-                byte[] buffer = new byte[strArray.Length];
-                for (int i = 0; i < strArray.Length; i++)
-                {
-                    string str = strArray[i];
-                    buffer[i] = Convert.ToByte(str, 16);
-                }
-                buffer2 = buffer;
+                string str = strArray[i];
+                buffer[i] = Convert.ToByte(str, 16);
             }
-            catch (Exception exception)
-            {
-                throw new Exception(exception.Message + exception.StackTrace);
-            }
-            return buffer2;
+            return buffer;
         }
     }
 }

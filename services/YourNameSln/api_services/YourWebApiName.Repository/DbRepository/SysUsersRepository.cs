@@ -23,19 +23,19 @@ namespace YourWebApiName.MongoRepository.DbRepository
         /// </summary>
         public string tableName { get; set; }
 
-       /// <summary>
-       /// 资源 DbRepository 系统_用户
-       /// </summary>
-       public SysUsersRepository()
-       {
+        /// <summary>
+        /// 资源 DbRepository 系统_用户
+        /// </summary>
+        public SysUsersRepository()
+        {
             tableName = "sys_users";
-       }
+        }
 
         public ISqlServerDbContext DbContext { get; set; }
 
         public async Task<bool> CreateAsync(SysUsersModel model)
         {
-          model.user_time = DateTime.Now.Utc();
+            model.user_time = DateTime.Now.Utc();
             return await DbContext.CreateAsync(model);
         }
 
@@ -77,59 +77,59 @@ namespace YourWebApiName.MongoRepository.DbRepository
         private string GetQuery(SysUsersRequestModel queryParameter, string table = null)
         {
 
-          switch (table)
+            switch (table)
             {
                 default:
                     {
                         var sqlWhere = new StringBuilder();//查询条件
-            if (queryParameter.user_id.IsNotNull())
-            {
-                sqlWhere.Append(" AND b1.user_id = @user_id");
-            }
-            if (queryParameter.role_id.IsNotNull())
-            {
-                sqlWhere.Append(" AND b1.role_id = @role_id");
-            }
-            if (!string.IsNullOrEmpty(queryParameter.user_account))
-            {
-                sqlWhere.Append(" AND b1.user_account LIKE @user_account");
-                queryParameter.user_account += "%";
-            }
-            if (!string.IsNullOrEmpty(queryParameter.user_pwd))
-            {
-                sqlWhere.Append(" AND b1.user_pwd LIKE @user_pwd");
-                queryParameter.user_pwd += "%";
-            }
-            if (queryParameter.user_is_enable>0)
-            {
-                sqlWhere.Append(" AND b1.user_is_enable = @user_is_enable");
-            }
-            if (!string.IsNullOrEmpty(queryParameter.user_phone))
-            {
-                sqlWhere.Append(" AND b1.user_phone LIKE @user_phone");
-                queryParameter.user_phone += "%";
-            }
-            if (!string.IsNullOrEmpty(queryParameter.user_email))
-            {
-                sqlWhere.Append(" AND b1.user_email LIKE @user_email");
-                queryParameter.user_email += "%";
-            }
-            if (!string.IsNullOrEmpty(queryParameter.user_icon))
-            {
-                sqlWhere.Append(" AND b1.user_icon LIKE @user_icon");
-                queryParameter.user_icon += "%";
-            }
-            if (!string.IsNullOrEmpty(queryParameter.user_name))
-            {
-                sqlWhere.Append(" AND b1.user_name LIKE @user_name");
-                queryParameter.user_name += "%";
-            }
-            if (queryParameter.user_sex>0)
-            {
-                sqlWhere.Append(" AND b1.user_sex = @user_sex");
-            }
-            return sqlWhere.ToString();
-     }
+                        if (queryParameter.user_id.IsNotNull())
+                        {
+                            sqlWhere.Append(" AND b1.user_id = @user_id");
+                        }
+                        if (queryParameter.role_id.IsNotNull())
+                        {
+                            sqlWhere.Append(" AND b1.role_id = @role_id");
+                        }
+                        if (!string.IsNullOrEmpty(queryParameter.user_account))
+                        {
+                            sqlWhere.Append(" AND b1.user_account LIKE @user_account");
+                            queryParameter.user_account += "%";
+                        }
+                        if (!string.IsNullOrEmpty(queryParameter.user_pwd))
+                        {
+                            sqlWhere.Append(" AND b1.user_pwd LIKE @user_pwd");
+                            queryParameter.user_pwd += "%";
+                        }
+                        if (queryParameter.user_is_enable > 0)
+                        {
+                            sqlWhere.Append(" AND b1.user_is_enable = @user_is_enable");
+                        }
+                        if (!string.IsNullOrEmpty(queryParameter.user_phone))
+                        {
+                            sqlWhere.Append(" AND b1.user_phone LIKE @user_phone");
+                            queryParameter.user_phone += "%";
+                        }
+                        if (!string.IsNullOrEmpty(queryParameter.user_email))
+                        {
+                            sqlWhere.Append(" AND b1.user_email LIKE @user_email");
+                            queryParameter.user_email += "%";
+                        }
+                        if (!string.IsNullOrEmpty(queryParameter.user_icon))
+                        {
+                            sqlWhere.Append(" AND b1.user_icon LIKE @user_icon");
+                            queryParameter.user_icon += "%";
+                        }
+                        if (!string.IsNullOrEmpty(queryParameter.user_name))
+                        {
+                            sqlWhere.Append(" AND b1.user_name LIKE @user_name");
+                            queryParameter.user_name += "%";
+                        }
+                        if (queryParameter.user_sex > 0)
+                        {
+                            sqlWhere.Append(" AND b1.user_sex = @user_sex");
+                        }
+                        return sqlWhere.ToString();
+                    }
             }
         }
 
@@ -152,7 +152,7 @@ namespace YourWebApiName.MongoRepository.DbRepository
             var strWhere = GetQuery(queryParameter);
             var querySql = "SELECT {0} " + $"FROM (SELECT b1.* FROM {tableName}  b1 WHERE 1=1 {strWhere}) b1_result";//内查询，可以做连接查询 直接join
             var countQuery = string.Format(querySql, "COUNT(1)");
-            pagingModel.TotalCount = await DbContext.CreateConnection().ExecuteScalarAsync<long>(countQuery,queryParameter);
+            pagingModel.TotalCount = await DbContext.CreateConnection().ExecuteScalarAsync<long>(countQuery, queryParameter);
 
             var pagingQuerySql = string.Format(querySql, "ROW_NUMBER() OVER(ORDER BY user_id ASC) AS RowNum,b1_result.*");//按带索引的字段排序，否则很慢
             var dataQuery = $"SELECT * FROM ({pagingQuerySql}) tdata WHERE tdata.RowNum BETWEEN {pagingModel.StartIndex()} and {pagingModel.PageSize * pagingModel.Page}";

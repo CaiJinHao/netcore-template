@@ -75,7 +75,6 @@ namespace YourWebApiName.MongoRepository.DbRepository
 
         private string GetQuery(SysRolesRequestModel queryParameter, string table = null)
         {
-
             switch (table)
             {
                 default:

@@ -77,30 +77,14 @@ namespace DataBase.MongoDb
 
         public async Task<bool> CreateAsync<TTableModel>(TTableModel model) where TTableModel : class, new()
         {
-            try
-            {
-                await GetCollection<TTableModel>().InsertOneAsync(model);
-                return true;
-            }
-            catch (Exception ex)
-            {
-                Logger.LogError(ex);
-                return false;
-            }
+            await GetCollection<TTableModel>().InsertOneAsync(model);
+            return true;
         }
 
         public async Task<bool> CreateAsync<TTableModel>(TTableModel[] models) where TTableModel : class, new()
         {
-            try
-            {
-                await GetCollection<TTableModel>().InsertManyAsync(models);
-                return true;
-            }
-            catch (Exception ex)
-            {
-                Logger.LogError(ex);
-                return false;
-            }
+            await GetCollection<TTableModel>().InsertManyAsync(models);
+            return true;
         }
 
         public async Task<TTableModel> GetModelAsync<Tid, TTableModel>(Tid id) where TTableModel : class, new()

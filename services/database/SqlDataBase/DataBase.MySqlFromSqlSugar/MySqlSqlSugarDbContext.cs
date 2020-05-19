@@ -45,43 +45,19 @@ namespace DataBase.MySqlFromSqlSugar
 
         public async Task<bool> CreateAsync<TTableModel>(TTableModel model) where TTableModel : class, new()
         {
-            try
-            {
-                await CreateConnection().Insertable(model).ExecuteCommandAsync();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                Logger.LogError(ex);
-                return false;
-            }
+            var r = await CreateConnection().Insertable(model).ExecuteCommandAsync();
+            return r > 0;
         }
 
         public async Task<bool> CreateAsync<TTableModel>(TTableModel[] models) where TTableModel : class, new()
         {
-            try
-            {
-                await CreateConnection().Insertable(models).ExecuteCommandAsync();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                Logger.LogError(ex);
-                return false;
-            }
+            var r = await CreateConnection().Insertable(models).ExecuteCommandAsync();
+            return r > 0;
         }
 
         public async Task<long> DeleteAsync<Tid, TTableModel>(Tid[] id) where TTableModel : class, new()
         {
-            try
-            {
-               return await CreateConnection().Deleteable<TTableModel>().In(id).ExecuteCommandAsync();
-            }
-            catch (Exception ex)
-            {
-                Logger.LogError(ex);
-                return 0;
-            }
+            return await CreateConnection().Deleteable<TTableModel>().In(id).ExecuteCommandAsync();
         }
 
         public async Task<TTableModel> GetModelAsync<Tid, TTableModel>(Tid id) where TTableModel : class, new()

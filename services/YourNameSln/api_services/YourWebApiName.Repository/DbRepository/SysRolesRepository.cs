@@ -132,18 +132,19 @@ namespace YourWebApiName.MongoRepository.DbRepository
         public async Task<IEnumerable<SysRolesResponeModel>> GetModelsAsync(SysRolesRequestModel queryParameter)
         {
             var strWhere = GetQuery(queryParameter);
-            var dataQuery = $"SELECT b1.* FROM {tableName} b1 WHERE 1=1 " + strWhere;
+            //这样做性能是一样的
+            var dataQuery = $"SELECT b1_result.* FROM (SELECT b1.* FROM {tableName}  b1 WHERE 1=1 {strWhere}) b1_result";//内查询，可以做连接查询 直接join
             return await DbContext.CreateConnection().QueryAsync<SysRolesResponeModel>(dataQuery, queryParameter);
         }
 
         public async Task<IEnumerable<SysRolesResponeModel>> GetModelsAsync(PagingModel pagingModel, SysRolesRequestModel queryParameter)
         {
             var strWhere = GetQuery(queryParameter);
-            var querySql = "SELECT {0} " + $"FROM (SELECT b1.* FROM {tableName}  b1 WHERE 1=1 {strWhere}) b1_result";//内查询，可以做连接查询
+            var querySql = "SELECT {0} " + $"FROM (SELECT b1.* FROM {tableName}  b1 WHERE 1=1 {strWhere}) b1_result";//内查询，可以做连接查询 直接join
             var countQuery = string.Format(querySql, "COUNT(1)");
             pagingModel.TotalCount = await DbContext.CreateConnection().ExecuteScalarAsync<long>(countQuery,queryParameter);
 
-            var pagingQuerySql = string.Format(querySql, "ROW_NUMBER() OVER(ORDER BY role_id ASC) AS RowNum,*");//按带索引的字段排序，否则很慢
+            var pagingQuerySql = string.Format(querySql, "ROW_NUMBER() OVER(ORDER BY role_id ASC) AS RowNum,b1_result.*");//按带索引的字段排序，否则很慢
             var dataQuery = $"SELECT * FROM ({pagingQuerySql}) tdata WHERE tdata.RowNum BETWEEN {pagingModel.StartIndex()} and {pagingModel.PageSize * pagingModel.Page}";
             return await DbContext.GetModelsAsync<SysRolesResponeModel, SysRolesRequestModel>(dataQuery, queryParameter);
         }

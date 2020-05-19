@@ -23,13 +23,13 @@ namespace YourWebApiName.MongoRepository.DbRepository
         /// </summary>
         public string tableName { get; set; }
 
-       /// <summary>
-       /// 资源 DbRepository 系统_角色
-       /// </summary>
-       public SysRolesRepository()
-       {
+        /// <summary>
+        /// 资源 DbRepository 系统_角色
+        /// </summary>
+        public SysRolesRepository()
+        {
             tableName = "sys_roles";
-       }
+        }
 
         public IMySqlDbContext DbContext { get; set; }
 
@@ -73,83 +73,73 @@ namespace YourWebApiName.MongoRepository.DbRepository
             throw new NotImplementedException();
         }
 
-        private string GetQuery(SysRolesRequestModel queryParameter, Action<StringBuilder> appendSqlWhere)
+        private string GetQuery(SysRolesRequestModel queryParameter, string table = null)
         {
-            var sqlWhere = new StringBuilder();//查询条件
-            if (queryParameter.role_id.IsNotNull())
+            switch (table)
             {
-                sqlWhere.Append(" AND b1.role_id = @role_id");
+                default:
+                    {
+                        var sqlWhere = new StringBuilder();//查询条件
+                        if (queryParameter.role_id.IsNotNull())
+                        {
+                            sqlWhere.Append(" AND b1.role_id = @role_id");
+                        }
+                        if (!string.IsNullOrEmpty(queryParameter.role_name))
+                        {
+                            sqlWhere.Append(" AND b1.role_name LIKE @role_name");
+                            queryParameter.role_name += "%";
+                        }
+                        if (!string.IsNullOrEmpty(queryParameter.role_remarks))
+                        {
+                            sqlWhere.Append(" AND b1.role_remarks LIKE @role_remarks");
+                            queryParameter.role_remarks += "%";
+                        }
+                        if (!string.IsNullOrEmpty(queryParameter.role_parent_role))
+                        {
+                            sqlWhere.Append(" AND b1.role_parent_role LIKE @role_parent_role");
+                            queryParameter.role_parent_role += "%";
+                        }
+                        if (queryParameter.role_sort > 0)
+                        {
+                            sqlWhere.Append(" AND b1.role_sort = @role_sort");
+                        }
+                        if (queryParameter.role_grade > 0)
+                        {
+                            sqlWhere.Append(" AND b1.role_grade = @role_grade");
+                        }
+                        if (queryParameter.role_is_enable > 0)
+                        {
+                            sqlWhere.Append(" AND b1.role_is_enable = @role_is_enable");
+                        }
+                        return sqlWhere.ToString();
+                    }
             }
-            if (!string.IsNullOrEmpty(queryParameter.role_name))
-            {
-                sqlWhere.Append(" AND b1.role_name LIKE @role_name");
-                queryParameter.role_name += "%";
-            }
-            if (!string.IsNullOrEmpty(queryParameter.role_remarks))
-            {
-                sqlWhere.Append(" AND b1.role_remarks LIKE @role_remarks");
-                queryParameter.role_remarks += "%";
-            }
-            if (!string.IsNullOrEmpty(queryParameter.role_parent_role))
-            {
-                sqlWhere.Append(" AND b1.role_parent_role LIKE @role_parent_role");
-                queryParameter.role_parent_role += "%";
-            }
-            if (queryParameter.role_sort>0)
-            {
-                sqlWhere.Append(" AND b1.role_sort = @role_sort");
-            }
-            if (queryParameter.role_grade>0)
-            {
-                sqlWhere.Append(" AND b1.role_grade = @role_grade");
-            }
-            if (queryParameter.role_is_enable>0)
-            {
-                sqlWhere.Append(" AND b1.role_is_enable = @role_is_enable");
-            }
-            appendSqlWhere(sqlWhere);
-            return sqlWhere.ToString();
         }
 
         public async Task<IEnumerable<SysRolesModel>> GetCurrentModelsAsync(SysRolesRequestModel queryParameter)
         {
-            var strWhere = GetQuery(queryParameter, (sb) => { });
-            var dataQuery = $"SELECT b1.* FROM {tableName} b1 WHERE 1=1 " + strWhere;
+            var strWhere = GetQuery(queryParameter);
+            var dataQuery = $"SELECT b1.* FROM {tableName} b1 WHERE 1=1 {strWhere} ORDER BY role_id ASC";
             return await DbContext.CreateConnection().QueryAsync<SysRolesModel>(dataQuery, queryParameter);
         }
 
         public async Task<IEnumerable<SysRolesResponeModel>> GetModelsAsync(SysRolesRequestModel queryParameter)
         {
-            var strWhere = GetQuery(queryParameter, (sb) => {
-                //ViewModel 的条件过滤
-                //if (!string.IsNullOrEmpty(queryParameter.xxx))
-                //{
-                //    sb.Append(" AND b2.xxx LIKE xxxx");
-                //    queryObj.xxx += "%";
-                //}
-            });
-            var dataQuery = $"SELECT b1.* FROM {tableName} b1 WHERE 1=1 " + strWhere;
+            var strWhere = GetQuery(queryParameter);
+            var dataQuery = $"SELECT b1_result.* FROM (SELECT b1.* FROM {tableName}  b1 WHERE 1=1 {strWhere} ORDER BY role_id ASC) b1_result";//内查询，可以做连接查询 直接join
             return await DbContext.CreateConnection().QueryAsync<SysRolesResponeModel>(dataQuery, queryParameter);
         }
 
         public async Task<IEnumerable<SysRolesResponeModel>> GetModelsAsync(PagingModel pagingModel, SysRolesRequestModel queryParameter)
         {
-            var strWhere = GetQuery(queryParameter, (sb) => {
-                //ViewModel 的条件过滤
-                //if (!string.IsNullOrEmpty(queryParameter.xxx))
-                //{
-                //    sb.Append(" AND b2.xxx LIKE xxxx");
-                //    queryObj.xxx += "%";
-                //}
-            });
-            var querySql = "SELECT {0} FROM "+ tableName + " b1 WHERE 1=1 " + strWhere;
-
+            var strWhere = GetQuery(queryParameter);
+            var querySql = "SELECT {0} " + $"FROM (SELECT b1.* FROM {tableName}  b1 WHERE 1=1 {strWhere} ORDER BY role_id ASC) b1_result";//内查询，可以做连接查询 直接join
             var countQuery = string.Format(querySql, "COUNT(1)");
-            pagingModel.TotalCount = await DbContext.CreateConnection().ExecuteScalarAsync<long>(countQuery,queryParameter);
+            pagingModel.TotalCount = await DbContext.CreateConnection().ExecuteScalarAsync<long>(countQuery, queryParameter);
 
             var pagingSql = $" LIMIT {pagingModel.StartIndex()},{pagingModel.PageSize}";//分页
-            var dataQuery = string.Format(querySql, "b1.*") + pagingSql;
-            return await DbContext.GetModelsAsync<SysRolesResponeModel, SysRolesRequestModel>(dataQuery,queryParameter);
+            var dataQuery = string.Format(querySql, "b1_result.*") + pagingSql;
+            return await DbContext.GetModelsAsync<SysRolesResponeModel, SysRolesRequestModel>(dataQuery, queryParameter);
         }
 
         public async Task<long> UpdateModelAsync(string id, SysRolesModel model)

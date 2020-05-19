@@ -5,12 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="DbRepository\SysRolesRepositoryOld.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\..\database\DataBase.IDataBase\DataBase.IDataBase.csproj" />
-    <ProjectReference Include="..\..\..\database\SqlDataBase\DataBase.DapperForSqlServer\DataBase.DapperForSqlServer.csproj" />
+    <ProjectReference Include="..\..\..\database\SqlDataBase\DataBase.DapperForMySql\DataBase.DapperForMySql.csproj" />
     <ProjectReference Include="..\..\YourWebApiName.IRepository\YourWebApiName.IRepository.csproj" />
     <ProjectReference Include="..\..\YourWebApiName.Models\YourWebApiName.Models.csproj" />
   </ItemGroup>

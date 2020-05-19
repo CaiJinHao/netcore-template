@@ -249,7 +249,10 @@
     <None Include="Resource\Template\ResponeModelsTemplate.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Resource\Template\SqlDb\DbRepositorysTemplate.cshtml">
+    <None Include="Resource\Template\SqlDb\MySql\DbRepositorysTemplate.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resource\Template\SqlDb\SqlServer\DbRepositorysTemplate.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Resource\Template\SqlDb\RequestModelsTemplate.cshtml">
@@ -265,9 +268,9 @@
       <Project>{7de65530-0388-4618-b59b-f617dc0306f4}</Project>
       <Name>DataBase.IDataBase</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\database\SqlDataBase\DataBse.MySqlFromDapper\DataBse.MySqlFromDapper.csproj">
-      <Project>{f57fe846-6340-4703-aea8-e4570be1990e}</Project>
-      <Name>DataBse.MySqlFromDapper</Name>
+    <ProjectReference Include="..\..\database\SqlDataBase\DataBase.DapperForMySql\DataBase.DapperForMySql.csproj">
+      <Project>{9c446e57-a884-4d43-9ae6-cacb1a3d4ec8}</Project>
+      <Name>DataBase.DapperForMySql</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -282,6 +285,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>

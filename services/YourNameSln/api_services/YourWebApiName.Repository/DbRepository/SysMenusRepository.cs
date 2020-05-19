@@ -3,7 +3,7 @@
 using Common.Utility.Extension;
 using Common.Utility.Models.App;
 using Dapper;
-using DataBase.DapperForSqlServer;
+using DataBase.DapperForMySql;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,7 +31,7 @@ namespace YourWebApiName.MongoRepository.DbRepository
             tableName = "sys_menus";
        }
 
-        public ISqlServerDbContext DbContext { get; set; }
+        public IMySqlDbContext DbContext { get; set; }
 
         public async Task<bool> CreateAsync(SysMenusModel model)
         {
@@ -73,14 +73,9 @@ namespace YourWebApiName.MongoRepository.DbRepository
             throw new NotImplementedException();
         }
 
-        private string GetQuery(SysMenusRequestModel queryParameter, string table = null)
+        private string GetQuery(SysMenusRequestModel queryParameter, Action<StringBuilder> appendSqlWhere)
         {
-
-          switch (table)
-            {
-                default:
-                    {
-                        var sqlWhere = new StringBuilder();//查询条件
+            var sqlWhere = new StringBuilder();//查询条件
             if (queryParameter.menu_id.IsNotNull())
             {
                 sqlWhere.Append(" AND b1.menu_id = @menu_id");
@@ -121,35 +116,49 @@ namespace YourWebApiName.MongoRepository.DbRepository
             {
                 sqlWhere.Append(" AND b1.menu_is_enabled = @menu_is_enabled");
             }
+            appendSqlWhere(sqlWhere);
             return sqlWhere.ToString();
-     }
-            }
         }
 
         public async Task<IEnumerable<SysMenusModel>> GetCurrentModelsAsync(SysMenusRequestModel queryParameter)
         {
-            var strWhere = GetQuery(queryParameter);
+            var strWhere = GetQuery(queryParameter, (sb) => { });
             var dataQuery = $"SELECT b1.* FROM {tableName} b1 WHERE 1=1 " + strWhere;
             return await DbContext.CreateConnection().QueryAsync<SysMenusModel>(dataQuery, queryParameter);
         }
 
         public async Task<IEnumerable<SysMenusResponeModel>> GetModelsAsync(SysMenusRequestModel queryParameter)
         {
-            var strWhere = GetQuery(queryParameter);
-            var dataQuery = $"SELECT b1_result.* FROM (SELECT b1.* FROM {tableName}  b1 WHERE 1=1 {strWhere}) b1_result";//内查询，可以做连接查询 直接join
+            var strWhere = GetQuery(queryParameter, (sb) => {
+                //ViewModel 的条件过滤
+                //if (!string.IsNullOrEmpty(queryParameter.xxx))
+                //{
+                //    sb.Append(" AND b2.xxx LIKE xxxx");
+                //    queryObj.xxx += "%";
+                //}
+            });
+            var dataQuery = $"SELECT b1.* FROM {tableName} b1 WHERE 1=1 " + strWhere;
             return await DbContext.CreateConnection().QueryAsync<SysMenusResponeModel>(dataQuery, queryParameter);
         }
 
         public async Task<IEnumerable<SysMenusResponeModel>> GetModelsAsync(PagingModel pagingModel, SysMenusRequestModel queryParameter)
         {
-            var strWhere = GetQuery(queryParameter);
-            var querySql = "SELECT {0} " + $"FROM (SELECT b1.* FROM {tableName}  b1 WHERE 1=1 {strWhere}) b1_result";//内查询，可以做连接查询 直接join
+            var strWhere = GetQuery(queryParameter, (sb) => {
+                //ViewModel 的条件过滤
+                //if (!string.IsNullOrEmpty(queryParameter.xxx))
+                //{
+                //    sb.Append(" AND b2.xxx LIKE xxxx");
+                //    queryObj.xxx += "%";
+                //}
+            });
+            var querySql = "SELECT {0} FROM "+ tableName + " b1 WHERE 1=1 " + strWhere;
+
             var countQuery = string.Format(querySql, "COUNT(1)");
             pagingModel.TotalCount = await DbContext.CreateConnection().ExecuteScalarAsync<long>(countQuery,queryParameter);
 
-            var pagingQuerySql = string.Format(querySql, "ROW_NUMBER() OVER(ORDER BY menu_id ASC) AS RowNum,b1_result.*");//按带索引的字段排序，否则很慢
-            var dataQuery = $"SELECT * FROM ({pagingQuerySql}) tdata WHERE tdata.RowNum BETWEEN {pagingModel.StartIndex()} and {pagingModel.PageSize * pagingModel.Page}";
-            return await DbContext.GetModelsAsync<SysMenusResponeModel, SysMenusRequestModel>(dataQuery, queryParameter);
+            var pagingSql = $" LIMIT {pagingModel.StartIndex()},{pagingModel.PageSize}";//分页
+            var dataQuery = string.Format(querySql, "b1.*") + pagingSql;
+            return await DbContext.GetModelsAsync<SysMenusResponeModel, SysMenusRequestModel>(dataQuery,queryParameter);
         }
 
         public async Task<long> UpdateModelAsync(string id, SysMenusModel model)

@@ -40,7 +40,6 @@ namespace BuildSlnRename.DirectoryServices
                 .Where(rinfo => ignoreDirectoriesRegex.IsMatch(rinfo.Name) == false);//拿出不匹配的目录
             foreach (var _dir in dirs)
             {
-                Console.WriteLine(_dir);
                 var files = Directory.GetFiles(_dir.FullName).Select(f => new FileInfo(f))
                     .Where(f => ignoreFileRegex.IsMatch(f.Name) == false).ToArray();
                 if (files.Length > 0)
@@ -71,7 +70,6 @@ namespace BuildSlnRename.DirectoryServices
         {
             foreach (var _file in files)
             {
-                Console.WriteLine(_file.FullName);
                 ReplaceFilesContent(_file);
                 {//修改文件名称
                     foreach (var reg in fileReplaces)
@@ -99,21 +97,16 @@ namespace BuildSlnRename.DirectoryServices
                 {
                     if (reg.SearchRegex.IsMatch(text))
                     {//当内容匹配的时候，替换内容
-                        reg.SearchRegex.Replace(text, reg.NewContent);
+                        text = reg.SearchRegex.Replace(text, reg.NewContent);
                         b = true;
-                        Console.WriteLine($"修改了文件内容：{file.FullName}");
                     }
                 }
             }
             if (b)
             {
                 //替换完成 保存
-                using (FileStream fs = file.OpenWrite())
-                {
-                    Byte[] info = new UTF8Encoding(true).GetBytes(text);
-                    // Add some information to the file.
-                    fs.Write(info, 0, info.Length);
-                }
+                File.WriteAllText(file.FullName,text);
+                Console.WriteLine($"修改了文件内容：{file.FullName}");
             }
         }
     }

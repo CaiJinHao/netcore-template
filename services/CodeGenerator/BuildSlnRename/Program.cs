@@ -26,15 +26,14 @@ namespace BuildSlnRename
                 可选修改（不修改就可以直接删掉，建议修改要不然很多都可以删掉）：
              */
 
-            var  AppSettings = await "Configurations/appsettings.json".ReadJson<AppSettings>();
+            var AppSettings = await "Configurations/appsettings.json".ReadJson<AppSettings>();
 
-            var sourceDir = @"E:\MyWork\test\webapicommon";
             var dirOperator = new DirectoryOperator(
                 new Regex("git"),
                 new Regex("git|documents|AutoUpdateServer|common|database"),
                AppSettings.FileReplaceModels,
                AppSettings.ContentReplaceModels);
-            dirOperator.DirectoryHandler(sourceDir);
+            dirOperator.DirectoryHandler(AppSettings.SourceDir);
             Console.WriteLine("Over");
             Console.ReadKey();
         }

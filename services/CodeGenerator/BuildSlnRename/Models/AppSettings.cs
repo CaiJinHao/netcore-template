@@ -10,6 +10,10 @@ namespace BuildSlnRename.Models
     public class AppSettings
     {
         /// <summary>
+        /// 项目文件夹
+        /// </summary>
+        public string SourceDir { get; set; }
+        /// <summary>
         /// 模板文件
         /// </summary>
         public ReplaceModel[] FileReplaceModels { get; set; }

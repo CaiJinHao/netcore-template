@@ -90,10 +90,11 @@ namespace BuildSlnRename.DirectoryServices
         public void ReplaceFilesContent(FileInfo file)
         {
             var b = false;
+            var text = string.Empty;
             // Open the file to read from.
             using (StreamReader sr = file.OpenText())
             {
-                var text= sr.ReadToEnd();
+                text = sr.ReadToEnd();
                 foreach (var reg in contentReplaces)
                 {
                     if (reg.SearchRegex.IsMatch(text))
@@ -103,15 +104,15 @@ namespace BuildSlnRename.DirectoryServices
                         Console.WriteLine($"修改了文件内容：{file.FullName}");
                     }
                 }
-                if (b)
+            }
+            if (b)
+            {
+                //替换完成 保存
+                using (FileStream fs = file.OpenWrite())
                 {
-                    //替换完成 保存
-                    using (FileStream fs = file.OpenWrite())
-                    {
-                        Byte[] info = new UTF8Encoding(true).GetBytes(text);
-                        // Add some information to the file.
-                        fs.Write(info, 0, info.Length);
-                    }
+                    Byte[] info = new UTF8Encoding(true).GetBytes(text);
+                    // Add some information to the file.
+                    fs.Write(info, 0, info.Length);
                 }
             }
         }

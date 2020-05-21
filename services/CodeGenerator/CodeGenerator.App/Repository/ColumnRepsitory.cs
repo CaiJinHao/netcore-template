@@ -12,10 +12,10 @@ namespace CodeGenerator.App.Repository
     {
         public async Task<IEnumerable<ColumnsModel>> GetModelsAsync(string tableName)
         {
-            //var mySql = "select table_name,column_name,ordinal_position,is_nullable,data_type,character_maximum_length,column_key,column_comment from information_schema.COLUMNS where table_schema=@dbName and table_name = @tableName  order by ordinal_position";
+            //var mySql = "select column_name,ordinal_position,is_nullable,data_type,character_maximum_length,column_key,column_comment from information_schema.COLUMNS where table_schema=@dbName and table_name = @tableName  order by ordinal_position";
             //return await StaticConfig.DbContext.GetModelsAsync<ColumnsModel, object>(sqlServer, new { dbName = StaticConfig.AppSettings.DbConnection.DbName, tableName = tableName });
 
-            var sqlServer = $@"SELECT  obj.name table_name,  
+            var sqlServer = $@"SELECT   
         col.colorder AS ordinal_position,  
         col.name AS column_name ,  
         ISNULL(ep.[value], col.name) AS column_comment,  

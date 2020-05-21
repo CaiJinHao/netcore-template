@@ -50,10 +50,23 @@ namespace CodeGenerator.App.DbModels
                 }
             }
         }
+
         /// <summary>
         /// 列注释
         /// </summary>
-        public string column_comment { get; set; }
+        private string _column_comment;
+        /// <summary>
+        /// 列注释
+        /// </summary>
+        public string column_comment { 
+            get { return this._column_comment; }
+            set {
+                if (!string.IsNullOrEmpty(value))
+                {
+                    this._column_comment = value.Replace("\n", " ");
+                }
+            }
+        }
         /// <summary>
         /// 是否主键
         /// </summary>

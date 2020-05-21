@@ -33,5 +33,9 @@ namespace CodeGenerator.App.Models
         /// 模板文件
         /// </summary>
         public TemplateFilesModel[] TemplateFiles { get; set; }
+        /// <summary>
+        /// 表名称重命名
+        /// </summary>
+        public TableRenameModel[] TableRename { get; set; }
     }
 }

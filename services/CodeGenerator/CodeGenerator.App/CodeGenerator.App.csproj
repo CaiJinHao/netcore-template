@@ -202,6 +202,7 @@
     <Compile Include="Models\Enums\LogicEnums.cs" />
     <Compile Include="Models\ModelsTemplateFiles.cs" />
     <Compile Include="Models\StaticConfig.cs" />
+    <Compile Include="Models\TableRenameModel.cs" />
     <Compile Include="Models\TemplateFilesModel.cs" />
     <Compile Include="Models\TemplateModel.cs" />
     <Compile Include="Program.cs" />

@@ -58,6 +58,7 @@ namespace CodeGenerator.App.BuildFiles
                 }
 
                 var primaryKey = cols.Where(a => a.primary_key).First();
+           
                 var razorModelData = new ModelsFileModel()
                 {
                     api_version = _template.ApiVersion,
@@ -67,11 +68,25 @@ namespace CodeGenerator.App.BuildFiles
                     columns = cols,
                     primary_key_name = primaryKey.column_name,
                     primary_key_data_type = primaryKey.data_type,
-                    table_name_pascal = t.table_name.ConvertToPascal(),
-                    table_name_camel = t.table_name.ConvertToCamel(),
-                    table_name_lower = t.table_name.ConvertToLower(),
                     name_space = _template.NameSpace
                 };
+
+                var _table_name_rename = razorModelData.table_name;
+                if (_template.TableRename != null)
+                {
+                    foreach (var _regexModel in _template.TableRename)
+                    {
+                        if (!string.IsNullOrEmpty(_regexModel.SearchRegexStr))
+                        {
+                            _table_name_rename = _regexModel.SearchRegex.Replace(_table_name_rename, _regexModel.NewContent);
+                        }
+                    }
+                }
+                razorModelData.table_name_rename = _table_name_rename;
+
+                razorModelData.table_name_pascal = razorModelData.table_name_rename.ConvertToPascal();
+                razorModelData.table_name_camel = razorModelData.table_name_rename.ConvertToCamel();
+                razorModelData.table_name_lower = razorModelData.table_name_rename.ConvertToLower();
 
                 var templatelist = StaticConfig.AppSettings.Template.TemplateFiles;
                 if (!string.IsNullOrEmpty(templateStr))
@@ -90,11 +105,11 @@ namespace CodeGenerator.App.BuildFiles
                         if (template.FileSuf.EndsWith("html"))
                         {
                             fileModel.FileName = fileModel.FileName.ToLower();
-                            fileModel.FileSavePath = Path.Combine(StaticConfig.AppSettings.Template.SaveFilesPath, fileModel.FileDirName, t.table_name.ConvertToLower(), fileModel.FileName + fileModel.FileSuf);
+                            fileModel.FileSavePath = Path.Combine(StaticConfig.AppSettings.Template.SaveFilesPath, fileModel.FileDirName, razorModelData.table_name_lower, fileModel.FileName + fileModel.FileSuf);
                         }
                         else
                         {
-                            fileModel.FileName = string.Format(fileModel.FileName, t.table_name).ConvertToPascal();
+                            fileModel.FileName = string.Format(fileModel.FileName, razorModelData.table_name_pascal);
                             fileModel.FileSavePath = Path.Combine(StaticConfig.AppSettings.Template.SaveFilesPath, fileModel.FileDirName, fileModel.FileName + fileModel.FileSuf);
                         }
                         //模板构建文件

@@ -25,6 +25,10 @@ namespace CodeGenerator.App.DbModels
         /// </summary>
         public string name_space { get; set; }
         /// <summary>
+        /// 重命名的表名称
+        /// </summary>
+        public string table_name_rename { get; set; }
+        /// <summary>
         /// pascal 表名 开头大写
         /// </summary>
         public string table_name_pascal { get; set; }

@@ -10,8 +10,10 @@ namespace CodeGenerator.App.Repository
         public async Task<IEnumerable<TablesModel>> GetModelsAsync()
         {
             //var mySql = "select table_name,table_comment from information_schema.tables where table_schema=@dbName";
-            var sqlServer = "select name as table_name,name table_comment from MonitorOnlineDB.sys.tables a where a.name not like '%temp%' and a.name like 'tb_%'";//排序不需要生成的表名;
-            return await StaticConfig.DbContext.GetModelsAsync<TablesModel, object>(sqlServer, new { dbName = StaticConfig.AppSettings.DbConnection.DbName });
+            //return await StaticConfig.DbContext.GetModelsAsync<TablesModel, object>(sqlServer, new { dbName = StaticConfig.AppSettings.DbConnection.DbName });
+
+            var sqlServer = $"select name as table_name,name table_comment from {StaticConfig.AppSettings.DbConnection.DbName}.sys.tables ";//排序不需要生成的表名;a where a.name not like '%temp%' and a.name like 'tb_%'
+            return await StaticConfig.DbContext.GetModelsAsync<TablesModel, object>(sqlServer, new {});
         }
     }
 }

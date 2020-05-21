@@ -70,9 +70,9 @@ namespace @(name_space).MongoRepository.DbRepository
             return await DbContext.DeleteAsync(model);
         }
 
-        public @(table_name_pascal)Model GetModel(string id)
+        public @(table_name_pascal)Model GetModel(@(primary_key_data_type) id)
         {
-            return DbContext.GetModel<string, @(table_name_pascal)Model>(id);
+            return DbContext.GetModel<@(primary_key_data_type), @(table_name_pascal)Model>(id);
         }
 
         public async Task<@(table_name_pascal)Model> GetModelAsync(@(primary_key_data_type) id)

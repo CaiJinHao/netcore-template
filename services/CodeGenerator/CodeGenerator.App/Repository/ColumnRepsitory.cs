@@ -16,7 +16,7 @@ namespace CodeGenerator.App.Repository
             //return await StaticConfig.DbContext.GetModelsAsync<ColumnsModel, object>(sqlServer, new { dbName = StaticConfig.AppSettings.DbConnection.DbName, tableName = tableName });
 
             var sqlServer = $@"select 
-c.name table_name,a.name column_name,a.colorder ordinal_position,b.name data_type,b.length character_maximum_length,a.name column_comment,CASE a.colid when 1 then 'PRI' else '' END column_key,CASE a.isnullable when 0 then 'YES' ELSE 'NO' END is_nullable
+c.name table_name,a.name column_name,a.colorder ordinal_position,b.name data_type,b.length character_maximum_length,a.name column_comment,CASE a.colid when 1 then 'PRI' else '' END column_key,CASE a.isnullable when 0 then 'NO' ELSE 'YES' END is_nullable
 from syscolumns a 
 join systypes b on a.xtype=b.xusertype
 join sysobjects c on c.id=a.id 

@@ -17,7 +17,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SqlDataBase", "SqlDataBase"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataBase.DapperForMySql", "..\database\SqlDataBase\DataBase.DapperForMySql\DataBase.DapperForMySql.csproj", "{9C446E57-A884-4D43-9AE6-CACB1A3D4EC8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildSlnRename", "BuildSlnRename\BuildSlnRename.csproj", "{143860F7-9E08-400D-9092-B1117E9107D2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildSlnRename", "BuildSlnRename\BuildSlnRename.csproj", "{143860F7-9E08-400D-9092-B1117E9107D2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataBase.DapperForSqlServer", "..\database\SqlDataBase\DataBase.DapperForSqlServer\DataBase.DapperForSqlServer.csproj", "{FC20EE24-62EF-4DBA-ABCD-41FBE2E490F3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{143860F7-9E08-400D-9092-B1117E9107D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{143860F7-9E08-400D-9092-B1117E9107D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{143860F7-9E08-400D-9092-B1117E9107D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC20EE24-62EF-4DBA-ABCD-41FBE2E490F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC20EE24-62EF-4DBA-ABCD-41FBE2E490F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC20EE24-62EF-4DBA-ABCD-41FBE2E490F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC20EE24-62EF-4DBA-ABCD-41FBE2E490F3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -54,6 +60,7 @@ Global
 		{7DE65530-0388-4618-B59B-F617DC0306F4} = {5766E633-49E7-45EF-84AC-F9033C46B104}
 		{4D38D6CE-9E2A-49CC-86F6-617EC64E348F} = {5766E633-49E7-45EF-84AC-F9033C46B104}
 		{9C446E57-A884-4D43-9AE6-CACB1A3D4EC8} = {4D38D6CE-9E2A-49CC-86F6-617EC64E348F}
+		{FC20EE24-62EF-4DBA-ABCD-41FBE2E490F3} = {4D38D6CE-9E2A-49CC-86F6-617EC64E348F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8B97DFF8-75CB-4524-BD33-A9BCB77CF127}

@@ -1,5 +1,6 @@
 ﻿using CodeGenerator.App.Models;
 using DataBase.DapperForMySql;
+using DataBase.DapperForSqlServer;
 using System;
 using System.Threading.Tasks;
 
@@ -30,9 +31,9 @@ namespace CodeGenerator.App.Extensions
             StaticConfig.ContentRootPath = AppDomain.CurrentDomain.BaseDirectory;
             StaticConfig.AppSettings = await ConfigurationsModel.AppSettings.ReadJson<AppSettings>();
 
-            var con = StaticConfig.AppSettings.DbConnection.MySqlConnection;
+            var con = StaticConfig.AppSettings.DbConnection.SqlServerConnection;
             //StaticConfig.DbContext = new MySqlSqlSugarDbContext(con);
-            StaticConfig.DbContext = new MySqlDbContext(con);
+            StaticConfig.DbContext = new SqlServerDbContext(con);
         }
     }
 }

@@ -15,13 +15,46 @@ namespace CodeGenerator.App.Repository
             //var mySql = "select table_name,column_name,ordinal_position,is_nullable,data_type,character_maximum_length,column_key,column_comment from information_schema.COLUMNS where table_schema=@dbName and table_name = @tableName  order by ordinal_position";
             //return await StaticConfig.DbContext.GetModelsAsync<ColumnsModel, object>(sqlServer, new { dbName = StaticConfig.AppSettings.DbConnection.DbName, tableName = tableName });
 
-            var sqlServer = $@"select 
-c.name table_name,a.name column_name,a.colorder ordinal_position,b.name data_type,b.length character_maximum_length,a.name column_comment,CASE a.colid when 1 then 'PRI' else '' END column_key,CASE a.isnullable when 0 then 'NO' ELSE 'YES' END is_nullable
-from syscolumns a 
-join systypes b on a.xtype=b.xusertype
-join sysobjects c on c.id=a.id 
-Where a.id=object_Id('{tableName}') order by a.colorder
-            ";
+            var sqlServer = $@"SELECT  obj.name table_name,  
+        col.colorder AS ordinal_position,  
+        col.name AS column_name ,  
+        ISNULL(ep.[value], '') AS column_comment,  
+        t.name AS data_type,  
+        col.length AS character_maximum_length,  
+        ISNULL(COLUMNPROPERTY(col.id, col.name, 'Scale'), 0) AS number_length ,  
+        CASE WHEN COLUMNPROPERTY(col.id, col.name, 'IsIdentity') = 1 THEN 'YES'  
+             ELSE ''  
+        END AS is_identity,  
+        CASE WHEN EXISTS ( SELECT   1  
+                           FROM     dbo.sysindexes si  
+                                    INNER JOIN dbo.sysindexkeys sik ON si.id = sik.id  
+                                                              AND si.indid = sik.indid  
+                                    INNER JOIN dbo.syscolumns sc ON sc.id = sik.id  
+                                                              AND sc.colid = sik.colid  
+                                    INNER JOIN dbo.sysobjects so ON so.name = si.name  
+                                                              AND so.xtype = 'PK'  
+                           WHERE    sc.id = col.id  
+                                    AND sc.colid = col.colid ) THEN 'PRI'  
+             ELSE ''  
+        END AS column_key,  
+        CASE WHEN col.isnullable = 1 THEN 'YES'  
+             ELSE ''  
+        END AS is_nullable,  
+        ISNULL(comm.text, '') AS default_value
+FROM    dbo.syscolumns col  
+        LEFT  JOIN dbo.systypes t ON col.xtype = t.xusertype  
+        inner JOIN dbo.sysobjects obj ON col.id = obj.id  
+                                         AND obj.xtype = 'U'  
+                                         AND obj.status >= 0  
+        LEFT  JOIN dbo.syscomments comm ON col.cdefault = comm.id  
+        LEFT  JOIN sys.extended_properties ep ON col.id = ep.major_id  
+                                                      AND col.colid = ep.minor_id  
+                                                      AND ep.name = 'MS_Description'  
+        LEFT  JOIN sys.extended_properties epTwo ON obj.id = epTwo.major_id  
+                                                         AND epTwo.minor_id = 0  
+                                                         AND epTwo.name = 'MS_Description'  
+WHERE   obj.name = '{tableName}'
+ORDER BY col.colorder";
             return await StaticConfig.DbContext.GetModelsAsync<ColumnsModel,object>(sqlServer,new { });
         }
     }

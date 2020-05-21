@@ -23,7 +23,7 @@ namespace CodeGenerator.App.DbModels
         public string is_nullable { get => _nullable;
             set {
                 _nullable = value;
-                if (value=="NO")
+                if (value=="YES")
                 {
                     nullable = true;
                 }

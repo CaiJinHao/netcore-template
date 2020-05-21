@@ -37,7 +37,7 @@ namespace @(name_space).Models.DbModels
          }
          else 
          { 
-            if(col.nullable&&col.data_type!="DateTime"&&col.data_type!="int")
+            if(!col.nullable&&col.data_type!="DateTime"&&col.data_type!="int")
             {
          @:[Required]
             }

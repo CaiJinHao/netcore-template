@@ -48,10 +48,10 @@ namespace CodeGenerator.App.BuildFiles
         /// <returns></returns>
         private async Task<string> BuildModelsStart(IEnumerable<TablesModel> tables, string templateStr)
         {
-            foreach (var t in tables)
+            foreach (var t in tables.ToArray())
             {
                 var cols = await columnRepsitory.GetModelsAsync(t.table_name);
-                foreach (var c in cols)
+                foreach (var c in cols.ToArray())
                 {
                     c.data_type = c.data_type.ConvertType();
                 }

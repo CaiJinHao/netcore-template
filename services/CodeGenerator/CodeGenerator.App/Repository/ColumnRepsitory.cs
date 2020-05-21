@@ -18,12 +18,12 @@ namespace CodeGenerator.App.Repository
             var sqlServer = $@"SELECT  obj.name table_name,  
         col.colorder AS ordinal_position,  
         col.name AS column_name ,  
-        ISNULL(ep.[value], '') AS column_comment,  
+        ISNULL(ep.[value], col.name) AS column_comment,  
         t.name AS data_type,  
         col.length AS character_maximum_length,  
         ISNULL(COLUMNPROPERTY(col.id, col.name, 'Scale'), 0) AS number_length ,  
         CASE WHEN COLUMNPROPERTY(col.id, col.name, 'IsIdentity') = 1 THEN 'YES'  
-             ELSE ''  
+             ELSE 'NO'  
         END AS is_identity,  
         CASE WHEN EXISTS ( SELECT   1  
                            FROM     dbo.sysindexes si  
@@ -35,10 +35,10 @@ namespace CodeGenerator.App.Repository
                                                               AND so.xtype = 'PK'  
                            WHERE    sc.id = col.id  
                                     AND sc.colid = col.colid ) THEN 'PRI'  
-             ELSE ''  
+             ELSE CASE col.colid when 1 then 'PRI' else '' END
         END AS column_key,  
         CASE WHEN col.isnullable = 1 THEN 'YES'  
-             ELSE ''  
+             ELSE 'NO'  
         END AS is_nullable,  
         ISNULL(comm.text, '') AS default_value
 FROM    dbo.syscolumns col  
@@ -54,7 +54,7 @@ FROM    dbo.syscolumns col
                                                          AND epTwo.minor_id = 0  
                                                          AND epTwo.name = 'MS_Description'  
 WHERE   obj.name = '{tableName}'
-ORDER BY col.colorder";
+ORDER BY col.colorder";//解决了没有主键的问题，没有主见按第一个字段查询
             return await StaticConfig.DbContext.GetModelsAsync<ColumnsModel,object>(sqlServer,new { });
         }
     }

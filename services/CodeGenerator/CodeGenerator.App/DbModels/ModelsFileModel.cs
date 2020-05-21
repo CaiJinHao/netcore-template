@@ -12,6 +12,15 @@ namespace CodeGenerator.App.DbModels
     public class ModelsFileModel: TablesModel
     {
         /// <summary>
+        /// API 版本
+        /// </summary>
+        public string api_version { get; set; }
+        /// <summary>
+        /// API 控制器的命名空间
+        /// </summary>
+        public string api_controller_name_space { get; set; }
+
+        /// <summary>
         /// 第一级命名空间
         /// </summary>
         public string name_space { get; set; }

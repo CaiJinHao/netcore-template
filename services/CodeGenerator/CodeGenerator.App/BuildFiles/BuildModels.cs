@@ -48,6 +48,7 @@ namespace CodeGenerator.App.BuildFiles
         /// <returns></returns>
         private async Task<string> BuildModelsStart(IEnumerable<TablesModel> tables, string templateStr)
         {
+            var _template = StaticConfig.AppSettings.Template;
             foreach (var t in tables.ToArray())
             {
                 var cols = await columnRepsitory.GetModelsAsync(t.table_name);
@@ -59,6 +60,8 @@ namespace CodeGenerator.App.BuildFiles
                 var primaryKey = cols.Where(a => a.primary_key).First();
                 var razorModelData = new ModelsFileModel()
                 {
+                    api_version = _template.ApiVersion,
+                    api_controller_name_space = _template.ApiControllerNameSpace,
                     table_name = t.table_name,
                     table_comment = t.table_comment,
                     columns = cols,
@@ -67,7 +70,7 @@ namespace CodeGenerator.App.BuildFiles
                     table_name_pascal = t.table_name.ConvertToPascal(),
                     table_name_camel = t.table_name.ConvertToCamel(),
                     table_name_lower = t.table_name.ConvertToLower(),
-                    name_space = StaticConfig.AppSettings.Template.NameSpace
+                    name_space = _template.NameSpace
                 };
 
                 var templatelist = StaticConfig.AppSettings.Template.TemplateFiles;

@@ -22,6 +22,14 @@ namespace CodeGenerator.App.Models
         /// </summary>
         public EnumNamingFormat NamingFormat { get; set; }
         /// <summary>
+        /// API 版本
+        /// </summary>
+        public string ApiVersion { get; set; }
+        /// <summary>
+        /// API 控制器的命名空间
+        /// </summary>
+        public string ApiControllerNameSpace { get; set; }
+        /// <summary>
         /// 模板文件
         /// </summary>
         public TemplateFilesModel[] TemplateFiles { get; set; }

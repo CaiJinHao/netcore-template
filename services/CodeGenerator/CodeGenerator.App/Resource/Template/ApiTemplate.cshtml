@@ -10,7 +10,8 @@
     var primary_key_name = table.primary_key_name;
     var primary_key_data_type = table.primary_key_data_type;
 
-    var api_version = "1";
+    var api_version = table.api_version;
+    var api_controller_name_space = table.api_controller_name_space;
 }
 
 using Common.Utility.Extension;
@@ -22,8 +23,8 @@ using @(name_space).IServices.IDbServices;
 using @(name_space).Models.DbModels;
 using @(name_space).Models.RequestModels;
 
-//请只复制类的body
-namespace @(name_space).ApiServices.RestApi.v1
+
+namespace @(api_controller_name_space)
 {
     /// <summary>
     /// @table.table_comment
@@ -126,12 +127,19 @@ namespace @(name_space).ApiServices.RestApi.v1
         public async Task<IActionResult> Delete(@(primary_key_data_type) id)
         {
             var apiResult = new ApiResultModel(ErrorCodeType.Success);
-            if (string.IsNullOrEmpty(id))
+            @if(primary_key_data_type=="string")
+            {
+            @:if (string.IsNullOrEmpty(id))
+            }
+            else{
+            @:if (id <= 0)
+            }
             {
                 apiResult.Code = ErrorCodeType.ParamsError;
                 return BadRequest(apiResult);
             }
-            var c = await @(table_name_camel)Service.DeleteAsync(new string[] { id });
+            
+            var c = await @(table_name_camel)Service.DeleteAsync(new @(primary_key_data_type)[] { id });
             if (c > 0)
             {
                 return Ok(apiResult);
@@ -146,7 +154,7 @@ namespace @(name_space).ApiServices.RestApi.v1
         /// <param name="idList"></param>
         /// <returns></returns>
         [HttpDelete]
-        public async Task<IActionResult> Delete([FromBody]string[] idList)
+        public async Task<IActionResult> Delete([FromBody]@(primary_key_data_type)[] idList)
         {
             var apiResult = new ApiResultModel(ErrorCodeType.Success);
             if (idList == null || idList.Length < 1)

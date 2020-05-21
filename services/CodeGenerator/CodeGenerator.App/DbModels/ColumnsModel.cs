@@ -63,7 +63,7 @@ namespace CodeGenerator.App.DbModels
             set {
                 if (!string.IsNullOrEmpty(value))
                 {
-                    this._column_comment = value.Replace("\n", " ");
+                    this._column_comment = value.Replace("\r\n", " ");
                 }
             }
         }

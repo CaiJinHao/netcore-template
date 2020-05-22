@@ -71,13 +71,7 @@ namespace DataBase.DapperForMySql
             using (var conn = CreateConnection())
             {
                 var keyName = GetKeyName<TTableModel>();
-                var fields = GetFields<TTableModel>(new List<string>() { keyName });
-                var strFieldNames = string.Empty;
-                foreach (var item in fields)
-                {
-                    strFieldNames += item + "=@" + item + ",";
-                }
-                strFieldNames = strFieldNames.Trim(',');
+                var strFieldNames = GetSqlUpdateString(model);
                 return await conn.ExecuteAsync($"UPDATE {GetTableName<TTableModel>()} SET {strFieldNames} WHERE {keyName}=@{keyName}", model);
             }
         }

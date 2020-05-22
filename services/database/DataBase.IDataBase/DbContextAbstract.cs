@@ -62,6 +62,12 @@ namespace DataBase
         public string GetSqlQueryString<TModel>(TModel model)
         {
             var sqlWhere = new StringBuilder();//查询条件
+
+            Action<System.Reflection.PropertyInfo> appendWhere = (_field) =>
+            {
+                sqlWhere.Append($" AND b1.{_field.Name} = @{_field.Name}");
+            };
+
             var filedsInfo = model.GetType().GetProperties();
             foreach (var _field in filedsInfo)
             {
@@ -80,16 +86,42 @@ namespace DataBase
                             }
                             break;
                         case "Int16":
+                            {
+                                var _value = (Int16)v;
+                                if (_value > 0)
+                                {
+                                    appendWhere(_field);
+                                }
+                            }
+                            break;
                         case "Int32":
+                            {
+                                var _value = (Int32)v;
+                                if (_value > 0)
+                                {
+                                    appendWhere(_field);
+                                }
+                            }
+                            break;
                         case "Int64":
                             {
                                 var _value = (Int64)v;
                                 if (_value > 0)
                                 {
-                                    sqlWhere.Append($" AND b1.{_field.Name} = @{_field.Name}");
+                                    appendWhere(_field);
                                 }
                             }
                             break;
+                        case "Decimal":
+                            {
+                                var _value = (decimal)v;
+                                if (_value > 0)
+                                {
+                                    appendWhere(_field);
+                                }
+                            }
+                            break;
+                        case "DateTime": { } break;
                         default:
                             throw new Exception("没有匹配的类型");
                     }
@@ -107,6 +139,10 @@ namespace DataBase
         public string GetSqlUpdateString<TModel>(TModel model)
         {
             var sqlWhere = new StringBuilder();//查询条件
+            Action<System.Reflection.PropertyInfo> appendField = (_field) =>
+            {
+                sqlWhere.Append($" {_field.Name} = @{_field.Name},");
+            };
             var filedsInfo = model.GetType().GetProperties();
             foreach (var _field in filedsInfo)
             {
@@ -120,28 +156,53 @@ namespace DataBase
                             {
                                 if (!string.IsNullOrEmpty((string)v))
                                 {
-                                    sqlWhere.Append($" {_field.Name} = @{_field.Name},");
+                                    appendField(_field);
                                 }
                             }
                             break;
                         case "Int16":
+                            {
+                                var _value = (Int16)v;
+                                if (_value > 0)
+                                {
+                                    appendField(_field);
+                                }
+                            }
+                            break;
                         case "Int32":
+                            {
+                                var _value = (Int32)v;
+                                if (_value > 0)
+                                {
+                                    appendField(_field);
+                                }
+                            }
+                            break;
                         case "Int64":
                             {
                                 var _value = (Int64)v;
                                 if (_value > 0)
                                 {
-                                    sqlWhere.Append($" {_field.Name} = @{_field.Name},");
+                                    appendField(_field);
                                 }
                             }
                             break;
-                        //datetime,
+                        case "Decimal":
+                            {
+                                var _value = (decimal)v;
+                                if (_value > 0)
+                                {
+                                    appendField(_field);
+                                }
+                            }
+                            break;
+                        case "DateTime": { } break;
                         default:
                             throw new Exception("没有匹配的类型");
                     }
                 }
             }
-            return sqlWhere.ToString();
+            return sqlWhere.ToString().Trim(',');
         }
     }
 }

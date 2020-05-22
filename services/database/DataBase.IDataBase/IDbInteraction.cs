@@ -30,37 +30,12 @@ namespace DataBase.IDataBase
         /// <returns></returns>
         Task<bool> CreateAsync(TTableModel[] models);
 
-        /*
-         Retrieve 读取
-         获取指定
-         获取表中所有数据
-         获取表中所有数据,根据多条件查询过滤
-         获取表中所有数据,根据多条件查询过滤,并且分页处理
-         获取表中所有数据总数量
-             */
-        /// <summary>
-        /// 同步调用
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        TTableModel GetModel(Tid id);
-        /// <summary>
-        /// 获取表中所有数据
-        /// </summary>
-        /// <returns></returns>
-        Task<IEnumerable<TTableModel>> GetModelsAsync();
-        /// <summary>
+/*        /// <summary>
         /// 获取信息名称数据供下拉列表使用
         /// </summary>
         /// <typeparam name="TTableModel"></typeparam>
         /// <returns></returns>
-        Task<IEnumerable<dynamic>> GetNamesAsync(TRequestModel queryParameter);
-        /// <summary>
-        /// 获取条件的第一个
-        /// </summary>
-        /// <param name="queryParameter"></param>
-        /// <returns></returns>
-        Task<TTableModel> GetFirstAsync(TRequestModel queryParameter);
+        Task<IEnumerable<dynamic>> GetNamesAsync(TRequestModel queryParameter);*/
         /// <summary>
         /// 获取当前model表
         /// </summary>

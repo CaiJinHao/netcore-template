@@ -55,13 +55,6 @@ namespace DataBase.IDataBase
         /// <param name="id"></param>
         /// <returns></returns>
         Task<TTableModel> GetModelAsync<Tid, TTableModel>(Tid id) where TTableModel : class, new();
-        TTableModel GetModel<Tid, TTableModel>(Tid id) where TTableModel : class, new();
-        /// <summary>
-        /// 获取表中所有数据
-        /// </summary>
-        /// <returns></returns>
-        Task<IEnumerable<TTableModel>> GetModelsAsync<TTableModel>() where TTableModel : class, new();
-
 
         /*
          Delete 

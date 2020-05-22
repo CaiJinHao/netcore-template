@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using Common.Utility.Other;
 
 namespace Common.Utility.Extension
 {
@@ -50,6 +51,10 @@ namespace Common.Utility.Extension
                     {
                         var _value = (string)sourceObj;
                         return !string.IsNullOrEmpty(_value);
+                    }
+                case "Int64":
+                    {
+                        return (Int64)sourceObj > 0;
                     }
                 default:
                     break;

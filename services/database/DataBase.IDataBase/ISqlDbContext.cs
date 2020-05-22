@@ -14,15 +14,6 @@ namespace DataBase.IDataBase
     public interface ISqlDbContext: IDbContextInteraction<string>
     {
         /// <summary>
-        /// 根据SQL获取表中所有数据
-        /// </summary>
-        /// <returns></returns>
-        Task<IEnumerable<TTableModel>> GetModelsAsync<TTableModel, TParameter>(string sql, TParameter modelParameter) where TTableModel : class, new();
-        /*
-      U
-      根据主键更新对象中的指定属性
-      */
-        /// <summary>
         /// 根据主键更新对象中的指定属性
         /// </summary>
         /// <param name="id"></param>

@@ -1,5 +1,6 @@
 ﻿using CodeGenerator.App.DbModels;
 using CodeGenerator.App.Models;
+using Dapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +13,12 @@ namespace CodeGenerator.App.Repository
     {
         public async Task<IEnumerable<ColumnsModel>> GetModelsAsync(string tableName)
         {
-            //var mySql = "select column_name,ordinal_position,is_nullable,data_type,character_maximum_length,column_key,column_comment from information_schema.COLUMNS where table_schema=@dbName and table_name = @tableName  order by ordinal_position";
-            //return await StaticConfig.DbContext.GetModelsAsync<ColumnsModel, object>(sqlServer, new { dbName = StaticConfig.AppSettings.DbConnection.DbName, tableName = tableName });
+            using (var conn = StaticConfig.DbContext.CreateConnection())
+            {
+                //var mySql = "select column_name,ordinal_position,is_nullable,data_type,character_maximum_length,column_key,column_comment from information_schema.COLUMNS where table_schema=@dbName and table_name = @tableName  order by ordinal_position";
+                //return await StaticConfig.DbContext.GetModelsAsync<ColumnsModel, object>(sqlServer, new { dbName = StaticConfig.AppSettings.DbConnection.DbName, tableName = tableName });
 
-            var sqlServer = $@"SELECT   
+                var sqlServer = $@"SELECT   
         col.colorder AS ordinal_position,  
         col.name AS column_name ,  
         ISNULL(ep.[value], col.name) AS column_comment,  
@@ -55,7 +58,8 @@ FROM    dbo.syscolumns col
                                                          AND epTwo.name = 'MS_Description'  
 WHERE   obj.name = '{tableName}'
 ORDER BY col.colorder";//解决了没有主键的问题，没有主见按第一个字段查询
-            return await StaticConfig.DbContext.GetModelsAsync<ColumnsModel,object>(sqlServer,new { });
+                return await conn.QueryAsync<ColumnsModel>(sqlServer);
+            }
         }
     }
 }

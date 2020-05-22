@@ -1,4 +1,4 @@
-﻿using DataBase.IDataBase;
+﻿using DataBase.DapperForSqlServer;
 
 namespace CodeGenerator.App.Models
 {
@@ -12,6 +12,6 @@ namespace CodeGenerator.App.Models
         /// <summary>
         /// 尽量少的出现 更换数据上下文时比较简单
         /// </summary>
-        public static ISqlDbContext DbContext { get; set; }
+        public static ISqlServerDbContext DbContext { get; set; }
     }
 }

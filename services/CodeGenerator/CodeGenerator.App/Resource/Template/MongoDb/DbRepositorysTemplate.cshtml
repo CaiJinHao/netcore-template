@@ -67,24 +67,9 @@ namespace @(name_space).MongoRepository.DbRepository
             return await DbContext.DeleteAsync(model);
         }
 
-        public @(table_name_pascal)Model GetModel(string id)
-        {
-            return DbContext.GetModel<string, @(table_name_pascal)Model>(id);
-        }
-
         public async Task<@(table_name_pascal)Model> GetModelAsync(@(primary_key_data_type) id)
         {
             return await DbContext.GetModelAsync<@(primary_key_data_type), @(table_name_pascal)Model>(id);
-        }
-
-        public async Task<IEnumerable<@(table_name_pascal)Model>> GetModelsAsync()
-        {
-            return await DbContext.GetModelsAsync<@(table_name_pascal)Model>();
-        }
-
-        public Task<IEnumerable<dynamic>> GetNamesAsync(@(table_name_pascal)RequestModel queryParameter)
-        {
-            throw new NotImplementedException();
         }
 
         private IMongoQueryable<@(table_name_pascal)ResponeModel> GetQuery(@(table_name_pascal)RequestModel queryParameter)
@@ -119,7 +104,7 @@ namespace @(name_space).MongoRepository.DbRepository
             return tq;
         }
 
-        public async Task<IEnumerable<@(table_name_pascal)ResponeModel>> GetModelsAsync(@(table_name_pascal)RequestModel queryParameter)
+        public async Task<IEnumerable<@(table_name_pascal)ResponeModel>> GetCurrentModelsAsync(@(table_name_pascal)RequestModel queryParameter)
         {
             return await GetQuery(queryParameter).ToListAsync();
         }
@@ -141,12 +126,6 @@ namespace @(name_space).MongoRepository.DbRepository
         public async Task<long> UpdateModelAsync(@(primary_key_data_type) id, @(table_name_pascal)Model model, string notFieldRegex)
         {
             return await DbContext.UpdateModelAsync(id, model, notFieldRegex);
-        }
-
-        public async Task<@(table_name_pascal)Model> GetFirstAsync(@(table_name_pascal)RequestModel queryParameter)
-        {
-            var tq = GetQuery(queryParameter);
-            return await tq.FirstAsync();
         }
     }
 }

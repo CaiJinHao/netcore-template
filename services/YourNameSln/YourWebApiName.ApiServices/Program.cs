@@ -46,7 +46,7 @@ namespace YourWebApiName.ApiServices
                     /*                    不应使用顶级通配符绑定（http: //*:80/ 和 http://+:80）。 顶级通配符绑定会带来应用安全漏洞。
                                         请使用显式主机名或IP 地址，而不是通配符。 
                                         如果可控制整个父域（相对于易受攻击的 *.com），子域通配符绑定（例如，*.mysub.com）不会构成安全风险
-                                        http://192.168.1.88:9016*/
+                                        http://192.168.1.88:9001*/
 
                     var _path = Directory.GetCurrentDirectory();
                     var config = new ConfigurationBuilder()

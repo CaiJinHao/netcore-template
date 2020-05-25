@@ -4,6 +4,23 @@
         <name>YourWebApiName.ApiServices</name>
     </assembly>
     <members>
+        <member name="T:YourWebApiName.ApiServices.DefaultApi.AppEnumsController">
+            <summary>
+            应用程序中的枚举类型
+            </summary>
+        </member>
+        <member name="M:YourWebApiName.ApiServices.DefaultApi.AppEnumsController.Get(System.Int32)">
+            <summary>
+            给下拉列表使用
+            </summary>
+            <param name="option"></param>
+            <returns></returns>
+        </member>
+        <member name="T:YourWebApiName.ApiServices.DefaultApi.ProcessController">
+            <summary>
+            进程信息,程序版本更新
+            </summary>
+        </member>
         <member name="T:YourWebApiName.ApiServices.DefaultApi.RestAdminController">
             <summary>
             RESTapi 用户登录
@@ -20,6 +37,45 @@
             登录验证
             </summary>
             <param name="authModel"></param>
+            <returns></returns>
+        </member>
+        <member name="T:YourWebApiName.ApiServices.DefaultApi.TokenController">
+            <summary>
+            身份验证
+            </summary>
+        </member>
+        <member name="M:YourWebApiName.ApiServices.DefaultApi.TokenController.Post(Common.Utility.RequestModels.RequestAuthModel)">
+            <summary>
+            获取TOKEN
+            </summary>
+            <param name="authModel"></param>
+            <returns></returns>
+        </member>
+        <member name="M:YourWebApiName.ApiServices.DefaultApi.TokenController.Get">
+            <summary>
+            拿旧TOKEN刷新TOKEN
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:YourWebApiName.ApiServices.DefaultApi.VerifyUserController">
+            <summary>
+            验证用户
+            </summary>
+        </member>
+        <member name="M:YourWebApiName.ApiServices.DefaultApi.VerifyUserController.Get(System.String,System.String)">
+            <summary>
+            验证用户
+            </summary>
+            <param name="key">账号</param>
+            <param name="secret">密码</param>
+            <returns></returns>
+        </member>
+        <member name="M:YourWebApiName.ApiServices.DefaultApi.VerifyUserController.VerifyUser(System.String,System.String)">
+            <summary>
+            验证用户
+            </summary>
+            <param name="key">账号</param>
+            <param name="secret">密码</param>
             <returns></returns>
         </member>
         <member name="T:YourWebApiName.ApiServices.Extensions.AutofacDefaultModule">

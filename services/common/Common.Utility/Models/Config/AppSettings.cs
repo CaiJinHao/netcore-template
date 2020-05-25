@@ -32,9 +32,5 @@ namespace Common.Utility.Models.Config
         /// 日志记录器配置
         /// </summary>
         public LoggerConfigModel LoggerConfig { get; set; }
-        /// <summary>
-        /// 数据保留天数配置
-        /// </summary>
-        public DataDayConfigModel DataDayConfig { get; set; }
     }
 }

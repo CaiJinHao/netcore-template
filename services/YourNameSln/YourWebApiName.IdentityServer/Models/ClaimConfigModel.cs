@@ -1,19 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace Common.Utility.Models.Config
+namespace YourWebApiName.IdentityServer.Models
 {
-    /*
-     值必须小写，否则添加不到token中
-     必须配置ApiResource 的ClaimTypes 否则不会携带
-     请确保和IdentityServer中保持一致
-         */
-
     /// <summary>
     /// Claim变量名称配置
     /// </summary>
-    public class ClaimConfig
+    public class ClaimConfigModel
     {
         /// <summary>
         /// 用于存储用户唯一标识

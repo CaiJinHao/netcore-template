@@ -15,8 +15,4 @@
     <ProjectReference Include="..\..\YourWebApiName.Models\YourWebApiName.Models.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="DbRepository\" />
-  </ItemGroup>
-
 </Project>

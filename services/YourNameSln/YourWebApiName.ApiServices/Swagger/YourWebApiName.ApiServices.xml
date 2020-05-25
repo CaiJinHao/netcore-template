@@ -252,60 +252,6 @@
             初始化目录
             </summary>
         </member>
-        <member name="T:YourWebApiName.ApiServices.RestApi.v1.sys.SysMenusController">
-            <summary>
-            系统_菜单
-            </summary>
-        </member>
-        <member name="P:YourWebApiName.ApiServices.RestApi.v1.sys.SysMenusController.sysMenusService">
-            <summary>
-            服务
-            </summary>
-        </member>
-        <member name="M:YourWebApiName.ApiServices.RestApi.v1.sys.SysMenusController.Get(Common.Utility.Models.App.PagingModel,YourWebApiName.Models.RequestModels.SysMenusRequestModel)">
-            <summary>
-            查询多条数据
-            </summary>
-            <param name="paging"></param>
-            <param name="queryParameter"></param>
-            <returns></returns>
-        </member>
-        <member name="M:YourWebApiName.ApiServices.RestApi.v1.sys.SysMenusController.Get(System.String)">
-            <summary>
-            获取实体
-            </summary>
-            <param name="id"></param>
-            <returns></returns>
-        </member>
-        <member name="M:YourWebApiName.ApiServices.RestApi.v1.sys.SysMenusController.Post(YourWebApiName.Models.RequestModels.SysMenusRequestModel)">
-            <summary>
-            新增一条
-            </summary>
-            <param name="parameter"></param>
-            <returns></returns>
-        </member>
-        <member name="M:YourWebApiName.ApiServices.RestApi.v1.sys.SysMenusController.Put(System.String,YourWebApiName.Models.RequestModels.SysMenusRequestModel)">
-            <summary>
-            修改实体
-            </summary>
-            <param name="id">主键</param>
-            <param name="parameter">修改的字段</param>
-            <returns></returns>
-        </member>
-        <member name="M:YourWebApiName.ApiServices.RestApi.v1.sys.SysMenusController.Delete(System.String)">
-            <summary>
-            删除实体
-            </summary>
-            <param name="id"></param>
-            <returns></returns>
-        </member>
-        <member name="M:YourWebApiName.ApiServices.RestApi.v1.sys.SysMenusController.Delete(System.String[])">
-            <summary>
-            删除多条
-            </summary>
-            <param name="idList"></param>
-            <returns></returns>
-        </member>
         <member name="T:YourWebApiName.ApiServices.RestApi.v1.sys.SysRolesController">
             <summary>
             系统_角色
@@ -316,7 +262,7 @@
             服务
             </summary>
         </member>
-        <member name="M:YourWebApiName.ApiServices.RestApi.v1.sys.SysRolesController.Get(Common.Utility.Models.App.PagingModel,YourWebApiName.Models.RequestModels.SysRolesRequestModel)">
+        <member name="M:YourWebApiName.ApiServices.RestApi.v1.sys.SysRolesController.Get(Common.Utility.Models.HttpModels.PagingModel,YourWebApiName.Models.RequestModels.SysRolesRequestModel)">
             <summary>
             查询多条数据
             </summary>
@@ -354,60 +300,6 @@
             <returns></returns>
         </member>
         <member name="M:YourWebApiName.ApiServices.RestApi.v1.sys.SysRolesController.Delete(System.String[])">
-            <summary>
-            删除多条
-            </summary>
-            <param name="idList"></param>
-            <returns></returns>
-        </member>
-        <member name="T:YourWebApiName.ApiServices.RestApi.v1.sys.SysUsersController">
-            <summary>
-            系统_用户
-            </summary>
-        </member>
-        <member name="P:YourWebApiName.ApiServices.RestApi.v1.sys.SysUsersController.sysUsersService">
-            <summary>
-            服务
-            </summary>
-        </member>
-        <member name="M:YourWebApiName.ApiServices.RestApi.v1.sys.SysUsersController.Get(Common.Utility.Models.App.PagingModel,YourWebApiName.Models.RequestModels.SysUsersRequestModel)">
-            <summary>
-            查询多条数据
-            </summary>
-            <param name="paging"></param>
-            <param name="queryParameter"></param>
-            <returns></returns>
-        </member>
-        <member name="M:YourWebApiName.ApiServices.RestApi.v1.sys.SysUsersController.Get(System.String)">
-            <summary>
-            获取实体
-            </summary>
-            <param name="id"></param>
-            <returns></returns>
-        </member>
-        <member name="M:YourWebApiName.ApiServices.RestApi.v1.sys.SysUsersController.Post(YourWebApiName.Models.RequestModels.SysUsersRequestModel)">
-            <summary>
-            新增一条
-            </summary>
-            <param name="parameter"></param>
-            <returns></returns>
-        </member>
-        <member name="M:YourWebApiName.ApiServices.RestApi.v1.sys.SysUsersController.Put(System.String,YourWebApiName.Models.RequestModels.SysUsersRequestModel)">
-            <summary>
-            修改实体
-            </summary>
-            <param name="id">主键</param>
-            <param name="parameter">修改的字段</param>
-            <returns></returns>
-        </member>
-        <member name="M:YourWebApiName.ApiServices.RestApi.v1.sys.SysUsersController.Delete(System.String)">
-            <summary>
-            删除实体
-            </summary>
-            <param name="id"></param>
-            <returns></returns>
-        </member>
-        <member name="M:YourWebApiName.ApiServices.RestApi.v1.sys.SysUsersController.Delete(System.String[])">
             <summary>
             删除多条
             </summary>

@@ -15,14 +15,13 @@ using IDataBase.IServices;
 using @(name_space).Models.DbModels;
 using @(name_space).Models.RequestModels;
 using @(name_space).Models.ResponeModels;
-using @(name_space).Models.ResponeModels;
 
 namespace @(name_space).IServices.IDbServices
 {
     /// <summary>
     /// 服务 IDbServices @table.table_comment
     /// </summary>
-    public interface I@(table_name_pascal)Service : IDbServicesBase<@(table_name_pascal)Model,@(table_name_pascal)ResponeModel,@(table_name_pascal)RequestModel, @(primary_key_data_type)>
+    public interface I@(table_name_pascal)Service : IDbServicesBase<@(table_name_pascal)Model,@(table_name_pascal)ResponeModel,@(table_name_pascal)RequestModel, @(primary_key_data_type), PagingModel>
     {
     }
 }

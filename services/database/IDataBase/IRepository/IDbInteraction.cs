@@ -9,7 +9,7 @@ namespace IDataBase.IRepository
     /// TTableModel的名称必须和数据库表名称一致
     /// 继承者：所有IRepository,IDbContext
     /// </summary>
-    public interface IDbInteraction<TTableModel, TResponeModel, TRequestModel, Tid>: IDbServicesBase<TTableModel, TResponeModel, TRequestModel, Tid>
+    public interface IDbInteraction<TTableModel, TResponeModel, TRequestModel, Tid, TPagingModel> : IDbServicesBase<TTableModel, TResponeModel, TRequestModel, Tid, TPagingModel>
     {
         /// <summary>
         /// 当前数据仓库的表名称

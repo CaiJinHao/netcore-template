@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\DataBase.IDataBase\DataBase.IDataBase.csproj" />
+    <ProjectReference Include="..\..\IDataBase\IDataBase.csproj" />
   </ItemGroup>
 
 </Project>

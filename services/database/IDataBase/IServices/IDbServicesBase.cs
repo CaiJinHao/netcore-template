@@ -1,5 +1,4 @@
-﻿using Common.Utility.Models.App;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace IDataBase.IServices
@@ -11,7 +10,7 @@ namespace IDataBase.IServices
     /// <typeparam name="TResponeModel"></typeparam>
     /// <typeparam name="TRequestModel"></typeparam>
     /// <typeparam name="Tid"></typeparam>
-    public interface IDbServicesBase<TTableModel, TResponeModel, TRequestModel, Tid>
+    public interface IDbServicesBase<TTableModel, TResponeModel, TRequestModel, Tid, TPagingModel>
     {
         /// <summary>
         /// 创建一个对象
@@ -50,6 +49,6 @@ namespace IDataBase.IServices
         /// <param name="pagingModel">分页器</param>
         /// <param name="queryParameter">查询对象</param>
         /// <returns></returns>
-        Task<IEnumerable<TResponeModel>> GetModelsAsync(PagingModel pagingModel, TRequestModel queryParameter);
+        Task<IEnumerable<TResponeModel>> GetModelsAsync(TPagingModel pagingModel, TRequestModel queryParameter);
     }
 }

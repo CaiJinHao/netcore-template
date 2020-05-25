@@ -1,14 +1,8 @@
-﻿using Microsoft.Extensions.Logging;
-using MySql.Data.MySqlClient;
+﻿using IDataBase.DbExtensions;
 using SqlSugar;
 using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Common.Utility.Extension;
-using DataBase.IDataBase;
 
 namespace DataBase.MySqlFromSqlSugar
 {
@@ -18,13 +12,11 @@ namespace DataBase.MySqlFromSqlSugar
     public class MySqlSqlSugarDbContext : DbContextAbstract,IMySqlSqlSugarDbContext
     {
         private string ConnectionString { get; set; }
-        private ILogger Logger { get; set; }
 
         public string PrimaryKey => Guid.NewGuid().ToString("n");
 
         public MySqlSqlSugarDbContext(string connectionString) { 
             ConnectionString = connectionString;
-            Logger = typeof(MySqlSqlSugarDbContext).Logger();
         }
         public SqlSugarClient CreateConnection()
         {

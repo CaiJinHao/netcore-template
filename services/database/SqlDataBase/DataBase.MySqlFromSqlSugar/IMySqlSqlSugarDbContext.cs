@@ -1,4 +1,5 @@
-﻿using DataBase.IDataBase;
+﻿using IDataBase;
+using IDataBase.ISql;
 using SqlSugar;
 using System;
 using System.Collections.Generic;

@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
-namespace DataBase.IDataBase
+namespace IDataBase.ISql
 {
     /// <summary>
     /// 关系型数据库方法

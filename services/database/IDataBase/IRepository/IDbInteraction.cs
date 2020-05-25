@@ -1,13 +1,11 @@
-﻿using Common.Utility.Models.App;
-using System;
+﻿using IDataBase.IServices;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace DataBase.IDataBase
+namespace IDataBase.IRepository
 {
     /// <summary>
-    /// 与数据库交互方法(基础) 由Service和Repository同时继承
+    /// 与数据库交互方法(基础) 由Repository继承
     /// TTableModel的名称必须和数据库表名称一致
     /// 继承者：所有IRepository,IDbContext
     /// </summary>

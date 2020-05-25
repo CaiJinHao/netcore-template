@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
-namespace DataBase.IDataBase
+namespace IDataBase
 {
     /// <summary>
-    /// 数据库上下文基础操作,由DbContext继承
+    /// 数据库上下文基础操作,由IDbContext继承
     /// 所有数据库方法：NoSql(非关系型代表)/Sql(关系型代表)
     /// </summary>
     public interface IDbContextInteraction<TPrimaryKey>

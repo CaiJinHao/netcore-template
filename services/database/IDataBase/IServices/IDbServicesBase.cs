@@ -1,10 +1,8 @@
 ﻿using Common.Utility.Models.App;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace DataBase
+namespace IDataBase.IServices
 {
     /// <summary>
     /// 逻辑层使用的接口、给控制器层调用的接口

@@ -1,8 +1,6 @@
-﻿using DataBase.IDataBase;
-using System;
-using System.Collections.Generic;
+﻿using IDataBase;
+using IDataBase.ISql;
 using System.Data;
-using System.Text;
 
 namespace DataBase.DapperForMySql
 {

@@ -5,17 +5,21 @@
 		<Version>0.0.1</Version>
 		<AssemblyName>DataBse.DapperForMySql</AssemblyName>
 		<RootNamespace>DataBse</RootNamespace>
-		<Description>
-			DataBse.DapperForMySql is a class library tool that connects to MySql database by using Dapper driver
-		</Description>
+		<Description>DataBse.DapperForMySql is a class library tool that connects to MySql database by using Dapper driver</Description>
 		<Authors>CaiJinHao</Authors>
 		<Owners>CaiJinHao</Owners>
-		<PackageTags>C#,lib,utility</PackageTags>
+		<PackageTags>C#,utility,netstandard2.0,netstandard2.1</PackageTags>
 		<Title>Common.Utility: The class library tools</Title>
 		<Summary>
 			DataBase.DapperForMySql is a class library tool that connects to MySql database by using Dapper driver
 		</Summary>
 		<Copyright>Copyright © 2020~2021</Copyright>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<PackageIcon>nugeticon.png</PackageIcon>
+		<PackageReleaseNotes>This is a complete template project that contains the entire project dependent reference and use</PackageReleaseNotes>
+		<RepositoryUrl>https://github.com/CaiJinHao/netcore-api-template</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageProjectUrl>https://github.com/CaiJinHao/netcore-api-template/tree/master/services/database/SqlDataBase/DataBase.DapperForMySql</PackageProjectUrl>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -24,7 +28,14 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\DataBase.IDataBase\DataBase.IDataBase.csproj" />
+	  <ProjectReference Include="..\..\IDataBase\IDataBase.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="..\..\..\..\documents\images\nugeticon.png">
+	    <Pack>True</Pack>
+	    <PackagePath></PackagePath>
+	  </None>
 	</ItemGroup>
 
 </Project>

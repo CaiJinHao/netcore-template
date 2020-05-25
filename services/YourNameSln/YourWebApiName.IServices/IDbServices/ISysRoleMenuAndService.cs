@@ -1,6 +1,4 @@
-
-
-using DataBase;
+using IDataBase.IServices;
 using YourWebApiName.Models.DbModels;
 using YourWebApiName.Models.RequestModels;
 using YourWebApiName.Models.ResponeModels;

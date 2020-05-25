@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
-namespace DataBase.IDataBase
+namespace IDataBase.INoSql
 {
     /// <summary>
     /// 非关系型数据库上下文TODO:暂时没有用

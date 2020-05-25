@@ -1,6 +1,6 @@
 ﻿using Common.Utility.Extension;
 using Common.Utility.Other;
-using DataBase.IDataBase;
+using IDataBase.DbExtensions;
 using Microsoft.Extensions.Logging;
 using MongoDB.Bson;
 using MongoDB.Driver;

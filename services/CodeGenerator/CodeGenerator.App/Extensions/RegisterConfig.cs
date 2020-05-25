@@ -1,5 +1,4 @@
 ﻿using CodeGenerator.App.Models;
-using DataBase.DapperForMySql;
 using DataBase.DapperForSqlServer;
 using System;
 using System.Threading.Tasks;

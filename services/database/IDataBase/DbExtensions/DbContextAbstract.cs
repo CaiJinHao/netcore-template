@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 
-namespace DataBase
+namespace IDataBase.DbExtensions
 {
     /// <summary>
     /// 数据Table 工具

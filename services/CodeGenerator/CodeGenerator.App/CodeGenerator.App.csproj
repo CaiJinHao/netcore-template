@@ -268,9 +268,9 @@
       <Project>{7c611b6f-6c52-4de1-bcf5-b1caefac0ac2}</Project>
       <Name>Common.Utility</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\database\DataBase.IDataBase\DataBase.IDataBase.csproj">
-      <Project>{7de65530-0388-4618-b59b-f617dc0306f4}</Project>
-      <Name>DataBase.IDataBase</Name>
+    <ProjectReference Include="..\..\database\IDataBase\IDataBase.csproj">
+      <Project>{f311bb6b-544e-43ce-8a68-52f8f668874d}</Project>
+      <Name>IDataBase</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\database\SqlDataBase\DataBase.DapperForMySql\DataBase.DapperForMySql.csproj">
       <Project>{9c446e57-a884-4d43-9ae6-cacb1a3d4ec8}</Project>

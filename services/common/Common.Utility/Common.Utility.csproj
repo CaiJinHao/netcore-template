@@ -4,17 +4,23 @@
 		<Version>0.0.1</Version>
 		<AssemblyName>Common.Utility</AssemblyName>
 		<RootNamespace>Common</RootNamespace>
-		<Description>
-			Common.utility is a Common class library tool that can be bank-based on project needs. Netstatnd2.0 and 2.1
-		</Description>
+		<Description>Common.utility is a Common class library tool that can be bank-based on project needs. Netstatnd2.0 and 2.1</Description>
 		<Authors>CaiJinHao</Authors>
 		<Owners>CaiJinHao</Owners>
-		<PackageTags>C#,lib,utility</PackageTags>
+		<PackageTags>C#,utility,netstandard2.0,netstandard2.1</PackageTags>
 		<Title>Common.Utility: The class library tools</Title>
 		<Summary>
 			Common.utility is a Common class library tool that can be bank-based on project needs. Netstatnd2.0 and 2.1
 		</Summary>
 		<Copyright>Copyright © 2020~2021</Copyright>
+		<PackageProjectUrl>https://github.com/CaiJinHao/netcore-api-template/tree/master/services/common/Common.Utility</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/CaiJinHao/netcore-api-template</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageReleaseNotes>This is a complete template project that contains the entire project dependent reference and use</PackageReleaseNotes>
+		<PackageIcon>nugeticon.png</PackageIcon>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<Product>CaiJinHao</Product>
+		<PackageId>Common.Utilitys</PackageId>
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="Autofac" Version="5.2.0" />
@@ -30,5 +36,11 @@
 		<PackageReference Include="System.Drawing.Common" Version="4.7.0" />
 		<PackageReference Include="System.Net.Sockets" Version="4.3.0" />
 		<PackageReference Include="System.Text.Json" Version="4.7.1" />
+	</ItemGroup>
+	<ItemGroup>
+	  <None Include="..\..\..\documents\images\nugeticon.png">
+	    <Pack>True</Pack>
+	    <PackagePath></PackagePath>
+	  </None>
 	</ItemGroup>
 </Project>

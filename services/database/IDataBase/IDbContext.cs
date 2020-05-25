@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
-namespace DataBase.IDataBase
+namespace IDataBase
 {
     /// <summary>
     /// 数据库上下文 连接

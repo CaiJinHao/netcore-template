@@ -1,10 +1,8 @@
-﻿using DataBase.IDataBase;
-using MongoDB.Bson;
+﻿using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using IDataBase.INoSql;
+using IDataBase;
 
 namespace DataBase.MongoDb
 {

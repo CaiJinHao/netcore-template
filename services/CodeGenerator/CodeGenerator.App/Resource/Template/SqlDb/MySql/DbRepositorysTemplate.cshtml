@@ -138,6 +138,7 @@ namespace @(name_space).MongoRepository.DbRepository
             }
         }
 
+        
         public async Task<long> UpdateModelAsync(@(primary_key_data_type) id, @(table_name_pascal)Model model)
         {
             return await DbContext.UpdateModelAsync(id, model);

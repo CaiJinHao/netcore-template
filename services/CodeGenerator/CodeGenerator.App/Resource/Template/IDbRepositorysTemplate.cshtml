@@ -10,18 +10,18 @@
     var primary_key_data_type = table.primary_key_data_type;
 }
 
+using Common.Utility.Models.HttpModels;
+using IDataBase.IRepository;
 using @(name_space).Models.DbModels;
 using @(name_space).Models.RequestModels;
 using @(name_space).Models.ResponeModels;
-using DataBase.IDataBase;
-using System;
 
 namespace @(name_space).IRepository.IDbRepository
 {
     /// <summary>
     /// 资源 IDbRepository @table.table_comment
     /// </summary>
-    public interface I@(table_name_pascal)Repository : IDbInteraction<@(table_name_pascal)Model,@(table_name_pascal)ResponeModel,@(table_name_pascal)RequestModel, @(primary_key_data_type)>
+    public interface I@(table_name_pascal)Repository : IDbInteraction<@(table_name_pascal)Model,@(table_name_pascal)ResponeModel,@(table_name_pascal)RequestModel, @(primary_key_data_type), PagingModel>
     {
     }
 }

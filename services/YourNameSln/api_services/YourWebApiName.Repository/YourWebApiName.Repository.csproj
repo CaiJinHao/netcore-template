@@ -9,10 +9,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\database\DataBase.IDataBase\DataBase.IDataBase.csproj" />
+    <ProjectReference Include="..\..\..\database\IDataBase\IDataBase.csproj" />
     <ProjectReference Include="..\..\..\database\SqlDataBase\DataBase.DapperForSqlServer\DataBase.DapperForSqlServer.csproj" />
     <ProjectReference Include="..\..\YourWebApiName.IRepository\YourWebApiName.IRepository.csproj" />
     <ProjectReference Include="..\..\YourWebApiName.Models\YourWebApiName.Models.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="DbRepository\" />
   </ItemGroup>
 
 </Project>

@@ -1,6 +1,6 @@
 ﻿using Common.Utility.Extension;
 using Common.Utility.Models;
-using Common.Utility.Models.App;
+using Common.Utility.Models.HttpModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using YourWebApiName.IServices.IDbServices;

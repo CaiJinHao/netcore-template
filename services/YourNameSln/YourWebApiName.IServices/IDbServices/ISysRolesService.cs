@@ -1,5 +1,6 @@
 
 
+using Common.Utility.Models.HttpModels;
 using IDataBase.IServices;
 using YourWebApiName.Models.DbModels;
 using YourWebApiName.Models.RequestModels;
@@ -10,7 +11,7 @@ namespace YourWebApiName.IServices.IDbServices
     /// <summary>
     /// 服务 IDbServices 系统_角色
     /// </summary>
-    public interface ISysRolesService : IDbServicesBase<SysRolesModel,SysRolesResponeModel,SysRolesRequestModel, string>
+    public interface ISysRolesService: IDbServicesBase<SysRolesModel,SysRolesResponeModel,SysRolesRequestModel, string,PagingModel>
     {
     }
 }

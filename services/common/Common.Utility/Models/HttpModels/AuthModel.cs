@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Common.Utility.Models.App
+namespace Common.Utility.Models.HttpModels
 {
     /// <summary>
     /// 身份验证 获取TOKEN

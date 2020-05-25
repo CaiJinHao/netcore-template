@@ -12,7 +12,7 @@
     <Authors>CaiJinHao</Authors>
     <Company>CaiJinHao</Company>
     <Version>0.0.2</Version>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
   </PropertyGroup>
 
 	<ItemGroup>

@@ -18,7 +18,7 @@
 		<RepositoryType>git</RepositoryType>
 		<PackageReleaseNotes>This is a complete template project that contains the entire project dependent reference and use</PackageReleaseNotes>
 		<PackageIcon>nugeticon.png</PackageIcon>
-		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
 		<Product>CaiJinHao</Product>
 		<PackageId>Common.Utilitys</PackageId>
 	</PropertyGroup>

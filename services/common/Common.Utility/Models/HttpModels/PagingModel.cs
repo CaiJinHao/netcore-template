@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Common.Utility.Models.App
+namespace Common.Utility.Models.HttpModels
 {
     /// <summary>
     /// 分页器

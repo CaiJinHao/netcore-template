@@ -1,6 +1,6 @@
 ﻿using Common.Utility.Extension;
 using Common.Utility.Models.Config;
-using Common.Utility.Models.HttpLog;
+using Common.Utility.Models.HttpModels;
 using Common.Utility.Models.User;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;

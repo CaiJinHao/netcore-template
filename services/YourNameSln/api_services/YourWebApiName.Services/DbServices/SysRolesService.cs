@@ -1,15 +1,11 @@
-
-
-
+using Common.Utility.Models.HttpModels;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using YourWebApiName.IRepository.IDbRepository;
 using YourWebApiName.IServices.IDbServices;
 using YourWebApiName.Models.DbModels;
 using YourWebApiName.Models.RequestModels;
 using YourWebApiName.Models.ResponeModels;
-using Common.Utility.Models.App;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace YourWebApiName.Services.DbServices
 {

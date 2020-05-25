@@ -1,4 +1,5 @@
-﻿using Common.Utility.Extension;
+﻿using System;
+using Common.Utility.Extension;
 using Common.Utility.Models;
 using Common.Utility.Models.HttpModels;
 using Microsoft.AspNetCore.Mvc;

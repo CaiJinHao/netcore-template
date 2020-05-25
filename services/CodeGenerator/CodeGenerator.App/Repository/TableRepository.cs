@@ -14,7 +14,7 @@ namespace CodeGenerator.App.Repository
             //return await StaticConfig.DbContext.GetModelsAsync<TablesModel, object>(sqlServer, new { dbName = StaticConfig.AppSettings.DbConnection.DbName });
             using (var conn= StaticConfig.DbContext.CreateConnection())
             {
-                var sqlServer = $"select name as table_name,name table_comment from {StaticConfig.AppSettings.DbConnection.DbName}.sys.tables ";//排序不需要生成的表名;a where a.name not like '%temp%' and a.name like 'tb_%'
+                var sqlServer = $"select name as table_name,name table_comment from {StaticConfig.AppSettings.DbConnection.DbName}.sys.tables a where 1=1 {StaticConfig.AppSettings.Template.TableSqlWhere}";//排序不需要生成的表名; and a.name not like '%temp%' and a.name like 'tb_%'
                 return await conn.QueryAsync<TablesModel>(sqlServer);
             }
         }

@@ -37,5 +37,9 @@ namespace CodeGenerator.App.Models
         /// 表名称重命名
         /// </summary>
         public TableRenameModel[] TableRename { get; set; }
+        /// <summary>
+        /// 过滤表SQL 
+        /// </summary>
+        public string TableSqlWhere { get; set; }
     }
 }

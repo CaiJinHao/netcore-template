@@ -1,7 +1,5 @@
-﻿using Common.Utility.Extension;
-using Common.Utility.Other;
+﻿using IDataBase.Common;
 using IDataBase.DbExtensions;
-using Microsoft.Extensions.Logging;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
@@ -16,13 +14,11 @@ namespace DataBase.MongoDb
     {
         private string ConnectionUrl { get; set; }
         private string DbName { get; set; }
-        private ILogger Logger { get; set; }
 
         public MongoDbContext(string connectionUrl,string dbName)
         { 
             this.ConnectionUrl = connectionUrl;
             this.DbName = dbName;
-            Logger=  typeof(MongoDbContext).Logger();
         }
 
         public IMongoDatabase CreateConnection()
@@ -130,7 +126,8 @@ namespace DataBase.MongoDb
             var updateDefs = new List<UpdateDefinition<TTableModel>>();
             foreach (var item in fileds)
             {
-                updateDefs.Add(Builders<TTableModel>.Update.Set(item.Key,item.Value));
+                var _t = Builders<TTableModel>.Update.Set(item.Key, item.Value);
+                updateDefs.Add(_t);
             }
             var update = Builders<TTableModel>.Update.Combine(updateDefs);
             var ur = await GetCollection<TTableModel>().UpdateManyAsync(filter, update);
@@ -164,7 +161,8 @@ namespace DataBase.MongoDb
             var fileds = ReflectHelper.ConvertToDictionary(model);
             foreach (var item in fileds)
             {
-                filterDefs.Add(Builders<TTableModel>.Filter.Eq(item.Key, item.Value));
+                var _t = Builders<TTableModel>.Filter.Eq(item.Key, item.Value);
+                filterDefs.Add(_t);
             }
             var filter = Builders<TTableModel>.Filter.And(filterDefs);
             var dr = await GetCollection<TTableModel>().DeleteManyAsync(filter);

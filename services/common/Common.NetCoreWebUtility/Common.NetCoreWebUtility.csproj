@@ -11,7 +11,7 @@
     <Description>This is an extended class library for the net core web API, including some component authorization, Swagger, and other references</Description>
     <Authors>CaiJinHao</Authors>
     <Company>CaiJinHao</Company>
-    <Version>0.0.1</Version>
+    <Version>0.0.2</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 

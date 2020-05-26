@@ -18,6 +18,10 @@ namespace YourWebApiName.ApiServices.DefaultApi
     [AllowAnonymous]//允许匿名访问
     public class ProcessController : ControllerBase
     {
+        /// <summary>
+        /// 当前进程信息和版本
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult Get()
         {

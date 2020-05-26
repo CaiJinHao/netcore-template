@@ -19,6 +19,9 @@ namespace YourWebApiName.ApiServices.DefaultApi
     [ApiController]
     public class TokenController : ControllerBase
     {
+        /// <summary>
+        /// Token
+        /// </summary>
         public IToKenService toKenService { get; set; }
         /// <summary>
         /// 获取TOKEN

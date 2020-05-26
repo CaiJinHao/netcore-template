@@ -5,7 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\database\IDataBase\IDataBase.csproj" />
+    <PackageReference Include="IDataBase" Version="0.0.5" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\YourWebApiName.Models\YourWebApiName.Models.csproj" />
   </ItemGroup>
 

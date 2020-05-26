@@ -21,6 +21,12 @@
             进程信息,程序版本更新
             </summary>
         </member>
+        <member name="M:YourWebApiName.ApiServices.DefaultApi.ProcessController.Get">
+            <summary>
+            当前进程信息和版本
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:YourWebApiName.ApiServices.DefaultApi.RestAdminController">
             <summary>
             RESTapi 用户登录
@@ -42,6 +48,11 @@
         <member name="T:YourWebApiName.ApiServices.DefaultApi.TokenController">
             <summary>
             身份验证
+            </summary>
+        </member>
+        <member name="P:YourWebApiName.ApiServices.DefaultApi.TokenController.toKenService">
+            <summary>
+            Token
             </summary>
         </member>
         <member name="M:YourWebApiName.ApiServices.DefaultApi.TokenController.Post(Common.Utility.RequestModels.RequestAuthModel)">
@@ -360,17 +371,6 @@
             删除多条
             </summary>
             <param name="idList"></param>
-            <returns></returns>
-        </member>
-        <member name="T:YourWebApiName.ApiServices.RestApi.v1.TestController">
-            <summary>
-            临时测试控制器
-            </summary>
-        </member>
-        <member name="M:YourWebApiName.ApiServices.RestApi.v1.TestController.Get">
-            <summary>
-            获取作者信息
-            </summary>
             <returns></returns>
         </member>
         <member name="T:YourWebApiName.ApiServices.Startup">

@@ -4,13 +4,15 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="DataBse.DapperForSqlServer" Version="0.0.5" />
+  </ItemGroup>
+  
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <OutputPath>../../YourWebApiName.ApiServices/bin/Debug/netcoreapp3.1</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\database\IDataBase\IDataBase.csproj" />
-    <ProjectReference Include="..\..\..\database\SqlDataBase\DataBase.DapperForSqlServer\DataBase.DapperForSqlServer.csproj" />
     <ProjectReference Include="..\..\YourWebApiName.IRepository\YourWebApiName.IRepository.csproj" />
     <ProjectReference Include="..\..\YourWebApiName.Models\YourWebApiName.Models.csproj" />
   </ItemGroup>

@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using System.IO;
 
 namespace YourWebApiName.IdentityServer
@@ -23,6 +24,10 @@ namespace YourWebApiName.IdentityServer
                                     .AddCommandLine(args)
                                     .Build();
                     webBuilder.UseConfiguration(config);
+                    webBuilder.ConfigureLogging(loggingBuilder => {
+                        //去除打印Info信息
+                        loggingBuilder.AddFilter(f => f == LogLevel.Error);
+                    });
                     webBuilder.UseStartup<Startup>();
                 });
     }

@@ -33,7 +33,7 @@ namespace Common.NetCoreWebUtility.Services
             var rdata = new ResponesToKenModel();
 
             var handler = new HttpClientHandler();
-            handler.ServerCertificateCustomValidationCallback = delegate { return true; };//忽略SSL
+            handler.ServerCertificateCustomValidationCallback = delegate { return true; };
             var client = new HttpClient(handler);
             var disco = await client.GetDiscoveryDocumentAsync(passwordToken.Address);
             if (disco.IsError)

@@ -12,10 +12,10 @@ namespace Common.Utility.RequestModels
         /// <summary>
         /// KEY值
         /// </summary>
-        public string IotKey { get; set; }
+        public string Key { get; set; }
         /// <summary>
         /// 密匙
         /// </summary>
-        public string IotSecret { get; set; }
+        public string Secret { get; set; }
     }
 }

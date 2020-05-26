@@ -29,8 +29,10 @@ namespace YourWebApiName.IdentityServer
             //ÇëÇó²âÊÔ Â·¾¶ /.well-known/openid-configuration
             services.InitConfig(_s =>
                     {
-                        var _service = _s.BuildServiceProvider();
-                        IdentityConfigService.AppSettings = _service.GetService<IOptions<AppSettingsModel>>().Value;
+                        using (var _service = _s.BuildServiceProvider())
+                        {
+                            IdentityConfigService.AppSettings = _service.GetService<IOptions<AppSettingsModel>>().Value;
+                        }
                         return _s;
                     })
                     .AddIdentityServer()

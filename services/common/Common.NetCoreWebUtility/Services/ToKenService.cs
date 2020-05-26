@@ -19,13 +19,13 @@ namespace Common.NetCoreWebUtility.Services
 {
     public class ToKenService : IToKenService
     {
-        private ILogger logger { get; set; }
+        //private ILogger logger { get; set; }
         private PasswordTokenConfig passwordToken { get; set; }
 
         public ToKenService()
         {
             passwordToken = StaticConfig.AppSettings.ServiceCollectionExtension.IdentityJwt.PasswordToken;
-            logger = typeof(ToKenService).Logger();
+            //logger = typeof(ToKenService).Logger();
         }
 
         public async Task<ResponesToKenModel> GetTokenAsync(RequestAuthModel requestAuthModel)
@@ -37,7 +37,7 @@ namespace Common.NetCoreWebUtility.Services
             if (disco.IsError)
             {
                 rdata.Error = disco.Error;
-                logger.LogError(disco.Error);
+                //logger.LogError(disco.Error);
                 return rdata;
             }
             var tokenResponse = await client.RequestPasswordTokenAsync(new PasswordTokenRequest()
@@ -46,8 +46,8 @@ namespace Common.NetCoreWebUtility.Services
                 ClientId = passwordToken.ClientId,
                 ClientSecret = passwordToken.ClientSecret,
                 Scope = passwordToken.Scope,
-                UserName = requestAuthModel.IotKey,
-                Password = requestAuthModel.IotSecret
+                UserName = requestAuthModel.Key,
+                Password = requestAuthModel.Secret
             });
 
             if (tokenResponse.IsError)
@@ -63,22 +63,30 @@ namespace Common.NetCoreWebUtility.Services
             return rdata;
         }
 
-        public string GetUserId()
+        public string GetValueByToken(TokenInfoType  tokenInfoType)
         {
-            var claim = UserHttpContext.Current.User.Claims.Where(c => c.Type == ClaimConfig.UserId).FirstOrDefault();
-            if (claim == null)
+            string infoType = string.Empty;
+            switch (tokenInfoType)
             {
-                throw new Exception("用户授权异常，获取不多claim信息");
+                case TokenInfoType.UserId:
+                    infoType = ClaimConfig.UserId;
+                    break;
+                case TokenInfoType.RoleId:
+                    infoType = ClaimConfig.RoleId;
+                    break;
+                case TokenInfoType.RoleName:
+                    infoType = ClaimConfig.RoleName;
+                    break;
+                case TokenInfoType.UserInfo:
+                    infoType = ClaimConfig.UserInfo;
+                    break;
+                default:
+                    break;
             }
-            return claim.Value;
-        }
-
-        public string GetRoleId()
-        {
-            var claim = UserHttpContext.Current.User.Claims.Where(c => c.Type == ClaimConfig.RoleId).FirstOrDefault();
+            var claim = UserHttpContext.Current.User.Claims.Where(c => c.Type == infoType).FirstOrDefault();
             if (claim == null)
             {
-                throw new Exception("用户授权异常，获取不多claim信息");
+                throw new Exception("用户授权异常，获取不多Token内容信息");
             }
             return claim.Value;
         }

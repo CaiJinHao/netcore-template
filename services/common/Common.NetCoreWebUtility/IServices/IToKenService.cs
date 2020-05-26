@@ -1,4 +1,5 @@
-﻿using Common.Utility.RequestModels;
+﻿using Common.Utility.Models.Config;
+using Common.Utility.RequestModels;
 using Common.Utility.ResponesModels;
 using System;
 using System.Collections.Generic;
@@ -15,14 +16,10 @@ namespace Common.NetCoreWebUtility.IServices
         /// <returns></returns>
         Task<ResponesToKenModel> GetTokenAsync(RequestAuthModel requestAuthModel);
         /// <summary>
-        /// 获取用户唯一标识
+        /// 获取信息
         /// </summary>
+        /// <param name="tokenInfoType"></param>
         /// <returns></returns>
-        string GetUserId();
-        /// <summary>
-        /// 获取用户角色Id
-        /// </summary>
-        /// <returns></returns>
-        string GetRoleId();
+        string GetValueByToken(TokenInfoType tokenInfoType);
     }
 }

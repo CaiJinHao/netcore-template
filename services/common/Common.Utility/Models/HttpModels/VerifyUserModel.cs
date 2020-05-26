@@ -19,6 +19,11 @@ namespace Common.Utility.Models.HttpModels
         /// 用户角色名称
         /// </summary>
         public string role_name { get; set; }
+        /// <summary>
+        /// 当密码为md5的时候，需要知道账号密码
+        /// 可以存成json吗？
+        /// </summary>
+        public string user_info { get; set; }
 /*        /// <summary>
         /// 授权列表（可以是接口，可以是任何数组数据，这个数据会在header中可以获取到）
         /// </summary>

@@ -55,16 +55,18 @@ namespace YourWebApiName.IdentityServer.Service
             {
                 //必须用构造函数 其他方式无效
                 //如果想token中携带Cliams 必须在这里定义(item.ClaimTypes)，否则不会携带
-                yield return new ApiResource(item.Name, item.DisplayName,new string[] {
+                yield return new ApiResource(item.Name, item.DisplayName, new string[] {
                     JwtClaimTypes.Role,
                     JwtClaimTypes.AuthenticationTime,
                     JwtClaimTypes.AuthenticationMethod,
                     JwtClaimTypes.AuthorizedParty,
                     JwtClaimTypes.SessionId,
-                    ClaimConfigModel.UserId, 
+                    ClaimConfigModel.UserId,
                     ClaimConfigModel.RoleId,
-                    ClaimConfigModel.RoleName
-                }) {
+                    ClaimConfigModel.RoleName,
+                    ClaimConfigModel.UserInfo,
+                })
+                {
                     //定义API资源的scope,可结合授权策略是否通过GET、POST、ALL请求
                     // API 验证Token Scope使用
                     Scopes = {

@@ -27,5 +27,20 @@ namespace Common.Utility.Models.Config
         /// 用于存储用户角色名称，用来显示到UI端
         /// </summary>
         public static string RoleName = "role_name";
+        /// <summary>
+        /// 用户存储用户信息Json
+        /// </summary>
+        public static string UserInfo = "user_info";
+    }
+
+    /// <summary>
+    /// TokenInfoType
+    /// </summary>
+    public enum TokenInfoType
+    {
+        UserId=1,
+        RoleId=2,
+        RoleName=3,
+        UserInfo=4
     }
 }

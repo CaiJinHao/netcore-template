@@ -31,11 +31,11 @@ namespace YourWebApiName.IdentityServer.Service
         public async Task ValidateAsync(ResourceOwnerPasswordValidationContext context)
         {
             var _httpClient = new HttpClient();
-            var requestUrl = $"{Models.StaticConfigModel.AppSettings.VerifyUserUrl}/{context.UserName}/{context.Password}";
+            var requestUrl = $"{StaticConfigModel.AppSettings.VerifyUserUrl}/{context.UserName}/{context.Password}";
             var response = await _httpClient.GetAsync(requestUrl);
             if (!response.IsSuccessStatusCode)
             {
-                context.Result = new GrantValidationResult(TokenRequestErrors.InvalidClient,"验证用户服务响应失败,请联系管理员解决");
+                context.Result = new GrantValidationResult(TokenRequestErrors.InvalidClient, "验证用户服务响应失败,请联系管理员解决");
                 return;
             }
             var content = await response.Content.ReadAsStringAsync();
@@ -52,7 +52,7 @@ namespace YourWebApiName.IdentityServer.Service
                 var user_id = (string)userApiResult.Result.user_id;//用户唯一标识
                 var role_id = (string)userApiResult.Result.role_id;//用户唯一标识
                 var role_name = (string)userApiResult.Result.role_name;//角色名称
-
+                var user_info = (string)userApiResult.Result.user_info;//用户信息jsonString
 
                 /*
                  Claim type必须小写，否则添加不到token中
@@ -65,7 +65,8 @@ namespace YourWebApiName.IdentityServer.Service
                     {
                        new Claim(ClaimConfigModel.UserId,user_id),
                        new Claim(ClaimConfigModel.RoleId,role_id),
-                       new Claim(ClaimConfigModel.RoleName, role_name)
+                       new Claim(ClaimConfigModel.RoleName, role_name),
+                       new Claim(ClaimConfigModel.UserInfo, user_info)
                     });
             }
         }

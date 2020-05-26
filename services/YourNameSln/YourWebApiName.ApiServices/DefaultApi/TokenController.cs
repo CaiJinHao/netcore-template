@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
+using Common.JsonConverter;
 using Common.NetCoreWebUtility.IServices;
+using Common.Utility.Encryption;
 using Common.Utility.Models;
 using Common.Utility.RequestModels;
 using Microsoft.AspNetCore.Authorization;
@@ -30,7 +33,7 @@ namespace YourWebApiName.ApiServices.DefaultApi
         /// <returns></returns>
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Post([FromBody]RequestAuthModel authModel)
+        public async Task<IActionResult> Post([FromBody] RequestAuthModel authModel)
         {
             var apiData = new ApiResultModel();
             var responesToken = await toKenService.GetTokenAsync(authModel);
@@ -54,15 +57,15 @@ namespace YourWebApiName.ApiServices.DefaultApi
         public async Task<IActionResult> Get()
         {
             var apiData = new ApiResultModel();
-            var user_id = toKenService.GetUserId();
-            //通过userid获取用户信息
-            var user = new { user_id = user_id, pwd = "woshiroleid456" };
-            //通过用户信息获取最新的token
-            var responesToken = await toKenService.GetTokenAsync(new RequestAuthModel()
+            var userJson = toKenService.GetValueByToken(Common.Utility.Models.Config.TokenInfoType.UserInfo);
+            var user = JsonSerializer.Deserialize<dynamic>(userJson, new JsonSerializerOptions() { Converters = { new DynamicJsonConverter() } });
+            var requestAuth = new RequestAuthModel()
             {
-                IotKey = user.user_id,
-                IotSecret = user.pwd
-            });
+                Key = (string)user.key,
+                Secret = (string)user.secret
+            };
+            //通过用户信息获取最新的token
+            var responesToken = await toKenService.GetTokenAsync(requestAuth);
             if (!string.IsNullOrEmpty(responesToken.Error))
             {
                 apiData.Code = ErrorCodeType.ServerError;

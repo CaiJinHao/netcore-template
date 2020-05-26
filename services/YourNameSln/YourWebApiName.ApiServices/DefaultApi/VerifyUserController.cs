@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Common.Utility.Encryption;
 using Common.Utility.Models;
 using Common.Utility.Models.HttpModels;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace YourWebApiName.ApiServices.DefaultApi
 {
@@ -49,17 +47,22 @@ namespace YourWebApiName.ApiServices.DefaultApi
         private async Task<VerifyUserModel> VerifyUser(string key, string secret)
         {
             await Task.Delay(1);
-            var user = new { user_id = "woshiuserid123", role_id = "woshiroleid456", role_name = "角色名称" };
+            var pwd = key + secret;
+            pwd = EncrypHelper.EncryptToMD5(pwd);
+            var user = new { user_id = "woshiuserid", role_name = "角色名称" };
             if (user == null)
             {
                 //验证不通过
                 return null;
             }
+
+            var tokenUserJson = JsonSerializer.Serialize(new { key, secret });
             return new VerifyUserModel()
             {
                 user_id = user.user_id,
-                role_id = user.role_id,
+                role_id = "none",
                 role_name = user.role_name,
+                user_info = tokenUserJson
             };
         }
     }

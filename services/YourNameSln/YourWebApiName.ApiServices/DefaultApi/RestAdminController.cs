@@ -42,7 +42,7 @@ namespace YourWebApiName.ApiServices.DefaultApi
             var apiData = new ApiResultModel();
             var key = Configuration.GetValue<string>("RestApi:Users:Key");
             var secret = Configuration.GetValue<string>("RestApi:Users:Secret");
-            if (string.Equals(key, authModel.IotKey) && string.Equals(secret, authModel.IotSecret))
+            if (string.Equals(key, authModel.Key) && string.Equals(secret, authModel.Secret))
             {
                 apiData.Result = new
                 {

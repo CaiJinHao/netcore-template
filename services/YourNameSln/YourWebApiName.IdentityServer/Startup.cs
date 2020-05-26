@@ -30,7 +30,7 @@ namespace YourWebApiName.IdentityServer
                 opts.IncludeSubDomains = true;
             });
 
-            //注意必须要使用 dotnet 命令行启动  否则会爆rsa 文件错误
+            //报错，请清除掉tempkey.rsa再启动
             //请求测试 路径 /.well-known/openid-configuration
             services.InitConfig(_s =>
                     {
@@ -41,9 +41,10 @@ namespace YourWebApiName.IdentityServer
                         return _s;
                     })
                     .AddIdentityServer()
+                    //.AddSigningCredential(new X509Certificate2(path, Configuration["Certificates:Password"]))
                     .AddDeveloperSigningCredential(true)
-                    //.AddDeveloperSigningCredential(true, StaticConfig.ContentRootPath + "/tempkey.rsa")
-                    //.AddInMemoryIdentityResources(IdentityConfigService.GetIdentityResourceResources())
+                                                    //.AddDeveloperSigningCredential(true, StaticConfig.ContentRootPath + "/tempkey.rsa")
+                                                    //.AddInMemoryIdentityResources(IdentityConfigService.GetIdentityResourceResources())
                     .AddInMemoryApiResources(IdentityConfigService.GetApiResources(IdentityConfigService.AppSettings.ApiResource))
                     .AddInMemoryClients(IdentityConfigService.GetClients(IdentityConfigService.AppSettings.Clients))
                     .AddResourceOwnerValidator<CustomResourceOwnerPasswordValidator>()  //先执行  验证用户名密码是否正确

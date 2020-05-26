@@ -36,16 +36,12 @@ namespace BuildSlnRename.DirectoryServices
 
         public  void DirectoryHandler(string sourceDir)
         {
+            FilesHandler(sourceDir);
             var dirs = Directory.EnumerateDirectories(sourceDir).Select(r=>new DirectoryInfo(r))
                 .Where(rinfo => ignoreDirectoriesRegex.IsMatch(rinfo.Name) == false);//拿出不匹配的目录
             foreach (var _dir in dirs)
             {
-                var files = Directory.GetFiles(_dir.FullName).Select(f => new FileInfo(f))
-                    .Where(f => ignoreFileRegex.IsMatch(f.Name) == false).ToArray();
-                if (files.Length > 0)
-                {
-                    FilesHandler(files);
-                }
+                FilesHandler(_dir.FullName);
                 //获取目录
                 DirectoryHandler(_dir.FullName);
                 {//修改目录名称
@@ -66,19 +62,24 @@ namespace BuildSlnRename.DirectoryServices
         /// 文件处理
         /// </summary>
         /// <param name="files"></param>
-        public  void FilesHandler(FileInfo[] files)
+        public  void FilesHandler(string _dirFullName)
         {
-            foreach (var _file in files)
+            var files = Directory.GetFiles(_dirFullName).Select(f => new FileInfo(f))
+                    .Where(f => ignoreFileRegex.IsMatch(f.Name) == false).ToArray();
+            if (files.Length > 0)
             {
-                ReplaceFilesContent(_file);
-                {//修改文件名称
-                    foreach (var reg in fileReplaces)
-                    {
-                        if (reg.SearchRegex.IsMatch(_file.Name))
-                        {//正则匹配成功，开始修改文件名
-                            var directoryName = Path.Combine(_file.DirectoryName,reg.SearchRegex.Replace(_file.Name, reg.NewContent));
-                            _file.MoveTo(directoryName);
-                            Console.WriteLine($"修改过文件名称：{_file.FullName}:{directoryName}");
+                foreach (var _file in files)
+                {
+                    ReplaceFilesContent(_file);
+                    {//修改文件名称
+                        foreach (var reg in fileReplaces)
+                        {
+                            if (reg.SearchRegex.IsMatch(_file.Name))
+                            {//正则匹配成功，开始修改文件名
+                                var directoryName = Path.Combine(_file.DirectoryName, reg.SearchRegex.Replace(_file.Name, reg.NewContent));
+                                _file.MoveTo(directoryName);
+                                Console.WriteLine($"修改过文件名称：{_file.FullName}:{directoryName}");
+                            }
                         }
                     }
                 }
@@ -105,7 +106,7 @@ namespace BuildSlnRename.DirectoryServices
             if (b)
             {
                 //替换完成 保存
-                File.WriteAllText(file.FullName,text);
+                File.WriteAllText(file.FullName,text,Encoding.UTF8);
                 Console.WriteLine($"修改了文件内容：{file.FullName}");
             }
         }

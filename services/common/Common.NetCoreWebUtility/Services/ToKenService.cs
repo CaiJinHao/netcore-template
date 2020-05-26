@@ -32,7 +32,9 @@ namespace Common.NetCoreWebUtility.Services
         {
             var rdata = new ResponesToKenModel();
 
-            var client = new HttpClient();
+            var handler = new HttpClientHandler();
+            handler.ServerCertificateCustomValidationCallback = delegate { return true; };//忽略SSL
+            var client = new HttpClient(handler);
             var disco = await client.GetDiscoveryDocumentAsync(passwordToken.Address);
             if (disco.IsError)
             {

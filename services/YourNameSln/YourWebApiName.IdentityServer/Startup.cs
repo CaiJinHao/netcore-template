@@ -25,6 +25,11 @@ namespace YourWebApiName.IdentityServer
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHsts(opts => {
+                opts.Preload = true;
+                opts.IncludeSubDomains = true;
+            });
+
             //注意必须要使用 dotnet 命令行启动  否则会爆rsa 文件错误
             //请求测试 路径 /.well-known/openid-configuration
             services.InitConfig(_s =>
@@ -57,6 +62,8 @@ namespace YourWebApiName.IdentityServer
 
             app.UseRouting();
             app.UseIdentityServer();
+            app.UseHsts();
+            app.UseHttpsRedirection();
 
             app.UseEndpoints(endpoints =>
             {

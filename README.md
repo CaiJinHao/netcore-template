@@ -10,13 +10,16 @@ netcore-api-template是一个基础项目模板，包含用户管理、菜单管
 使用BuildSlnRename 构建你的项目，将所有的<YourWebApiName>及命名空间修改，快速投入使用
 
 配置忽略文件：.gitignore
-使用vs2019，右键解决方案，将解决方案添加到代码管理。之后就自动生成了.gitignore。
+使用vs2019，右键解决方案，将解决方案添加到代码管理。之后自动生成.gitignore
 
 
-项目设计思想：
+项目设计：
 依赖倒置原则（DIP）设计
 控制反转（Ioc）设计
 依赖注入（DI）设计
+
+使用注意：
+每次修改Implement（实现层）Repository、Services，需要单独生成一下，发布时需要单独copy到发布目录
 
 
 计划采用：

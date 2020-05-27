@@ -92,8 +92,8 @@ namespace YourWebApiName.ApiServices.Extensions.Service
                 .AddJwtBearer("Bearer", options =>
                 {
                     options.Authority = jwtBearer.Authority;
-                    options.RequireHttpsMetadata = jwtBearer.RequireHttpsMetadata;
                     options.Audience = jwtBearer.Audience;
+                    options.RequireHttpsMetadata = jwtBearer.RequireHttpsMetadata;
                 });
             return services;
         }

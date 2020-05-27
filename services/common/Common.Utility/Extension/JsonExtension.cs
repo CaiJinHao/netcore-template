@@ -21,8 +21,9 @@ namespace Common.Utility.Extension
             Encoder = System.Text.Encodings.Web.JavaScriptEncoder.Create(UnicodeRanges.All),
             IgnoreNullValues = true,//忽略NULL
             PropertyNameCaseInsensitive=true,//区分大小写
-            PropertyNamingPolicy=null,//使用默认属性名
-            AllowTrailingCommas=true,//允许额外符号
+            //PropertyNamingPolicy=null,//使用默认属性名
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,//使用小写开头，小驼峰
+            AllowTrailingCommas =true,//允许额外符号
         };
 
         /// <summary>

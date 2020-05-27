@@ -38,21 +38,20 @@ namespace YourWebApiName.IdentityServer.Service
                 context.Result = new GrantValidationResult(TokenRequestErrors.InvalidClient, "验证用户服务响应失败,请联系管理员解决");
                 return;
             }
-            var content = await response.Content.ReadAsStringAsync();
-            var userApiResult = JsonConvert.DeserializeObject<dynamic>(content);
-            if ((int)userApiResult.Code != 0)
+            var responseContent = await response.Content.ReadAsStringAsync();
+            var apiResult = JsonConvert.DeserializeObject<dynamic>(responseContent);
+            if ((int)apiResult.code != 0)
             {
                 //验证失败
-                string errorMsg = userApiResult.Msg;
-                context.Result = new GrantValidationResult(TokenRequestErrors.UnauthorizedClient, errorMsg);
+                context.Result = new GrantValidationResult(TokenRequestErrors.UnauthorizedClient, apiResult.msg);
             }
             else
             {
                 //验证通过返回结果 
-                var user_id = (string)userApiResult.Result.user_id;//用户唯一标识
-                var role_id = (string)userApiResult.Result.role_id;//用户唯一标识
-                var role_name = (string)userApiResult.Result.role_name;//角色名称
-                var user_info = (string)userApiResult.Result.user_info;//用户信息jsonString
+                var user_id = (string)apiResult.result.user_id;//用户唯一标识
+                var role_id = (string)apiResult.result.role_id;//用户唯一标识
+                var role_name = (string)apiResult.result.role_name;//角色名称
+                var user_info = (string)apiResult.result.user_info;//用户信息jsonString
 
                 /*
                  Claim type必须小写，否则添加不到token中

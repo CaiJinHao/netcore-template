@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Hosting;
+锘縰sing Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -25,7 +25,7 @@ namespace YourWebApiName.IdentityServer
                                     .Build();
                     webBuilder.UseConfiguration(config);
                     webBuilder.ConfigureLogging(loggingBuilder => {
-                        //去除打印Info信息
+                        //鍘婚櫎鎵撳嵃Info淇℃伅
                         loggingBuilder.AddFilter(f => f == LogLevel.Error);
                     });
                     webBuilder.UseStartup<Startup>();

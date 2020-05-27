@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -30,8 +30,8 @@ namespace YourWebApiName.IdentityServer
                 opts.IncludeSubDomains = true;
             });
 
-            //±¨´í£¬ÇëÇå³ıµôtempkey.rsaÔÙÆô¶¯
-            //ÇëÇó²âÊÔ Â·¾¶ /.well-known/openid-configuration
+            //æŠ¥é”™ï¼Œè¯·æ¸…é™¤æ‰tempkey.rsaå†å¯åŠ¨
+            //è¯·æ±‚æµ‹è¯• è·¯å¾„ /.well-known/openid-configuration
             services.InitConfig(_s =>
                     {
                         using (var _service = _s.BuildServiceProvider())
@@ -47,8 +47,8 @@ namespace YourWebApiName.IdentityServer
                                                     //.AddInMemoryIdentityResources(IdentityConfigService.GetIdentityResourceResources())
                     .AddInMemoryApiResources(IdentityConfigService.GetApiResources(IdentityConfigService.AppSettings.ApiResource))
                     .AddInMemoryClients(IdentityConfigService.GetClients(IdentityConfigService.AppSettings.Clients))
-                    .AddResourceOwnerValidator<CustomResourceOwnerPasswordValidator>()  //ÏÈÖ´ĞĞ  ÑéÖ¤ÓÃ»§ÃûÃÜÂëÊÇ·ñÕıÈ·
-                    //.AddProfileService<CustomProfileService>()//ºóÖ´ĞĞ
+                    .AddResourceOwnerValidator<CustomResourceOwnerPasswordValidator>()  //å…ˆæ‰§è¡Œ  éªŒè¯ç”¨æˆ·åå¯†ç æ˜¯å¦æ­£ç¡®
+                    //.AddProfileService<CustomProfileService>()//åæ‰§è¡Œ
                     ;
         }
 

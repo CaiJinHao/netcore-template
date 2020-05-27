@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,12 +16,12 @@ using YourWebApiName.ApiServices.Extensions.Middleware;
 namespace YourWebApiName.ApiServices
 {
    /// <summary>
-   /// Æô¶¯Àà
+   /// å¯åŠ¨ç±»
    /// </summary>
     public class Startup
     {
         /// <summary>
-        /// Æô¶¯¹¹Ôìº¯ÊıDI
+        /// å¯åŠ¨æ„é€ å‡½æ•°DI
         /// </summary>
         /// <param name="env"></param>
         public Startup(IWebHostEnvironment env)
@@ -32,7 +32,7 @@ namespace YourWebApiName.ApiServices
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         /// <summary>
-        /// ÅäÖÃ·şÎñ
+        /// é…ç½®æœåŠ¡
         /// </summary>
         /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
@@ -41,7 +41,7 @@ namespace YourWebApiName.ApiServices
         }
 
         /// <summary>
-        /// AutoFacµ÷ÓÃ
+        /// AutoFacè°ƒç”¨
         /// </summary>
         /// <param name="builder"></param>
         public void ConfigureContainer(ContainerBuilder builder)
@@ -77,7 +77,7 @@ namespace YourWebApiName.ApiServices
 
 
             /*
-             * // Ê¹ÓÃ·şÎñÌá¹©Õß»ñÈ¡·şÎñ
+             * // ä½¿ç”¨æœåŠ¡æä¾›è€…è·å–æœåŠ¡
             using (var container = host.Services.CreateScope())
             {
                 container.ServiceProvider.GetService<IEmailWarningService>();

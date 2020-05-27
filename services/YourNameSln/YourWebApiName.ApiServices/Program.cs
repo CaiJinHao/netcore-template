@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -19,7 +19,7 @@ namespace YourWebApiName.ApiServices
     public class Program
     {
         /// <summary>
-        /// Ö÷³ÌĞòÈë¿Ú
+        /// ä¸»ç¨‹åºå…¥å£
         /// </summary>
         /// <param name="args"></param>
         public static void Main(string[] args)
@@ -29,13 +29,13 @@ namespace YourWebApiName.ApiServices
         }
 
         /// <summary>
-        /// ´´½¨webÖ÷»ú
+        /// åˆ›å»ºwebä¸»æœº
         /// </summary>
         /// <param name="args"></param>
         /// <returns></returns>
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .UseServiceProviderFactory(new AutofacServiceProviderFactory())//ÈİÆ÷Ìæ»»
+                .UseServiceProviderFactory(new AutofacServiceProviderFactory())//å®¹å™¨æ›¿æ¢
                 .ConfigureLogging((loggingBuilder) =>
                 {
                     //Replace the default Logging with Log4Net
@@ -43,9 +43,9 @@ namespace YourWebApiName.ApiServices
                 })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    /*                    ²»Ó¦Ê¹ÓÃ¶¥¼¶Í¨Åä·û°ó¶¨£¨http: //*:80/ ºÍ http://+:80£©¡£ ¶¥¼¶Í¨Åä·û°ó¶¨»á´øÀ´Ó¦ÓÃ°²È«Â©¶´¡£
-                                        ÇëÊ¹ÓÃÏÔÊ½Ö÷»úÃû»òIP µØÖ·£¬¶ø²»ÊÇÍ¨Åä·û¡£ 
-                                        Èç¹û¿É¿ØÖÆÕû¸ö¸¸Óò£¨Ïà¶ÔÓÚÒ×ÊÜ¹¥»÷µÄ *.com£©£¬×ÓÓòÍ¨Åä·û°ó¶¨£¨ÀıÈç£¬*.mysub.com£©²»»á¹¹³É°²È«·çÏÕ
+                    /*                    ä¸åº”ä½¿ç”¨é¡¶çº§é€šé…ç¬¦ç»‘å®šï¼ˆhttp: //*:80/ å’Œ http://+:80ï¼‰ã€‚ é¡¶çº§é€šé…ç¬¦ç»‘å®šä¼šå¸¦æ¥åº”ç”¨å®‰å…¨æ¼æ´ã€‚
+                                        è¯·ä½¿ç”¨æ˜¾å¼ä¸»æœºåæˆ–IP åœ°å€ï¼Œè€Œä¸æ˜¯é€šé…ç¬¦ã€‚ 
+                                        å¦‚æœå¯æ§åˆ¶æ•´ä¸ªçˆ¶åŸŸï¼ˆç›¸å¯¹äºæ˜“å—æ”»å‡»çš„ *.comï¼‰ï¼Œå­åŸŸé€šé…ç¬¦ç»‘å®šï¼ˆä¾‹å¦‚ï¼Œ*.mysub.comï¼‰ä¸ä¼šæ„æˆå®‰å…¨é£é™©
                                         http://192.168.1.88:9001*/
 
                     var _path = Directory.GetCurrentDirectory();
@@ -64,7 +64,7 @@ namespace YourWebApiName.ApiServices
 
 
         /// <summary>
-        /// ³õÊ¼»¯Ä¿Â¼
+        /// åˆå§‹åŒ–ç›®å½•
         /// </summary>
         private static void InitDirectory()
         {

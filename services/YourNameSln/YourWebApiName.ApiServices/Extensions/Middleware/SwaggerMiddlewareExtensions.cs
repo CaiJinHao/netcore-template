@@ -62,7 +62,7 @@ namespace YourWebApiName.ApiServices.Extensions.Middleware
                 //ui.SupportedSubmitMethods();
 
                 // Other
-                ui.DocumentTitle = "云盒 RESTfull Api";
+                ui.DocumentTitle = "你的项目名称 RESTfull Api";
                 ui.InjectStylesheet("/ext/custom-stylesheet.css");
                 ui.InjectJavascript("/ext/custom-javascript.js");
             });

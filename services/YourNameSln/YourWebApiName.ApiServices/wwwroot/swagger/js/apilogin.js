@@ -14,8 +14,8 @@
             if(login_info_str!=null)
             {
                 var login_info=JSON.parse(login_info_str);
-                $('#UserName').val(login_info.IotKey);
-                $('#Password').val(login_info.IotSecret);
+                $('#UserName').val(login_info.Key);
+                $('#Password').val(login_info.Secret);
                 $('#remember-me').prop('checked',true);
             }
         }
@@ -27,8 +27,8 @@
         event.preventDefault();
         var remember_me=$('#remember-me').prop('checked');
         var login_info = {
-            IotKey: $('#UserName').val(),
-            IotSecret: $('#Password').val()
+            Key: $('#UserName').val(),
+            Secret: $('#Password').val()
         };
         if(remember_me)
         {

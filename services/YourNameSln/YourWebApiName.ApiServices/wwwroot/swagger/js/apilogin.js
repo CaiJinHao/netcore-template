@@ -40,11 +40,11 @@
             data: JSON.stringify(login_info),
             contentType: 'application/json;charset=utf-8',
             success: function (api_result) {
-                if (api_result.Code === 0) {
-                    sessionStorage.setItem('restapi_session_key', JSON.stringify(api_result.Result));
+                if (api_result.code === 0) {
+                    sessionStorage.setItem('restapi_session_key', JSON.stringify(api_result.result));
                     location.href='/restapi/';
                 } else {
-                    page.prompt("登录错误提示",api_result.Msg,3000);
+                    page.prompt("登录错误提示",api_result.msg,3000);
                 }
             }
         });

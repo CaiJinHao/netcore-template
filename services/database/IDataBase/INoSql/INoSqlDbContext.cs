@@ -7,6 +7,13 @@ namespace IDataBase.INoSql
     /// </summary>
     public interface INoSqlDbContext<TPrimaryKey> : IDbContextInteraction<TPrimaryKey>
     {
+        /// <summary>
+        /// 获取指定
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Task<TTableModel> GetModelAsync<Tid, TTableModel>(Tid id) where TTableModel : class, new();
+
         /*
          U
          根据主键更新对象中的指定属性

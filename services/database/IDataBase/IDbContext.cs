@@ -34,6 +34,14 @@ namespace IDataBase
         /// <returns></returns>
         IEnumerable<string> GetFields<TTableModel>(List<string> notInFields = null);
         /// <summary>
+        /// 获取用","号隔开的字段
+        /// </summary>
+        /// <typeparam name="TTableModel"></typeparam>
+        /// <param name="fieldTableName">字段表别名前缀</param>
+        /// <param name="fields">结果字段集合</param>
+        /// <returns></returns>
+        string GetFieldsToString<TTableModel>(string fieldTableName, IEnumerable<string> fields = null);
+        /// <summary>
         /// 根据Model生成查询SQL
         /// </summary>
         /// <typeparam name="TModel"></typeparam>

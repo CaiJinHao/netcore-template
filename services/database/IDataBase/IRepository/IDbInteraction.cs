@@ -15,12 +15,7 @@ namespace IDataBase.IRepository
         /// 当前数据仓库的表名称
         /// </summary>
         string tableName { get; set; }
-        /*
-         Create 
-         创建一个对象
-         创建一个数组对象
-             */
-       
+
         /// <summary>
         /// 创建一个数组对象
         /// </summary>
@@ -28,32 +23,21 @@ namespace IDataBase.IRepository
         /// <returns></returns>
         Task<bool> CreateAsync(TTableModel[] models);
 
-/*        /// <summary>
-        /// 获取信息名称数据供下拉列表使用
-        /// </summary>
-        /// <typeparam name="TTableModel"></typeparam>
-        /// <returns></returns>
-        Task<IEnumerable<dynamic>> GetNamesAsync(TRequestModel queryParameter);*/
+        /*        /// <summary>
+                /// 获取信息名称数据供下拉列表使用
+                /// </summary>
+                /// <typeparam name="TTableModel"></typeparam>
+                /// <returns></returns>
+                Task<IEnumerable<dynamic>> GetNamesAsync(TRequestModel queryParameter);*/
+
         /// <summary>
         /// 获取当前model表
         /// </summary>
-        /// <param name="queryParameter"></param>
+        /// <param name="queryParameter">过滤条件</param>
+        /// <param name="fields">结果字段集合</param>
         /// <returns></returns>
-        Task<IEnumerable<TTableModel>> GetCurrentModelsAsync(TRequestModel queryParameter);
+        Task<IEnumerable<TTableModel>> GetCurrentModelsAsync(TRequestModel queryParameter,IEnumerable<string> fields=null);
 
-
-        /*
-         U
-         根据主键更新对象中的指定属性
-         */
-        
-
-
-        /*
-         Delete 
-         删除存在id的所有对象
-             */
-        
         /// <summary>
         /// 根据条件删除多条数据
         /// </summary>

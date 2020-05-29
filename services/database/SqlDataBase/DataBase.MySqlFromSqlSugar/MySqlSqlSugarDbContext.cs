@@ -52,7 +52,7 @@ namespace DataBase.MySqlFromSqlSugar
             return await CreateConnection().Deleteable<TTableModel>().In(id).ExecuteCommandAsync();
         }
 
-        public async Task<TTableModel> GetModelAsync<Tid, TTableModel>(Tid id) where TTableModel : class, new()
+        public async Task<TTableModel> GetModelAsync<Tid, TTableModel>(Tid id, IEnumerable<string> fields = null) where TTableModel : class, new()
         {
             var keyName = GetKeyName<TTableModel>();
             return await CreateConnection().SqlQueryable<TTableModel>($"select * from {GetTableName<TTableModel>()}")

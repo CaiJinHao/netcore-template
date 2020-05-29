@@ -35,20 +35,23 @@ namespace IDataBase.IServices
         /// 获取指定
         /// </summary>
         /// <param name="id"></param>
+        /// <param name="fields">结果字段集合</param>
         /// <returns></returns>
-        Task<TTableModel> GetModelAsync(Tid id);
+        Task<TTableModel> GetModelAsync(Tid id, IEnumerable<string> fields = null);
         /// <summary>
         /// 获取表中有条件的数据
         /// </summary>
         /// <param name="queryParameter"></param>
+        /// <param name="fields">结果字段集合</param>
         /// <returns></returns>
-        Task<IEnumerable<TResponeModel>> GetModelsAsync(TRequestModel queryParameter);
+        Task<IEnumerable<TResponeModel>> GetModelsAsync(TRequestModel queryParameter, IEnumerable<string> fields = null);
         /// <summary>
         /// 获取分页数据
         /// </summary>
         /// <param name="pagingModel">分页器</param>
         /// <param name="queryParameter">查询对象</param>
+        /// <param name="fields">结果字段集合</param>
         /// <returns></returns>
-        Task<IEnumerable<TResponeModel>> GetModelsAsync(TPagingModel pagingModel, TRequestModel queryParameter);
+        Task<IEnumerable<TResponeModel>> GetModelsAsync(TPagingModel pagingModel, TRequestModel queryParameter, IEnumerable<string> fields = null);
     }
 }

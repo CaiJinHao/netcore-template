@@ -32,19 +32,23 @@ namespace YourWebApiName.Services.DbServices
             return await sysRolesRepository.DeleteAsync(id);
         }
 
-        public async Task<SysRolesModel> GetModelAsync(string id)
+        public async Task<SysRolesModel> GetModelAsync(string id, IEnumerable<string> fields = null)
         {
-            return await sysRolesRepository.GetModelAsync(id);
+            return await sysRolesRepository.GetModelAsync(id, fields);
         }
 
-        public async Task<IEnumerable<SysRolesResponeModel>> GetModelsAsync(SysRolesRequestModel queryParameter)
+        public async Task<IEnumerable<SysRolesResponeModel>> GetModelsAsync(SysRolesRequestModel queryParameter, IEnumerable<string> fields = null)
         {
-            return await sysRolesRepository.GetModelsAsync(queryParameter);
+            return await sysRolesRepository.GetModelsAsync(queryParameter, fields);
         }
 
-        public async Task<IEnumerable<SysRolesResponeModel>> GetModelsAsync(PagingModel pagingModel, SysRolesRequestModel queryParameter)
+        public async Task<IEnumerable<SysRolesResponeModel>> GetModelsAsync(PagingModel pagingModel, SysRolesRequestModel queryParameter, IEnumerable<string> fields = null)
         {
-            return await sysRolesRepository.GetModelsAsync(pagingModel, queryParameter);
+            fields = new List<string>() {
+               "role_id",
+               "role_name"
+            };
+            return await sysRolesRepository.GetModelsAsync(pagingModel, queryParameter, fields);
         }
 
         public async Task<long> UpdateModelAsync(string id, SysRolesModel model)

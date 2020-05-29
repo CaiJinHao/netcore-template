@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace IDataBase.ISql
 {
@@ -9,6 +10,12 @@ namespace IDataBase.ISql
     /// </summary>
     public interface ISqlDbContext: IDbContextInteraction<string>
     {
+        /// <summary>
+        /// 获取指定
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Task<TTableModel> GetModelAsync<Tid, TTableModel>(Tid id, IEnumerable<string> fields = null) where TTableModel : class, new();
         /// <summary>
         /// 根据主键更新对象中的指定属性
         /// </summary>

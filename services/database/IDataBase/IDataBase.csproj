@@ -2,7 +2,7 @@
 
   <PropertyGroup>
 	  <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
-	  <Version>0.0.5</Version>
+	  <Version>0.0.7</Version>
 	  <AssemblyName>IDataBase</AssemblyName>
 	  <RootNamespace>IDataBase</RootNamespace>
 	  <Description>IDataBase is a database connection - driven base class</Description>

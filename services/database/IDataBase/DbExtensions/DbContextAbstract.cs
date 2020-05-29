@@ -54,6 +54,22 @@ namespace IDataBase.DbExtensions
         }
 
         /// <summary>
+        /// 获取用","号隔开的字段
+        /// </summary>
+        /// <typeparam name="TTableModel"></typeparam>
+        /// <param name="fieldTableName">字段表别名前缀</param>
+        /// <param name="fields"></param>
+        /// <returns></returns>
+        public string GetFieldsToString<TTableModel>(string fieldTableName,IEnumerable<string> fields = null)
+        {
+            if (fields == null)
+            {
+                fields = GetFields<TTableModel>();
+            }
+            return string.Join(",", fields.Select(a => $"{fieldTableName}.{a}"));
+        }
+
+        /// <summary>
         /// 根据Model生成查询SQL
         /// </summary>
         /// <typeparam name="TModel"></typeparam>

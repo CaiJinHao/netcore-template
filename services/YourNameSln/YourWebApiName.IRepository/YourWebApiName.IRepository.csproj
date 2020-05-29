@@ -3,12 +3,9 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="IDataBase" Version="0.0.5" />
-  </ItemGroup>
   
   <ItemGroup>
+    <ProjectReference Include="..\..\database\IDataBase\IDataBase.csproj" />
     <ProjectReference Include="..\YourWebApiName.Models\YourWebApiName.Models.csproj" />
   </ItemGroup>
 

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace IDataBase
 {
@@ -37,21 +38,6 @@ namespace IDataBase
         /// <param name="models"></param>
         /// <returns></returns>
         Task<bool> CreateAsync<TTableModel>(TTableModel[] models) where TTableModel : class, new();
-
-        /*
-         Retrieve 读取
-         获取指定
-         获取表中所有数据
-         获取表中所有数据,根据多条件查询过滤
-         获取表中所有数据,根据多条件查询过滤,并且分页处理
-         获取表中所有数据总数量
-             */
-        /// <summary>
-        /// 获取指定
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        Task<TTableModel> GetModelAsync<Tid, TTableModel>(Tid id) where TTableModel : class, new();
 
         /*
          Delete 

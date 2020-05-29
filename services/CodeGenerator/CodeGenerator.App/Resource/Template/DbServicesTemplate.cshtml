@@ -45,19 +45,19 @@ namespace @(table.name_space).Services.DbServices
             return await @(table_name_camel)Repository.DeleteAsync(id);
         }
 
-        public async Task<@(table_name_pascal)Model> GetModelAsync(@(primary_key_data_type) id)
+        public async Task<@(table_name_pascal)Model> GetModelAsync(@(primary_key_data_type) id, IEnumerable<string> fields = null)
         {
-            return await @(table_name_camel)Repository.GetModelAsync(id);
+            return await @(table_name_camel)Repository.GetModelAsync(id, fields);
         }
 
-        public async Task<IEnumerable<@(table_name_pascal)ResponeModel>> GetModelsAsync(@(table_name_pascal)RequestModel queryParameter)
+        public async Task<IEnumerable<@(table_name_pascal)ResponeModel>> GetModelsAsync(@(table_name_pascal)RequestModel queryParameter, IEnumerable<string> fields = null)
         {
-            return await @(table_name_camel)Repository.GetModelsAsync(queryParameter);
+            return await @(table_name_camel)Repository.GetModelsAsync(queryParameter, fields);
         }
 
-        public async Task<IEnumerable<@(table_name_pascal)ResponeModel>> GetModelsAsync(PagingModel pagingModel, @(table_name_pascal)RequestModel queryParameter)
+        public async Task<IEnumerable<@(table_name_pascal)ResponeModel>> GetModelsAsync(PagingModel pagingModel, @(table_name_pascal)RequestModel queryParameter, IEnumerable<string> fields = null)
         {
-            return await @(table_name_camel)Repository.GetModelsAsync(pagingModel, queryParameter);
+            return await @(table_name_camel)Repository.GetModelsAsync(pagingModel, queryParameter, fields);
         }
 
         public async Task<long> UpdateModelAsync(@(primary_key_data_type) id, @(table_name_pascal)Model model)

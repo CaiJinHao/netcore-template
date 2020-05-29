@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using IDataBase.DbExtensions;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -55,12 +56,11 @@ namespace DataBase.DapperForSqlServer
             }
         }
 
-        public async Task<TTableModel> GetModelAsync<Tid, TTableModel>(Tid id) where TTableModel : class, new()
+        public async Task<TTableModel> GetModelAsync<Tid, TTableModel>(Tid id, IEnumerable<string> fields = null) where TTableModel : class, new()
         {
             using (var conn = CreateConnection())
             {
-                var fields = GetFields<TTableModel>();
-                var strFieldNames = string.Join(",", fields);
+                var strFieldNames = GetFieldsToString<TTableModel>("A", fields);
                 var keyName = GetKeyName<TTableModel>();
                 var sql = $"SELECT {strFieldNames} FROM {GetTableName<TTableModel>()} AS A WHERE {keyName}=@key";
                 var models = await conn.QueryAsync<TTableModel>(sql, new { key = id });

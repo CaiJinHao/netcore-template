@@ -47,8 +47,16 @@ namespace YourWebApiName.ApiServices.DefaultApi
         private async Task<VerifyUserModel> VerifyUser(string key, string secret)
         {
             await Task.Delay(1);
-            var pwd = key + secret;
-            pwd = EncrypHelper.EncryptToMD5(pwd);
+            var pwd = string.Empty;
+            //判断密码是不是md5密码
+            if (EncrypHelper.IsMd5(secret))
+            {
+                pwd = secret;
+            }
+            else
+            {
+                pwd = EncrypHelper.EncryptToMD5(key + secret);
+            }
             var user = new { user_id = "woshiuserid", role_name = "角色名称" };
             if (user == null)
             {
@@ -56,13 +64,12 @@ namespace YourWebApiName.ApiServices.DefaultApi
                 return null;
             }
 
-            var tokenUserJson = JsonSerializer.Serialize(new { key, secret });
             return new VerifyUserModel()
             {
                 user_id = user.user_id,
                 role_id = "none",
                 role_name = user.role_name,
-                user_info = tokenUserJson
+                user_info = string.Empty
             };
         }
     }

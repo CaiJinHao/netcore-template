@@ -50,6 +50,53 @@ namespace Common.Utility.Encryption
             }
         }
 
+        /// <summary>
+        /// 验证值是否为md5，自己写的需要验证
+        /// </summary>
+        /// <param name="md5Val"></param>
+        /// <returns></returns>
+        public static bool IsMd5(string md5Val)
+        {
+            var md5Chars = md5Val.AsSpan();
+            if (md5Chars.Length == 32)
+            {
+                foreach (var item in md5Chars)
+                {
+                    switch (item)
+                    {
+                        case '0':
+                        case '1':
+                        case '2':
+                        case '3':
+                        case '4':
+                        case '5':
+                        case '6':
+                        case '7':
+                        case '8':
+                        case '9':
+                        case 'a':
+                        case 'A':
+                        case 'b':
+                        case 'B':
+                        case 'c':
+                        case 'C':
+                        case 'd':
+                        case 'D':
+                        case 'e':
+                        case 'E':
+                        case 'f':
+                        case 'F':
+                            {
+                                return true;
+                            }
+                        default:
+                            break;
+                    }
+                }
+            }
+            return false;
+        }
+
         /// <summary>
         /// 缺省的密钥
         /// </summary>

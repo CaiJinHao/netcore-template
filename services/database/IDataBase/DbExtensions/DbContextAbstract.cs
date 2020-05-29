@@ -66,7 +66,14 @@ namespace IDataBase.DbExtensions
             {
                 fields = GetFields<TTableModel>();
             }
-            return string.Join(",", fields.Select(a => $"{fieldTableName}.{a}"));
+            if (string.IsNullOrEmpty(fieldTableName))
+            {
+                return string.Join(",", fields);
+            }
+            else
+            {
+                return string.Join(",", fields.Select(a => $"{fieldTableName}.{a}"));
+            }
         }
 
         /// <summary>

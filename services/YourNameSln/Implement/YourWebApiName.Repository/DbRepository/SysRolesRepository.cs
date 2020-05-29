@@ -1,5 +1,9 @@
+
+
+using Common.Utility.Extension;
 using Common.Utility.Models.HttpModels;
 using Dapper;
+using System;
 using DataBase.DapperForSqlServer;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -8,7 +12,7 @@ using YourWebApiName.Models.DbModels;
 using YourWebApiName.Models.RequestModels;
 using YourWebApiName.Models.ResponeModels;
 
-namespace YourWebApiName.MongoRepository.DbRepository
+namespace YourWebApiName.Repository.DbRepository
 {
     public class SysRolesRepository : ISysRolesRepository
     {
@@ -24,8 +28,6 @@ namespace YourWebApiName.MongoRepository.DbRepository
        {
             tableName = "sys_roles";
        }
-
-
 
         public ISqlServerDbContext DbContext { get; set; }
 
@@ -71,7 +73,7 @@ namespace YourWebApiName.MongoRepository.DbRepository
             using (var conn = DbContext.CreateConnection())
             {
                 var strWhere = GetQuery(queryParameter);
-                var strFieldNames = DbContext.GetFieldsToString<SysRolesModel>("b1", fields);
+            var strFieldNames = DbContext.GetFieldsToString<SysRolesModel>("b1", fields);
                 var dataQuery = $"SELECT {strFieldNames} FROM {tableName} b1 WHERE 1=1 {strWhere} ORDER BY b1.role_id ASC";
                 return await conn.QueryAsync<SysRolesModel>(dataQuery, queryParameter);
             }
@@ -82,7 +84,7 @@ namespace YourWebApiName.MongoRepository.DbRepository
             using (var conn = DbContext.CreateConnection())
             {
                 var strWhere = GetQuery(queryParameter);
-                var strFieldNames = DbContext.GetFieldsToString<SysRolesModel>("b1", fields);
+            var strFieldNames = DbContext.GetFieldsToString<SysRolesModel>("b1", fields);
                 var dataQuery = $"SELECT b1_result.* FROM (SELECT {strFieldNames} FROM {tableName}  b1 WHERE 1=1 {strWhere}) b1_result ORDER BY b1_result.role_id ASC";//内查询，可以做连接查询 直接join
                 return await conn.QueryAsync<SysRolesResponeModel>(dataQuery, queryParameter);
             }

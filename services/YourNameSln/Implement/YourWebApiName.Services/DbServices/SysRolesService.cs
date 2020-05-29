@@ -1,3 +1,6 @@
+
+
+using System;
 using Common.Utility.Models.HttpModels;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -12,7 +15,7 @@ namespace YourWebApiName.Services.DbServices
     public class SysRolesService : ISysRolesService
     {
         /// <summary>
-        /// 服务 DbServices 系统_角色
+        /// 服务 DbServices sys_roles
         /// </summary>
         public SysRolesService()
         {
@@ -44,10 +47,6 @@ namespace YourWebApiName.Services.DbServices
 
         public async Task<IEnumerable<SysRolesResponeModel>> GetModelsAsync(PagingModel pagingModel, SysRolesRequestModel queryParameter, IEnumerable<string> fields = null)
         {
-            fields = new List<string>() {
-               "role_id",
-               "role_name"
-            };
             return await sysRolesRepository.GetModelsAsync(pagingModel, queryParameter, fields);
         }
 

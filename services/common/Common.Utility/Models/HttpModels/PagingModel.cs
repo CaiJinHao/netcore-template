@@ -67,6 +67,6 @@ namespace Common.Utility.Models.HttpModels
         /// 0：分页数据
         /// 1：所有数据查询，不带分页
         /// </summary>
-        public int Oprator { get; set; }
+        public int Operator { get; set; }
     }
 }

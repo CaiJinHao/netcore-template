@@ -62,14 +62,23 @@ namespace IDataBase.DbExtensions
         /// <returns></returns>
         public string GetFieldsToString<TTableModel>(string fieldTableName,IEnumerable<string> fields = null)
         {
+            var isAutoFields = false;
             if (fields == null)
             {
                 fields = GetFields<TTableModel>();
+                isAutoFields = true;
             }
             if (string.IsNullOrEmpty(fieldTableName))
             {
                 //注意每个数据库的标识方法不一样 SQL SERVER []/MYSQL ``
-                return string.Join(",", fields.Select(a => $"[{a}]"));
+                if (isAutoFields)
+                {
+                    return string.Join(",", fields.Select(a => $"[{a}]"));
+                }
+                else
+                {
+                    return string.Join(",", fields);//为了支持case when 等其他语句
+                }
             }
             else
             {

@@ -68,11 +68,12 @@ namespace IDataBase.DbExtensions
             }
             if (string.IsNullOrEmpty(fieldTableName))
             {
-                return string.Join(",", fields);
+                //注意每个数据库的标识方法不一样 SQL SERVER []/MYSQL ``
+                return string.Join(",", fields.Select(a => $"[{a}]"));
             }
             else
             {
-                return string.Join(",", fields.Select(a => $"{fieldTableName}.{a}"));
+                return string.Join(",", fields.Select(a => $"{fieldTableName}.[{a}]"));
             }
         }
 

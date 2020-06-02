@@ -101,7 +101,7 @@ namespace IDataBase.DbExtensions
                 sqlWhere.Append($" AND b1.{_field.Name} = @{_field.Name}");
             };
 
-            var filedsInfo = model.GetType().GetProperties();
+            var filedsInfo = typeof(TModel).GetProperties();
             foreach (var _field in filedsInfo)
             {
                 var v = _field.GetValue(model, null);
@@ -154,9 +154,11 @@ namespace IDataBase.DbExtensions
                                 }
                             }
                             break;
-                        case "DateTime": { } break;
+                        case "DateTime": 
+                        case "Boolean":
                         default:
-                            throw new Exception("没有匹配的类型");
+                            break;
+                            //throw new Exception("没有匹配的类型");
                     }
                 }
             }

@@ -1,7 +1,10 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using IDataBase.DbExtensions;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using YourWebApiName.Models.DbModels;
+using YourWebApiName.Models.RequestModels;
 
 namespace ApiServices.Test.OtherTest
 {
@@ -11,8 +14,15 @@ namespace ApiServices.Test.OtherTest
         [TestMethod]
         public void ObjectEquest()
         {
-            var _t = "这是一个字符串";
-            var _type = _t.GetType();
+            //var _t = false;
+            //var _type = _t.GetType();
+            //Console.WriteLine(_type.FullName);
+            var t = new SysRolesRequestModel() {
+                Test=false,
+                 role_id="123"
+            };
+            var s= new DbContextAbstract().GetSqlQueryString<SysRolesModel>(t);
+            Console.WriteLine(s);
         }
     }
 }

@@ -80,7 +80,7 @@ namespace @(name_space).Repository.DbRepository
                 default:
                     {
                         //如果需要模糊查询请处理参数值添加%
-                        return DbContext.GetSqlQueryString(queryParameter);
+                        return DbContext.GetSqlQueryString<@(table_name_pascal)Model>(queryParameter);
                     }
             }
         }

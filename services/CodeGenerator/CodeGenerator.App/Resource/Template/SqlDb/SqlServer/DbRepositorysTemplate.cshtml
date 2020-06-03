@@ -79,8 +79,10 @@ namespace @(name_space).Repository.DbRepository
             {
                 default:
                     {
+                        var sb = new StringBuilder();
                         //如果需要模糊查询请处理参数值添加%
-                        return DbContext.GetSqlQueryString<@(table_name_pascal)Model>(queryParameter);
+                        sb.Append(DbContext.GetSqlQueryString<@(table_name_pascal)Model>(queryParameter));
+                        return sb.ToString();
                     }
             }
         }

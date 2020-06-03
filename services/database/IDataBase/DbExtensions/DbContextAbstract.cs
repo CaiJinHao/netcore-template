@@ -43,10 +43,10 @@ namespace IDataBase.DbExtensions
         /// </summary>
         /// <typeparam name="TTableModel"></typeparam>
         /// <returns></returns>
-        public IEnumerable<string> GetFields<TTableModel>(List<string> notInFields = null)
+        public IEnumerable<string> GetFields<TTableModel>(string[] notInFields = null)
         {
             var fields = ReflectHelper.GetFieldsByAttribute<TTableModel>();
-            if (notInFields != null && notInFields.Count > 0)
+            if (notInFields != null && notInFields.Length > 0)
             {
                 return fields.Where(a => !notInFields.Contains(a));
             }
@@ -92,7 +92,7 @@ namespace IDataBase.DbExtensions
         /// <typeparam name="TModel"></typeparam>
         /// <param name="model"></param>
         /// <returns></returns>
-        public string GetSqlQueryString<TModel>(TModel model)
+        public string GetSqlQueryString<TModel>(TModel model, string[] notInFields = null)
         {
             var sqlWhere = new StringBuilder();//查询条件
 
@@ -101,8 +101,12 @@ namespace IDataBase.DbExtensions
                 sqlWhere.Append($" AND b1.{_field.Name} = @{_field.Name}");
             };
 
-            var filedsInfo = typeof(TModel).GetProperties();
-            foreach (var _field in filedsInfo)
+            var fieldsInfo = typeof(TModel).GetProperties();
+            if (notInFields != null)
+            {
+                fieldsInfo = fieldsInfo.Where(a => !notInFields.Contains(a.Name)).ToArray();//不包含字段集合的字段
+            }
+            foreach (var _field in fieldsInfo)
             {
                 var v = _field.GetValue(model, null);
                 if (v != null)

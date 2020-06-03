@@ -14,12 +14,10 @@ namespace ApiServices.Test.OtherTest
         [TestMethod]
         public void ObjectEquest()
         {
-            //var _t = false;
-            //var _type = _t.GetType();
-            //Console.WriteLine(_type.FullName);
             var t = new SysRolesRequestModel() {
                 Test=false,
-                 role_id="123"
+                 role_id="123",
+                  role_name="tearfsadsfsadfsa"
             };
             var s= new DbContextAbstract().GetSqlQueryString<SysRolesModel>(t);
             Console.WriteLine(s);

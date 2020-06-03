@@ -32,7 +32,7 @@ namespace IDataBase
         /// <typeparam name="TTableModel"></typeparam>
         /// <param name="notInFields"></param>
         /// <returns></returns>
-        IEnumerable<string> GetFields<TTableModel>(List<string> notInFields = null);
+        IEnumerable<string> GetFields<TTableModel>(string[] notInFields = null);
         /// <summary>
         /// 获取用","号隔开的字段
         /// </summary>
@@ -47,7 +47,7 @@ namespace IDataBase
         /// <typeparam name="TModel"></typeparam>
         /// <param name="model"></param>
         /// <returns></returns>
-        string GetSqlQueryString<TModel>(TModel model);
+        string GetSqlQueryString<TModel>(TModel model, string[] notInFields = null);
         /// <summary>
         /// 根据Model生成更新的SQL
         /// </summary>

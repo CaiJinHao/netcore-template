@@ -74,7 +74,7 @@ namespace DataBase.MySqlFromSqlSugar
         public async Task<long> UpdateModelAsync<Tid, TTableModel>(Tid id, TTableModel model) where TTableModel : class, new()
         {
             var keyName = GetKeyName<TTableModel>();
-            var fields = GetFields<TTableModel>(new List<string>() { keyName });
+            var fields = GetFields<TTableModel>(new string[] { keyName });
             var strFieldNames = string.Empty;
             foreach (var item in fields)
             {

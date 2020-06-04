@@ -23,5 +23,13 @@ namespace IDataBase.ISql
         /// <param name="model">只更新有值得，为null类型的不更新</param>
         /// <returns></returns>
         Task<long> UpdateModelAsync<Tid, TTableModel>(Tid id, TTableModel model) where TTableModel : class, new();
+        /// <summary>
+        /// 自增使用
+        /// </summary>
+        /// <typeparam name="TTableModel"></typeparam>
+        /// <param name="model"></param>
+        /// <param name="notInFields">自增需要排除字段</param>
+        /// <returns>返回自增值</returns>
+        Task<long> CreateAsync<TTableModel>(TTableModel model, string[] notInFields) where TTableModel : class, new();
     }
 }

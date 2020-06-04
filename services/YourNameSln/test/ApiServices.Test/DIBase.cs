@@ -15,7 +15,8 @@ namespace ApiServices.Test
         public IContainer container { get; set; }
         public DIBase()
         {
-            StaticConfig.ContentRootPath = @"E:\Coding\2020\webapicommon\services\YourNameSln\YourWebApiName.ApiServices";
+            var basePath = @"E:\MyWork\webapicommon\services\YourNameSln\YourWebApiName.ApiServices";
+            StaticConfig.ContentRootPath = basePath + @"\bin\Debug\netcoreapp3.1";
             container = DICollections();
             AutofacHelper.Container = container;
         }

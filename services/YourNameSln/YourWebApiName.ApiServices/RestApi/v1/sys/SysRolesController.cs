@@ -34,7 +34,7 @@ namespace YourWebApiName.ApiServices.RestApi.v1.sys
         public async Task<IActionResult> Get([FromQuery]PagingModel paging, [FromQuery]SysRolesRequestModel queryParameter)
         {
             var apiResult = new ApiResultModel(ErrorCodeType.Success);
-            switch (paging.Operator)
+            switch (paging.Oprator)
             {
                 default:
                     {

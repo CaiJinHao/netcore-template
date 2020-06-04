@@ -47,6 +47,11 @@ namespace DataBase.MySqlFromSqlSugar
             return r > 0;
         }
 
+        public Task<long> CreateAsync<TTableModel>(TTableModel model, string[] notInFields) where TTableModel : class, new()
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<long> DeleteAsync<Tid, TTableModel>(Tid[] id) where TTableModel : class, new()
         {
             return await CreateConnection().Deleteable<TTableModel>().In(id).ExecuteCommandAsync();
@@ -100,5 +105,7 @@ namespace DataBase.MySqlFromSqlSugar
         {
             throw new NotImplementedException();
         }
+
+       
     }
 }

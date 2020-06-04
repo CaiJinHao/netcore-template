@@ -43,6 +43,19 @@ namespace DataBase.DapperForSqlServer
             }
         }
 
+        public async Task<long> CreateAsync<TTableModel>(TTableModel model,string[] notInFields) where TTableModel : class, new()
+        {
+            using (var conn = CreateConnection())
+            {
+                var fields = GetFields<TTableModel>(notInFields);
+                var strFieldNames = string.Join(",", fields);
+                var strParamFiledNames = "@" + string.Join(",@", fields);
+                var sql = string.Format("INSERT INTO {0} ({1}) VALUES({2});select SCOPE_IDENTITY() id;", GetTableName<TTableModel>(), strFieldNames, strParamFiledNames);
+                var multi = await conn.QueryMultipleAsync(sql, model);
+                return multi.Read<long>().FirstOrDefault();
+            }
+        }
+
         public async Task<bool> CreateAsync<TTableModel>(TTableModel[] models) where TTableModel : class, new()
         {
             using (var conn = CreateConnection())

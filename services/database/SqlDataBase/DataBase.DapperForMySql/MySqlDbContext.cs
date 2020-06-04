@@ -95,5 +95,10 @@ namespace DataBase.DapperForMySql
                 return await conn.ExecuteAsync(sql, model);
             }
         }
+
+        public Task<long> CreateAsync<TTableModel>(TTableModel model, string[] notInFields) where TTableModel : class, new()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

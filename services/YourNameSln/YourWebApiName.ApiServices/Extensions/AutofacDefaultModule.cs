@@ -1,4 +1,6 @@
-﻿using Autofac;
+﻿#define TEST
+
+using Autofac;
 using Common.Utility.AOP;
 using System;
 using System.Collections.Generic;
@@ -28,8 +30,13 @@ namespace YourWebApiName.ApiServices.Extensions
              可以直接引用程序集，每次都要重新生成很麻烦 上线时可以这么搞
              其他程序集只有继承接口才会自动注入,非依赖程序集的需要通过构造函数注入、如common
             */
+
+#if TEST
+            var basePath = Common.Utility.Models.Config.StaticConfig.ContentRootPath;//test使用
+#else
             var basePath = Microsoft.DotNet.PlatformAbstractions.ApplicationEnvironment.ApplicationBasePath;
-            //var basePath = Common.Utility.Models.Config.StaticConfig.ContentRootPath;//test使用
+#endif
+
 #if DEBUG
             var assemblysServices = Assembly.LoadFrom(Path.Combine(basePath, "netstandard2.0/YourWebApiName.Services.dll"));
             var assemblysRepository = Assembly.LoadFrom(Path.Combine(basePath, "netstandard2.0/YourWebApiName.Repository.dll"));

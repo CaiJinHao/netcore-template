@@ -1,13 +1,9 @@
 ﻿using Common.Utility.Models.OtherModels;
-using Common.Utility.Models.User;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Primitives;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Common.Utility.Other

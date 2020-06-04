@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using Common.Utility.Other;
+using System.Reflection;
 
 namespace Common.Utility.Extension
 {
@@ -25,10 +26,13 @@ namespace Common.Utility.Extension
             foreach (var toItem in toInfo)
             {
                 var toFiled = sourceInfo.Where(a => a.Name == toItem.Name).FirstOrDefault();
-                var v = toItem.GetValue(sourceObj, null);
-                if (v != null)
+                if (toFiled != null)
                 {
-                    toFiled.SetValue(toObj, v, null);
+                    var v = toItem.GetValue(sourceObj, null);
+                    if (v != null && toItem.CanWrite)
+                    {
+                        toFiled.SetValue(toObj, v, null);
+                    }
                 }
             }
         }
@@ -55,6 +59,16 @@ namespace Common.Utility.Extension
                 case "Int64":
                     {
                         return (Int64)sourceObj > 0;
+                    }
+                case "DateTime":
+                    {
+                        var _v = (DateTime)sourceObj;
+                        return _v > new DateTime(1900, 1, 1);
+                    }
+                case "String[]":
+                    {
+                        var _v = sourceObj as String[];
+                        return _v.Length > 0;
                     }
                 default:
                     break;

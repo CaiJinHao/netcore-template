@@ -63,10 +63,10 @@ namespace Common.Utility.Models.HttpModels
         public string OrderByFiled { get; set; }
 
         /// <summary>
-        /// 要做的操作
+        /// 要做的操作 运算符
         /// 0：分页数据
-        /// 1：所有数据查询，不带分页
+        /// 1：所有数据查询/关联表查询，不带分页
         /// </summary>
-        public int Operator { get; set; }
+        public int Oprator { get; set; }
     }
 }

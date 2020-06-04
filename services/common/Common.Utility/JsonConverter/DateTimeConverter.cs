@@ -6,9 +6,9 @@ using System.Text.Json.Serialization;
 
 namespace Common.Utility.JsonConverter
 {
-    public class JsonDateTimeConverter : JsonConverter<DateTime>
+    public class JsonDateTimeConverter : JsonConverter<DateTime?>
     {
-        public override DateTime Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        public override DateTime? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             switch (reader.TokenType)
             {
@@ -31,9 +31,16 @@ namespace Common.Utility.JsonConverter
            return reader.GetDateTime();
         }
 
-        public override void Write(Utf8JsonWriter writer, DateTime value, JsonSerializerOptions options)
+        public override void Write(Utf8JsonWriter writer, DateTime? value, JsonSerializerOptions options)
         {
-            writer.WriteStringValue(value.ToString("yyyy-MM-dd HH:mm:ss"));
+            if (value == null||value < new DateTime(1901,1,1))
+            {
+                writer.WriteStringValue("");
+            }
+            else
+            {
+                writer.WriteStringValue(((DateTime)value).ToString("yyyy-MM-dd HH:mm:ss"));
+            }
         }
     }
 

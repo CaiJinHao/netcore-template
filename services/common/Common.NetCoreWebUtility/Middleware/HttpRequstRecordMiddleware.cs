@@ -1,7 +1,6 @@
 ﻿using Common.Utility.Extension;
 using Common.Utility.Models.Config;
 using Common.Utility.Models.HttpModels;
-using Common.Utility.Models.User;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using System;
@@ -19,12 +18,10 @@ namespace Common.NetCoreWebUtility.Middleware
     {
         private readonly RequestDelegate next;
         private readonly ILogger logger;
-        private readonly IHttpInfo httpInfo;
 
-        public HttpRequstRecordMiddleware(RequestDelegate _next, IHttpInfo _httpInfo)
+        public HttpRequstRecordMiddleware(RequestDelegate _next)
         {
             next = _next;
-            httpInfo = _httpInfo;
             logger =typeof(HttpRequstRecordMiddleware).Logger();
         }
 
@@ -43,7 +40,7 @@ namespace Common.NetCoreWebUtility.Middleware
                 {
                     var rlInfo = new HttpRequestLogInfoModel(LogInfoType.API)
                     {
-                        Ip = httpInfo.GetIp(),
+                        Ip = UserHttpInfo.GetIp(),
                         Url = httpRequest.Path.ToString().TrimEnd('/').ToLower(),
                         Method = httpRequest.Method,
                         ContentType = httpRequest.ContentType,

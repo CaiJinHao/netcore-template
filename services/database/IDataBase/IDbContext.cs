@@ -54,6 +54,6 @@ namespace IDataBase
         /// <typeparam name="TModel"></typeparam>
         /// <param name="model"></param>
         /// <returns></returns>
-        string GetSqlUpdateString<TModel>(TModel model);
+        string GetSqlUpdateString<TModel>(TModel model, string[] notInFields = null);
     }
 }

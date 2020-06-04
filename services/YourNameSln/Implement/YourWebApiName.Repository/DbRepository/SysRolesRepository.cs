@@ -109,7 +109,8 @@ namespace YourWebApiName.Repository.DbRepository
 
         public async Task<long> UpdateModelAsync(string id, SysRolesModel model)
         {
-            return await DbContext.UpdateModelAsync(id, model);
+            model.role_id = id;
+            return await DbContext.UpdateModelAsync(model);
         }
     }
 }

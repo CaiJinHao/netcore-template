@@ -45,5 +45,19 @@ namespace ApiServices.Test
             var b= await dbContext.CreateAsync(model, new string[] { "No" });
             Assert.IsTrue(b>0);
         }
+
+        [TestMethod]
+        public async Task TestUpdateDapperForSqlServer()
+        {
+            var _now = DateTime.Now;
+            var dbContext = AutofacHelper.GetService<ISqlServerDbContext>();
+            var model = new MVOnlineLogModel()
+            {
+                LogoutDate = _now,
+                No = 5735084
+            };
+            var b = await dbContext.UpdateModelAsync(model, new string[] { "No"});
+            Assert.IsTrue(b > 0);
+        }
     }
 }

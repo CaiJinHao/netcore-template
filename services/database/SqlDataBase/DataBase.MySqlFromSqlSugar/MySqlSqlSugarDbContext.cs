@@ -76,7 +76,7 @@ namespace DataBase.MySqlFromSqlSugar
            return await CreateConnection().Queryable<TTableModel>().ToListAsync();
         }
 
-        public async Task<long> UpdateModelAsync<Tid, TTableModel>(Tid id, TTableModel model) where TTableModel : class, new()
+        public async Task<long> UpdateModelAsync<TTableModel>(TTableModel model, string[] notInFields = null) where TTableModel : class, new()
         {
             var keyName = GetKeyName<TTableModel>();
             var fields = GetFields<TTableModel>(new string[] { keyName });

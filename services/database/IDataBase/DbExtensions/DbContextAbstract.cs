@@ -175,15 +175,19 @@ namespace IDataBase.DbExtensions
         /// <typeparam name="TModel"></typeparam>
         /// <param name="model"></param>
         /// <returns></returns>
-        public string GetSqlUpdateString<TModel>(TModel model)
+        public string GetSqlUpdateString<TModel>(TModel model, string[] notInFields = null)
         {
             var sqlWhere = new StringBuilder();//查询条件
             Action<System.Reflection.PropertyInfo> appendField = (_field) =>
             {
                 sqlWhere.Append($" {_field.Name} = @{_field.Name},");
             };
-            var filedsInfo = model.GetType().GetProperties();
-            foreach (var _field in filedsInfo)
+            var fieldsInfo = model.GetType().GetProperties();
+            if (notInFields != null)
+            {
+                fieldsInfo = fieldsInfo.Where(a => !notInFields.Contains(a.Name)).ToArray();//不包含字段集合的字段
+            }
+            foreach (var _field in fieldsInfo)
             {
                 var v = _field.GetValue(model, null);
                 if (v != null)
@@ -235,7 +239,13 @@ namespace IDataBase.DbExtensions
                                 }
                             }
                             break;
-                        case "DateTime": { } break;
+                        case "DateTime": {
+                                var _value = (DateTime)v;
+                                if (_value > new DateTime(1900,1,1))
+                                {
+                                    appendField(_field);
+                                }
+                            } break;
                         default:
                             throw new Exception("没有匹配的类型");
                     }

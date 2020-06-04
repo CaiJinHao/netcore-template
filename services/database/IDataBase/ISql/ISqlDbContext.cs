@@ -22,7 +22,7 @@ namespace IDataBase.ISql
         /// <param name="id"></param>
         /// <param name="model">只更新有值得，为null类型的不更新</param>
         /// <returns></returns>
-        Task<long> UpdateModelAsync<Tid, TTableModel>(Tid id, TTableModel model) where TTableModel : class, new();
+        Task<long> UpdateModelAsync<TTableModel>(TTableModel model, string[] notInFields = null) where TTableModel : class, new();
         /// <summary>
         /// 自增使用
         /// </summary>

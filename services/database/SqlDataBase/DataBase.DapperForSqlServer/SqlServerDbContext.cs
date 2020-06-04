@@ -81,12 +81,12 @@ namespace DataBase.DapperForSqlServer
             }
         }
 
-        public async Task<long> UpdateModelAsync<Tid, TTableModel>(Tid id, TTableModel model) where TTableModel : class, new()
+        public async Task<long> UpdateModelAsync<TTableModel>(TTableModel model, string[] notInFields = null) where TTableModel : class, new()
         {
             using (var conn = CreateConnection())
             {
                 var keyName = GetKeyName<TTableModel>();
-                var strFieldNames = GetSqlUpdateString(model);
+                var strFieldNames = GetSqlUpdateString(model, notInFields);
                 return await conn.ExecuteAsync($"UPDATE {GetTableName<TTableModel>()} SET {strFieldNames} WHERE {keyName}=@{keyName}", model);
             }
         }

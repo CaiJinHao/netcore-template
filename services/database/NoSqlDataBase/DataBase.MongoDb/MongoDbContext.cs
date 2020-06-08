@@ -168,5 +168,10 @@ namespace DataBase.MongoDb
             var dr = await GetCollection<TTableModel>().DeleteManyAsync(filter);
             return dr.DeletedCount;
         }
+
+        public Task<long> DeleteAsync<TTableModel>(TTableModel model, string[] notInFields = null) where TTableModel : class, new()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

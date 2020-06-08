@@ -56,6 +56,6 @@ namespace IDataBase
         /// <typeparam name="TTableModel"></typeparam>
         /// <param name="model"></param>
         /// <returns></returns>
-        Task<long> DeleteAsync<TTableModel>(TTableModel model) where TTableModel : class, new();
+        Task<long> DeleteAsync<TTableModel>(TTableModel model, string[] notInFields = null) where TTableModel : class, new();
     }
 }

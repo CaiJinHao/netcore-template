@@ -99,13 +99,13 @@ namespace DataBase.DapperForSqlServer
             }
         }
 
-        public async Task<long> DeleteAsync<TTableModel>(TTableModel model) where TTableModel : class, new()
+        public async Task<long> DeleteAsync<TTableModel>(TTableModel model, string[] notInFields = null) where TTableModel : class, new()
         {
             using (var conn = CreateConnection())
             {
                 var fields = GetFields<TTableModel>();
                 var strFieldNames = string.Join(",", fields);
-                var sqlWhere = GetSqlQueryString(model);
+                var sqlWhere = GetSqlQueryString(model,notInFields,string.Empty);
                 var sql = $"DELETE FROM {GetTableName<TTableModel>()} WHERE 1=1 {sqlWhere}";
                 return await conn.ExecuteAsync(sql, model);
             }

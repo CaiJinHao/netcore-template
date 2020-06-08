@@ -92,13 +92,13 @@ namespace IDataBase.DbExtensions
         /// <typeparam name="TModel"></typeparam>
         /// <param name="model"></param>
         /// <returns></returns>
-        public string GetSqlQueryString<TModel>(TModel model, string[] notInFields = null)
+        public string GetSqlQueryString<TModel>(TModel model, string[] notInFields = null, string fieldPrefix = "b1.")
         {
             var sqlWhere = new StringBuilder();//查询条件
 
             Action<System.Reflection.PropertyInfo> appendWhere = (_field) =>
             {
-                sqlWhere.Append($" AND b1.{_field.Name} = @{_field.Name}");
+                sqlWhere.Append($" AND {fieldPrefix}{_field.Name} = @{_field.Name}");
             };
 
             var fieldsInfo = typeof(TModel).GetProperties();
@@ -118,7 +118,7 @@ namespace IDataBase.DbExtensions
                             {
                                 if (!string.IsNullOrEmpty((string)v))
                                 {
-                                    sqlWhere.Append($" AND b1.{_field.Name} LIKE @{_field.Name}");
+                                    sqlWhere.Append($" AND {fieldPrefix}{_field.Name} LIKE @{_field.Name}");
                                 }
                             }
                             break;

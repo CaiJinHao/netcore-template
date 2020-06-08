@@ -47,7 +47,7 @@ namespace IDataBase
         /// <typeparam name="TModel"></typeparam>
         /// <param name="model"></param>
         /// <returns></returns>
-        string GetSqlQueryString<TModel>(TModel model, string[] notInFields = null);
+        string GetSqlQueryString<TModel>(TModel model, string[] notInFields = null, string fieldPrefix = "b1.");
         /// <summary>
         /// 根据Model生成更新的SQL
         /// </summary>

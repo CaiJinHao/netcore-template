@@ -100,5 +100,10 @@ namespace DataBase.DapperForMySql
         {
             throw new NotImplementedException();
         }
+
+        public Task<long> DeleteAsync<TTableModel>(TTableModel model, string[] notInFields = null) where TTableModel : class, new()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -41,11 +41,11 @@ namespace DataBase.DapperForMySql
             }
         }
 
-        public async Task<bool> CreateAsync<TTableModel>(TTableModel[] models) where TTableModel : class, new()
+        public async Task<bool> CreateAsync<TTableModel>(TTableModel[] models, string[] notInFields = null) where TTableModel : class, new()
         {
             using (var conn = CreateConnection())
             {
-                var fields = GetFields<TTableModel>();
+                var fields = GetFields<TTableModel>(notInFields);
                 var strFieldNames = string.Join(",", fields);
                 var strParamFiledNames = "@" + string.Join(",@", fields);
                 var sql = string.Format("INSERT INTO {0} ({1}) VALUES({2})", GetTableName<TTableModel>(), strFieldNames, strParamFiledNames);

@@ -32,12 +32,7 @@ namespace IDataBase
         /// <param name="model"></param>
         /// <returns></returns>
         Task<bool> CreateAsync<TTableModel>(TTableModel model) where TTableModel : class, new();
-        /// <summary>
-        /// 创建一个数组对象
-        /// </summary>
-        /// <param name="models"></param>
-        /// <returns></returns>
-        Task<bool> CreateAsync<TTableModel>(TTableModel[] models) where TTableModel : class, new();
+      
 
         /*
          Delete 

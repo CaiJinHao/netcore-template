@@ -25,5 +25,12 @@ namespace IDataBase.INoSql
         /// <param name="model">只更新有值得，为null类型的不更新</param>
         /// <returns></returns>
         Task<long> UpdateModelAsync<Tid, TTableModel>(Tid id, TTableModel model, string notFieldRegex = "^_id") where TTableModel : class, new();
+
+        /// <summary>
+        /// 创建一个数组对象
+        /// </summary>
+        /// <param name="models"></param>
+        /// <returns></returns>
+        Task<bool> CreateAsync<TTableModel>(TTableModel[] models) where TTableModel : class, new();
     }
 }

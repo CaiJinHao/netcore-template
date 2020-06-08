@@ -42,6 +42,7 @@ namespace @(api_controller_name_space)
 
         /// <summary>
         /// 查询多条数据
+        /// Oprator:为1时通过查询参数获取当前表所有符合条件的数据
         /// </summary>
         /// <param name="paging"></param>
         /// <param name="queryParameter"></param>
@@ -52,6 +53,13 @@ namespace @(api_controller_name_space)
             var apiResult = new ApiResultModel(ErrorCodeType.Success);
             switch (paging.Oprator)
             {
+                case 1:
+                    {
+                        //获取不分页数据集合
+                        var data = await @(table_name_camel)Service.GetModelsAsync(queryParameter);
+                        apiResult.Result = data;
+                        return Ok(apiResult);
+                    }
                 default:
                     {
                         var data = await @(table_name_camel)Service.GetModelsAsync(paging, queryParameter);

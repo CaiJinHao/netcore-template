@@ -41,7 +41,7 @@ namespace DataBase.MySqlFromSqlSugar
             return r > 0;
         }
 
-        public async Task<bool> CreateAsync<TTableModel>(TTableModel[] models) where TTableModel : class, new()
+        public async Task<bool> CreateAsync<TTableModel>(TTableModel[] models, string[] notInFields = null) where TTableModel : class, new()
         {
             var r = await CreateConnection().Insertable(models).ExecuteCommandAsync();
             return r > 0;

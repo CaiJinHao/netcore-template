@@ -31,5 +31,14 @@ namespace IDataBase.ISql
         /// <param name="notInFields">自增需要排除字段</param>
         /// <returns>返回自增值</returns>
         Task<long> CreateAsync<TTableModel>(TTableModel model, string[] notInFields) where TTableModel : class, new();
+
+        /// <summary>
+        /// 创建一个数组对象
+        /// </summary>
+        /// <typeparam name="TTableModel"></typeparam>
+        /// <param name="models"></param>
+        /// <param name="notInFields">要排除的字段</param>
+        /// <returns></returns>
+        Task<bool> CreateAsync<TTableModel>(TTableModel[] models, string[] notInFields = null) where TTableModel : class, new();
     }
 }

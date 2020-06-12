@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.Json;
-using System.Threading.Tasks;
-using Common.JsonConverter;
-using Common.NetCoreWebUtility.IServices;
-using Common.Utility.Encryption;
+﻿using Common.JsonConverter;
+using Common.NetCoreWebUtility.Services;
+using Common.Utility.Extension;
 using Common.Utility.Models;
 using Common.Utility.RequestModels;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace YourWebApiName.ApiServices.DefaultApi
 {
@@ -25,7 +21,7 @@ namespace YourWebApiName.ApiServices.DefaultApi
         /// <summary>
         /// Token
         /// </summary>
-        public IToKenService toKenService { get; set; }
+        public ToKenService toKenService { get; set; }
         /// <summary>
         /// 获取TOKEN
         /// </summary>
@@ -57,7 +53,7 @@ namespace YourWebApiName.ApiServices.DefaultApi
         public async Task<IActionResult> Get()
         {
             var apiData = new ApiResultModel();
-            var userJson = toKenService.GetValueByToken(Common.Utility.Models.Config.TokenInfoType.UserInfo);
+            var userJson = UserHttpInfo.GetValueByToken(Common.Utility.Models.Config.TokenInfoType.UserInfo);//这个应该封装到UserService中
             var user = JsonSerializer.Deserialize<dynamic>(userJson, new JsonSerializerOptions() { Converters = { new DynamicJsonConverter() } });
             var requestAuth = new RequestAuthModel()
             {

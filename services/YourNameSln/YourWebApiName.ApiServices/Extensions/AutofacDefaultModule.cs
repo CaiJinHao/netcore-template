@@ -1,4 +1,4 @@
-﻿#define TEST
+﻿//#define TEST
 
 using Autofac;
 using Common.Utility.AOP;

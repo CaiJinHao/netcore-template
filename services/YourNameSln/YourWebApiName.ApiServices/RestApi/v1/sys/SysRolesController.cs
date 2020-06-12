@@ -27,15 +27,24 @@ namespace YourWebApiName.ApiServices.RestApi.v1.sys
         /// <summary>
         /// 查询多条数据
         /// </summary>
+        /// <param name="oprator">
+        /// 为0时默认查分页数据
+        /// 为1时默认查不分页数据
+        /// </param>
         /// <param name="paging"></param>
         /// <param name="queryParameter"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> Get([FromQuery]PagingModel paging, [FromQuery]SysRolesRequestModel queryParameter)
+        public async Task<IActionResult> Get([FromQuery]int oprator, [FromQuery]PagingModel paging, [FromQuery]SysRolesRequestModel queryParameter)
         {
             var apiResult = new ApiResultModel(ErrorCodeType.Success);
-            switch (paging.Oprator)
+            switch (oprator)
             {
+                case 1:
+                    {
+                        apiResult.Result = await sysRolesService.GetModelsAsync(queryParameter);
+                        return Ok(apiResult);
+                    }
                 default:
                     {
                         var data = await sysRolesService.GetModelsAsync(paging, queryParameter);

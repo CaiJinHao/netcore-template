@@ -15,6 +15,7 @@
 }
 
 using System;
+using Common.Utility.Models.HttpModels;
 using Common.Utility.Extension;
 using Common.Utility.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -42,13 +43,16 @@ namespace @(api_controller_name_space)
 
         /// <summary>
         /// 查询多条数据
-        /// Oprator:为1时通过查询参数获取当前表所有符合条件的数据
         /// </summary>
+        /// <param name="oprator">
+        /// 为0时默认查分页数据
+        /// 为1时默认查不分页数据
+        /// </param>
         /// <param name="paging"></param>
         /// <param name="queryParameter"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> Get([FromQuery]PagingModel paging, [FromQuery]@(table_name_pascal)RequestModel queryParameter)
+        public async Task<IActionResult> Get([FromQuery]int oprator,[FromQuery]PagingModel paging, [FromQuery]@(table_name_pascal)RequestModel queryParameter)
         {
             var apiResult = new ApiResultModel(ErrorCodeType.Success);
             switch (paging.Oprator)

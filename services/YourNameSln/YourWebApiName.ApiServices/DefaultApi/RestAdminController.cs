@@ -46,7 +46,7 @@ namespace YourWebApiName.ApiServices.DefaultApi
             {
                 apiData.Result = new
                 {
-                    Token = Guid.NewGuid().ToString("n"),
+                    AccessToken = Guid.NewGuid().ToString("n"),
                     ExpiresIn = DateTime.Now.GetTicks()
                 };
             }

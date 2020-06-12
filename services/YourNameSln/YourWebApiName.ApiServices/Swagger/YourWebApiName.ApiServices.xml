@@ -329,10 +329,14 @@
             服务
             </summary>
         </member>
-        <member name="M:YourWebApiName.ApiServices.RestApi.v1.sys.SysRolesController.Get(Common.Utility.Models.HttpModels.PagingModel,YourWebApiName.Models.RequestModels.SysRolesRequestModel)">
+        <member name="M:YourWebApiName.ApiServices.RestApi.v1.sys.SysRolesController.Get(System.Int32,Common.Utility.Models.HttpModels.PagingModel,YourWebApiName.Models.RequestModels.SysRolesRequestModel)">
             <summary>
             查询多条数据
             </summary>
+            <param name="oprator">
+            为0时默认查分页数据
+            为1时默认查不分页数据
+            </param>
             <param name="paging"></param>
             <param name="queryParameter"></param>
             <returns></returns>

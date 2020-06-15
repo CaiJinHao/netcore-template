@@ -116,9 +116,15 @@ namespace IDataBase.DbExtensions
                     {
                         case "String":
                             {
-                                if (!string.IsNullOrEmpty((string)v))
+                                var _v = (string)v;
+                                if (!string.IsNullOrEmpty(_v))
                                 {
-                                    sqlWhere.Append($" AND {fieldPrefix}{_field.Name} LIKE @{_field.Name}");
+                                    var myOperator = "=";
+                                    if (_v.Contains("%"))
+                                    {
+                                        myOperator = "LIKE";
+                                    }
+                                    sqlWhere.Append($" AND {fieldPrefix}{_field.Name} {myOperator} @{_field.Name}");
                                 }
                             }
                             break;

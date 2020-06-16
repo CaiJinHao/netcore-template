@@ -89,9 +89,14 @@ namespace DataBase.DapperForSqlServer
         {
             using (var conn = CreateConnection())
             {
-                var keyName = GetKeyName<TTableModel>();
+                string whereSql = string.Empty;
+                if (notInFields == null)
+                {
+                    notInFields = GetKeyName<TTableModel>().ToArray();
+                }
+                whereSql = string.Join(" and ", notInFields.Select(item => $"{item}=@{item}"));
                 var strFieldNames = GetSqlUpdateString(model, notInFields);
-                return await conn.ExecuteAsync($"UPDATE {GetTableName<TTableModel>()} SET {strFieldNames} WHERE {keyName}=@{keyName}", model);
+                return await conn.ExecuteAsync($"UPDATE {GetTableName<TTableModel>()} SET {strFieldNames} WHERE {whereSql}", model);
             }
         }
 

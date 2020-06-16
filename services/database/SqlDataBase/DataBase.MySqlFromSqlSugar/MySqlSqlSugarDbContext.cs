@@ -2,6 +2,8 @@
 using SqlSugar;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace DataBase.MySqlFromSqlSugar
@@ -78,17 +80,17 @@ namespace DataBase.MySqlFromSqlSugar
 
         public async Task<long> UpdateModelAsync<TTableModel>(TTableModel model, string[] notInFields = null) where TTableModel : class, new()
         {
-            var keyName = GetKeyName<TTableModel>();
-            var fields = GetFields<TTableModel>(new string[] { keyName });
-            var strFieldNames = string.Empty;
-            foreach (var item in fields)
+            string whereSql = string.Empty;
+            if (notInFields == null)
             {
-                strFieldNames += item + "=@" + item + ",";
+                notInFields = GetKeyName<TTableModel>().ToArray();
             }
-            strFieldNames = strFieldNames.Trim(',');
+            whereSql = string.Join(" and ", notInFields.Select(item => $"{item}=@{item}"));
 
+            var fields = GetFields<TTableModel>(notInFields);
+            var fieldNames = string.Join(",", fields.Select(item => $"{item}=@{item}"));
             return await CreateConnection().Ado
-                .ExecuteCommandAsync($"UPDATE {GetTableName<TTableModel>()} SET {strFieldNames} WHERE {keyName}=@{keyName}", model);
+                .ExecuteCommandAsync($"UPDATE {GetTableName<TTableModel>()} SET {fieldNames} WHERE {whereSql}", model);
         }
 
         public async Task<IEnumerable<TTableModel>> GetModelsAsync<TTableModel, TParameter>(string sql, TParameter modelParameter) where TTableModel : class, new()

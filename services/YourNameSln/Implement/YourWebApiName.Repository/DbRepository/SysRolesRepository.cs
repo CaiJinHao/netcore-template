@@ -112,5 +112,10 @@ namespace YourWebApiName.Repository.DbRepository
             model.role_id = id;
             return await DbContext.UpdateModelAsync(model);
         }
+
+        public Task<long> DeleteAsync(SysRolesModel model, string[] notInFields = null)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

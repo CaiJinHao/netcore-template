@@ -28,14 +28,9 @@ namespace IDataBase.DbExtensions
         /// </summary>
         /// <typeparam name="TTableModel"></typeparam>
         /// <returns></returns>
-        public string GetKeyName<TTableModel>()
+        public IEnumerable<string> GetKeyName<TTableModel>()
         {
-            var key = ReflectHelper.GetFieldsByAttribute<TTableModel, KeyAttribute>().FirstOrDefault();
-            if (key == null)
-            {
-                throw new Exception("没有定义主键字段");
-            }
-            return key;
+            return ReflectHelper.GetFieldsByAttribute<TTableModel, KeyAttribute>();
         }
 
         /// <summary>

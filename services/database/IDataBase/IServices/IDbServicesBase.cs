@@ -25,6 +25,15 @@ namespace IDataBase.IServices
         /// <returns></returns>
         Task<long> DeleteAsync(Tid[] id);
         /// <summary>
+        /// 根据条件删除多条数据
+        /// </summary>
+        /// <typeparam name="Tid"></typeparam>
+        /// <typeparam name="TTableModel"></typeparam>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        Task<long> DeleteAsync(TTableModel model, string[] notInFields = null);
+
+        /// <summary>
         /// 根据主键更新对象中的指定属性
         /// </summary>
         /// <param name="id"></param>

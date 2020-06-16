@@ -35,6 +35,11 @@ namespace YourWebApiName.Services.DbServices
             return await sysRolesRepository.DeleteAsync(id);
         }
 
+        public Task<long> DeleteAsync(SysRolesModel model, string[] notInFields = null)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<SysRolesModel> GetModelAsync(string id, IEnumerable<string> fields = null)
         {
             return await sysRolesRepository.GetModelAsync(id, fields);

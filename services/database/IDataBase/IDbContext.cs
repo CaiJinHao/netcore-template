@@ -25,7 +25,7 @@ namespace IDataBase
         /// </summary>
         /// <typeparam name="TTableModel"></typeparam>
         /// <returns></returns>
-        string GetKeyName<TTableModel>();
+        IEnumerable<string> GetKeyName<TTableModel>();
         /// <summary>
         /// 获取table字段集合
         /// </summary>

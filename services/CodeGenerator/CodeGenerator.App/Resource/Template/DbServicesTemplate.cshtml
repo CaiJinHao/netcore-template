@@ -46,6 +46,11 @@ namespace @(table.name_space).Services.DbServices
             return await @(table_name_camel)Repository.DeleteAsync(id);
         }
 
+        public async Task<long> DeleteAsync(@(table_name_pascal)Model model)
+        {
+            return await @(table_name_camel)Repository.DeleteAsync(model);
+        }
+
         public async Task<@(table_name_pascal)Model> GetModelAsync(@(primary_key_data_type) id, IEnumerable<string> fields = null)
         {
             return await @(table_name_camel)Repository.GetModelAsync(id, fields);

@@ -33,6 +33,7 @@ namespace @(table.name_space).Services.DbServices
         }        
     
         public I@(table_name_pascal)Repository @(table_name_camel)Repository { get; set; }
+        //解决依赖循环问题private { get => AutofacHelper.GetScopeService<I@(table_name_pascal)Repository>(); }
 
 
         public async Task<bool> CreateAsync(@(table_name_pascal)Model model)

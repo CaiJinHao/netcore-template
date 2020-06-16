@@ -78,7 +78,7 @@ namespace DataBase.DapperForSqlServer
             using (var conn = CreateConnection())
             {
                 var strFieldNames = GetFieldsToString<TTableModel>("A", fields);
-                var keyName = GetKeyName<TTableModel>();
+                var keyName = GetKeyName<TTableModel>().FirstOrDefault();
                 var sql = $"SELECT {strFieldNames} FROM {GetTableName<TTableModel>()} AS A WHERE {keyName}=@key";
                 var models = await conn.QueryAsync<TTableModel>(sql, new { key = id });
                 return models.FirstOrDefault();
@@ -104,7 +104,8 @@ namespace DataBase.DapperForSqlServer
         {
             using (var conn = CreateConnection())
             {
-                return await conn.ExecuteAsync($"DELETE FROM {GetTableName<TTableModel>()} WHERE {GetKeyName<TTableModel>()} in @key", new { key = id });
+                var keyName = GetKeyName<TTableModel>().FirstOrDefault();
+                return await conn.ExecuteAsync($"DELETE FROM {GetTableName<TTableModel>()} WHERE {keyName} in @key", new { key = id });
             }
         }
 

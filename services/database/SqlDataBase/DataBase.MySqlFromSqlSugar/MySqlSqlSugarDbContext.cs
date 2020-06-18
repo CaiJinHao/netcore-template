@@ -78,16 +78,16 @@ namespace DataBase.MySqlFromSqlSugar
            return await CreateConnection().Queryable<TTableModel>().ToListAsync();
         }
 
-        public async Task<long> UpdateModelAsync<TTableModel>(TTableModel model, string[] notInFields = null) where TTableModel : class, new()
+        public async Task<long> UpdateModelAsync<TTableModel>(TTableModel model, string[] whereFields = null) where TTableModel : class, new()
         {
             string whereSql = string.Empty;
-            if (notInFields == null)
+            if (whereFields == null)
             {
-                notInFields = GetKeyName<TTableModel>().ToArray();
+                whereFields = GetKeyName<TTableModel>().ToArray();
             }
-            whereSql = string.Join(" and ", notInFields.Select(item => $"{item}=@{item}"));
+            whereSql = string.Join(" and ", whereFields.Select(item => $"{item}=@{item}"));
 
-            var fields = GetFields<TTableModel>(notInFields);
+            var fields = GetFields<TTableModel>(whereFields);
             var fieldNames = string.Join(",", fields.Select(item => $"{item}=@{item}"));
             return await CreateConnection().Ado
                 .ExecuteCommandAsync($"UPDATE {GetTableName<TTableModel>()} SET {fieldNames} WHERE {whereSql}", model);

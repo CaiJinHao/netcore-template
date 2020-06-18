@@ -21,10 +21,11 @@ namespace IDataBase.ISql
         /// 当需要更新老id为新的id的时候需要自己重新写sql,因为参数需要多一个参数
         /// 支持多主键条件更新
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="model">只更新有值得，为null类型的不更新</param>
+        /// <typeparam name="TTableModel"></typeparam>
+        /// <param name="model"></param>
+        /// <param name="whereFields">更新条件字段</param>
         /// <returns></returns>
-        Task<long> UpdateModelAsync<TTableModel>(TTableModel model, string[] notInFields = null) where TTableModel : class, new();
+        Task<long> UpdateModelAsync<TTableModel>(TTableModel model, string[] whereFields = null) where TTableModel : class, new();
         /// <summary>
         /// 自增使用
         /// </summary>

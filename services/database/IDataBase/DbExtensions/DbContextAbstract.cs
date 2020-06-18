@@ -175,6 +175,7 @@ namespace IDataBase.DbExtensions
         /// </summary>
         /// <typeparam name="TModel"></typeparam>
         /// <param name="model"></param>
+        /// <param name="notInFields">无法更新的字段类型可置位可空类型如:Bool</param>
         /// <returns></returns>
         public string GetSqlUpdateString<TModel>(TModel model, string[] notInFields = null)
         {

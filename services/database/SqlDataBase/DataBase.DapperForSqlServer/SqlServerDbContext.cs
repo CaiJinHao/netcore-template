@@ -21,17 +21,32 @@ namespace DataBase.DapperForSqlServer
         private string ConnectionString { get; set; }
 
         public string PrimaryKey => Guid.NewGuid().ToString("n");
-
+        /// <summary>
+        /// 创建连接对象委托  用于查看SQL
+        /// </summary>
+        private Func<IDbConnection> CreateConnectionAction;
         public SqlServerDbContext(string connectionString)
         {
             ConnectionString = connectionString;
         }
+        public SqlServerDbContext(string connectionString,Func<IDbConnection> createConnectionAction)
+        {
+            ConnectionString = connectionString;
+            CreateConnectionAction = createConnectionAction;
+        }
 
         public IDbConnection CreateConnection()
         {
-            var conn = new SqlConnection(ConnectionString);
-            conn.Open();
-            return conn;
+            if (CreateConnectionAction!=null)
+            {
+                return CreateConnectionAction();
+            }
+            else
+            {
+                var conn = new SqlConnection(ConnectionString);
+                conn.Open();
+                return conn;
+            }
         }
 
         public async Task<bool> CreateAsync<TTableModel>(TTableModel model) where TTableModel : class, new()
@@ -94,7 +109,7 @@ namespace DataBase.DapperForSqlServer
                 {
                     notInFields = GetKeyName<TTableModel>().ToArray();
                 }
-                whereSql = string.Join(" and ", notInFields.Select(item => $"{item}=@{item}"));
+                whereSql = string.Join(" and ", notInFields.Select(item => $"[{item}]=@{item}"));
                 var strFieldNames = GetSqlUpdateString(model, notInFields);
                 return await conn.ExecuteAsync($"UPDATE {GetTableName<TTableModel>()} SET {strFieldNames} WHERE {whereSql}", model);
             }

@@ -11,6 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Extensions\Service\SingletonServiceExtensions.cs~RF50dfdd7.TMP" />
     <None Remove="Swagger\index.html" />
   </ItemGroup>
 

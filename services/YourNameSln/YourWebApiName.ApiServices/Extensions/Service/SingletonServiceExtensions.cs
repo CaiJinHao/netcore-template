@@ -3,6 +3,7 @@ using Common.Utility.Models.User;
 using DataBase.DapperForSqlServer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using StackExchange.Profiling;
 
 namespace YourWebApiName.ApiServices.Extensions.Service
 {
@@ -23,7 +24,15 @@ namespace YourWebApiName.ApiServices.Extensions.Service
                     .AddSingleton<IHttpInfo, HttpInfo>()
                     .AddSingleton<ISqlServerDbContext>(s =>
                     {
+#if !DEBUG
+                        return new SqlServerDbContext(dbConfig.ConnectionString, () =>
+                        {
+                            var connection = new System.Data.SqlClient.SqlConnection(dbConfig.ConnectionString);
+                            return new StackExchange.Profiling.Data.ProfiledDbConnection(connection, MiniProfiler.Current);
+                        });
+#else
                         return new SqlServerDbContext(dbConfig.ConnectionString);
+#endif
                     })
                     //.AddSingleton<IMySqlDbContext>(s =>
                     //{

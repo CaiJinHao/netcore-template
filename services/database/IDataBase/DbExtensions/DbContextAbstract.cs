@@ -247,8 +247,12 @@ namespace IDataBase.DbExtensions
                                     appendField(_field);
                                 }
                             } break;
+                        case "Boolean":
+                            {
+                                appendField(_field);
+                            }break;
                         default:
-                            throw new Exception("没有匹配的类型");
+                            throw new Exception($"没有匹配的类型:{fieldType.Name}");//Bool类型值需要排除字段
                     }
                 }
             }

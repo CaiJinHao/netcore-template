@@ -176,8 +176,9 @@ namespace IDataBase.DbExtensions
         /// <typeparam name="TModel"></typeparam>
         /// <param name="model"></param>
         /// <param name="notInFields">无法更新的字段类型可置位可空类型如:Bool</param>
+        /// <param name="notValidateFields">不需要验证值得字段</param>
         /// <returns></returns>
-        public string GetSqlUpdateString<TModel>(TModel model, string[] notInFields = null)
+        public string GetSqlUpdateString<TModel>(TModel model, string[] notInFields = null,string[] notValidateFields=null)
         {
             var sqlWhere = new StringBuilder();//查询条件
             Action<System.Reflection.PropertyInfo> appendField = (_field) =>
@@ -195,65 +196,87 @@ namespace IDataBase.DbExtensions
                 if (v != null)
                 {
                     var fieldType = v.GetType();
-                    switch (fieldType.Name)
+                    if (notValidateFields != null && notValidateFields.Contains(fieldType.Name))
+                    {//不需要验证值的字段
+                        appendField(_field);
+                    }
+                    else
                     {
-                        case "String":
-                            {
-                                if (!string.IsNullOrEmpty((string)v))
-                                {
-                                    appendField(_field);
-                                }
-                            }
-                            break;
-                        case "Int16":
-                            {
-                                var _value = (Int16)v;
-                                if (_value > 0)
-                                {
-                                    appendField(_field);
-                                }
-                            }
-                            break;
-                        case "Int32":
-                            {
-                                var _value = (Int32)v;
-                                if (_value > 0)
-                                {
-                                    appendField(_field);
-                                }
-                            }
-                            break;
-                        case "Int64":
-                            {
-                                var _value = (Int64)v;
-                                if (_value > 0)
-                                {
-                                    appendField(_field);
-                                }
-                            }
-                            break;
-                        case "Decimal":
-                            {
-                                var _value = (decimal)v;
-                                if (_value > 0)
-                                {
-                                    appendField(_field);
-                                }
-                            }
-                            break;
-                        case "DateTime": {
-                                var _value = (DateTime)v;
-                                if (_value > new DateTime(1900,1,1))
-                                {
-                                    appendField(_field);
-                                }
-                            } break;
-                        case "Boolean":
+                        if (fieldType.IsEnum)
+                        {
+                            if (((Int32)v) > 0)
                             {
                                 appendField(_field);
-                            }break;
-                        default:
-                            throw new Exception($"没有匹配的类型:{fieldType.Name}");//Bool类型值需要排除字段
+                            }
+                        }
+                        else
+                        {
+                            switch (fieldType.Name)
+                            {
+                                case "String":
+                                    {
+                                        if (!string.IsNullOrEmpty((string)v))
+                                        {
+                                            appendField(_field);
+                                        }
+                                    }
+                                    break;
+                                case "DateTime":
+                                    {
+                                        var _value = (DateTime)v;
+                                        if (_value > new DateTime(1900, 1, 1))
+                                        {
+                                            appendField(_field);
+                                        }
+                                    }
+                                    break;
+                                case "Int16":
+                                    {
+                                        var _value = (Int16)v;
+                                        if (_value > 0)
+                                        {
+                                            appendField(_field);
+                                        }
+                                    }
+                                    break;
+                                case "Int32":
+                                    {
+                                        var _value = (Int32)v;
+                                        if (_value > 0)
+                                        {
+                                            appendField(_field);
+                                        }
+                                    }
+                                    break;
+                                case "Int64":
+                                    {
+                                        var _value = (Int64)v;
+                                        if (_value > 0)
+                                        {
+                                            appendField(_field);
+                                        }
+                                    }
+                                    break;
+                                case "Decimal":
+                                    {
+                                        var _value = (decimal)v;
+                                        if (_value > 0)
+                                        {
+                                            appendField(_field);
+                                        }
+                                    }
+                                    break;
+                                case "Boolean":
+                                    {
+                                        appendField(_field);
+                                    }
+                                    break;
+                                default:
+                                    //appendField(_field);
+                                    //break;
+                                    throw new Exception($"没有匹配的类型:{fieldType.Name}");//Bool类型值需要排除字段
+                            }
+                        }
                     }
                 }
             }

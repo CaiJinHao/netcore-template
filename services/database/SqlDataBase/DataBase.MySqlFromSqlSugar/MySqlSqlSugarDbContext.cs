@@ -78,7 +78,7 @@ namespace DataBase.MySqlFromSqlSugar
            return await CreateConnection().Queryable<TTableModel>().ToListAsync();
         }
 
-        public async Task<long> UpdateModelAsync<TTableModel>(TTableModel model, string[] whereFields = null) where TTableModel : class, new()
+        public async Task<long> UpdateModelAsync<TTableModel>(TTableModel model, string[] whereFields = null, string[] notValidateFields = null) where TTableModel : class, new()
         {
             string whereSql = string.Empty;
             if (whereFields == null)

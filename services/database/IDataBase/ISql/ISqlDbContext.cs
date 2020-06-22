@@ -25,7 +25,7 @@ namespace IDataBase.ISql
         /// <param name="model"></param>
         /// <param name="whereFields">更新条件字段</param>
         /// <returns></returns>
-        Task<long> UpdateModelAsync<TTableModel>(TTableModel model, string[] whereFields = null) where TTableModel : class, new();
+        Task<long> UpdateModelAsync<TTableModel>(TTableModel model, string[] whereFields = null, string[] notValidateFields = null) where TTableModel : class, new();
         /// <summary>
         /// 自增使用
         /// </summary>

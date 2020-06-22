@@ -100,7 +100,7 @@ namespace DataBase.DapperForSqlServer
             }
         }
 
-        public async Task<long> UpdateModelAsync<TTableModel>(TTableModel model, string[] whereFields = null) where TTableModel : class, new()
+        public async Task<long> UpdateModelAsync<TTableModel>(TTableModel model, string[] whereFields = null, string[] notValidateFields = null) where TTableModel : class, new()
         {
             using (var conn = CreateConnection())
             {
@@ -110,7 +110,7 @@ namespace DataBase.DapperForSqlServer
                     whereFields = GetKeyName<TTableModel>().ToArray();
                 }
                 whereSql = string.Join(" and ", whereFields.Select(item => $"[{item}]=@{item}"));
-                var strFieldNames = GetSqlUpdateString(model, whereFields);
+                var strFieldNames = GetSqlUpdateString(model, whereFields, notValidateFields);
                 return await conn.ExecuteAsync($"UPDATE {GetTableName<TTableModel>()} SET {strFieldNames} WHERE {whereSql}", model);
             }
         }

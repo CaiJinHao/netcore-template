@@ -66,7 +66,7 @@ namespace DataBase.DapperForMySql
             }
         }
 
-        public async Task<long> UpdateModelAsync<TTableModel>(TTableModel model, string[] whereFields = null) where TTableModel : class, new()
+        public async Task<long> UpdateModelAsync<TTableModel>(TTableModel model, string[] whereFields = null, string[] notValidateFields = null) where TTableModel : class, new()
         {
             using (var conn = CreateConnection())
             {

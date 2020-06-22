@@ -44,7 +44,7 @@ namespace IDataBase
         /// <summary>
         /// 根据Model生成查询SQL
         /// </summary>
-        /// <typeparam name="TModel"></typeparam>
+        /// <typeparam name="TModel">DateTime类型和Boolean类型不追加条件</typeparam>
         /// <param name="model"></param>
         /// <returns></returns>
         string GetSqlQueryString<TModel>(TModel model, string[] notInFields = null, string fieldPrefix = "b1.");
@@ -54,6 +54,6 @@ namespace IDataBase
         /// <typeparam name="TModel"></typeparam>
         /// <param name="model"></param>
         /// <returns></returns>
-        string GetSqlUpdateString<TModel>(TModel model, string[] notInFields = null);
+        string GetSqlUpdateString<TModel>(TModel model, string[] notInFields = null, string[] notValidateFields = null);
     }
 }

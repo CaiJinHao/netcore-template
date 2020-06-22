@@ -196,7 +196,7 @@ namespace IDataBase.DbExtensions
                 if (v != null)
                 {
                     var fieldType = v.GetType();
-                    if (notValidateFields != null && notValidateFields.Contains(fieldType.Name))
+                    if (notValidateFields != null && notValidateFields.Contains(_field.Name))
                     {//不需要验证值的字段
                         appendField(_field);
                     }

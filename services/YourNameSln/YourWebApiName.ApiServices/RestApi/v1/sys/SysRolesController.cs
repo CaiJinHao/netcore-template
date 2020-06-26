@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using YourWebApiName.IServices.IDbServices;
 using YourWebApiName.Models.DbModels;
 using YourWebApiName.Models.RequestModels;
+using Common.Utility.Autofac;
 
 namespace YourWebApiName.ApiServices.RestApi.v1.sys
 {

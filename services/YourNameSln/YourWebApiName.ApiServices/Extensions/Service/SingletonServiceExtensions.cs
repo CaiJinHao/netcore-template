@@ -24,7 +24,7 @@ namespace YourWebApiName.ApiServices.Extensions.Service
                     .AddSingleton<IHttpInfo, HttpInfo>()
                     .AddSingleton<ISqlServerDbContext>(s =>
                     {
-#if !DEBUG
+#if DEBUG
                         return new SqlServerDbContext(dbConfig.ConnectionString, () =>
                         {
                             var connection = new System.Data.SqlClient.SqlConnection(dbConfig.ConnectionString);

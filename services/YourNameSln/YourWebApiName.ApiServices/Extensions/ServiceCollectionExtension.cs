@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using YourWebApiName.ApiServices.Extensions.Service;
+using YourWebApiName.ApiServices.HostedService;
 
 namespace YourWebApiName.ApiServices.Extensions
 {
@@ -84,6 +85,8 @@ namespace YourWebApiName.ApiServices.Extensions
             //{
             //    services.AddHostedService<DataDeleteService>();
             //}
+            services.AddHostedService<TimerHostedService>();
+            services.AddHostedService<MyTimerHostedService>();
             return services;
         }
     }

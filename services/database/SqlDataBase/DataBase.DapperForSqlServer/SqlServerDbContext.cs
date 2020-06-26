@@ -37,16 +37,17 @@ namespace DataBase.DapperForSqlServer
 
         public IDbConnection CreateConnection()
         {
-            if (CreateConnectionAction!=null)
+            IDbConnection conn;
+            if (CreateConnectionAction != null)
             {
-                return CreateConnectionAction();
+                conn = CreateConnectionAction();
             }
             else
             {
-                var conn = new SqlConnection(ConnectionString);
-                conn.Open();
-                return conn;
+                conn = new SqlConnection(ConnectionString);
             }
+            conn.Open();
+            return conn;
         }
 
         public async Task<bool> CreateAsync<TTableModel>(TTableModel model) where TTableModel : class, new()

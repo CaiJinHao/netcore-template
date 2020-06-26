@@ -22,5 +22,12 @@ namespace ApiServices.Test.OtherTest
             var s= new DbContextAbstract().GetSqlQueryString<SysRolesModel>(t);
             Console.WriteLine(s);
         }
+
+        [TestMethod]
+        public void TimeTest()
+        {
+            var t = DateTime.Now.ToString();
+            Console.WriteLine(t);
+        }
     }
 }

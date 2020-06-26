@@ -55,6 +55,12 @@ namespace YourWebApiName.Services.DbServices
             return await sysRolesRepository.GetModelsAsync(pagingModel, queryParameter, fields);
         }
 
+        public async Task<string> GetOk()
+        {
+            await Task.Delay(1);
+            return "成功返回";
+        }
+
         public async Task<long> UpdateModelAsync(string id, SysRolesModel model)
         {
             return await sysRolesRepository.UpdateModelAsync(id, model);

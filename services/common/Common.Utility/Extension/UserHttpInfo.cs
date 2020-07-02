@@ -65,7 +65,7 @@ namespace Common.Utility.Extension
             var claim = Current.User.Claims.Where(c => c.Type == infoType).FirstOrDefault();
             if (claim == null)
             {
-                throw new Exception("用户授权异常，获取不多Token内容信息");
+                throw new Exception("用户授权异常，获取不到Token信息");
             }
             return claim.Value;
         }

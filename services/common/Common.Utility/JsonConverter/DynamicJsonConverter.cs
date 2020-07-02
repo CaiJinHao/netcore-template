@@ -83,11 +83,11 @@ namespace Common.JsonConverter
                     result = ReadList(jsonElement);
                     break;
                 case JsonValueKind.String:
-                    //TODO: Missing Datetime&Bytes Convert
+                    //Missing Datetime&Bytes Convert
                     result = jsonElement.GetString();
                     break;
                 case JsonValueKind.Number:
-                    //TODO: more num type
+                    //more num type
                     result = 0;
                     if (jsonElement.TryGetInt64(out long l))
                     {

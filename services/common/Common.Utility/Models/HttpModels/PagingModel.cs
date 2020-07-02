@@ -21,7 +21,7 @@ namespace Common.Utility.Models.HttpModels
         /// 每页的数量 Limit
         /// </summary>
         public int PageSize { get => pageSize; set => pageSize = value; }
-        
+
 
         /// <summary>
         /// 开始数据行索引
@@ -29,7 +29,7 @@ namespace Common.Utility.Models.HttpModels
         /// <returns></returns>
         public int StartIndex()
         {
-            return PageSize * (Page - 1);
+            return PageSize * (Page - 1) + 1;
         }
 
         #region 当Page=1时返回
@@ -62,11 +62,11 @@ namespace Common.Utility.Models.HttpModels
         /// </summary>
         public string OrderByFiled { get; set; }
 
-     /*   /// <summary>
+        /// <summary>
         /// 要做的操作 运算符
         /// 0：分页数据
         /// 1：所有数据查询/关联表查询，不带分页
         /// </summary>
-        public int Oprator { get; set; }*/
+        public int Oprator { get; set; }//写到前边可以写注释
     }
 }

@@ -20,9 +20,9 @@ namespace Common.Utility.Extension
             //取消Unicode编码
             Encoder = System.Text.Encodings.Web.JavaScriptEncoder.Create(UnicodeRanges.All),
             IgnoreNullValues = false,//忽略NULL
-            PropertyNameCaseInsensitive = true,//区分大小写
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,//null使用默认属性名
-            AllowTrailingCommas = true,//允许额外符号
+            PropertyNameCaseInsensitive=true,//区分大小写
+            PropertyNamingPolicy=null,//使用默认属性名
+            AllowTrailingCommas=true,//允许额外符号
         };
 
         /// <summary>

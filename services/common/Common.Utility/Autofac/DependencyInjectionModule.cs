@@ -35,6 +35,11 @@ namespace Common.Utility.Autofac
         /// <param name="assemblys"></param>
         public static void RegisterDefaultModuleImplementedInterfaces(this ContainerBuilder builder, Type[] aopServices, params Assembly[] assemblys)
         {
+            /*
+             InstancePerLifetimeScope：同一个Lifetime生成的对象是同一个实例
+            SingleInstance：单例模式，每次调用，都会使用同一个实例化的对象；每次都用同一个对象；
+            InstancePerDependency：默认模式，每次调用，都会重新实例化对象；每次请求都创建一个新的对象；
+             */
             //var cacheType = new List<Type>();
             //cacheType.Add(typeof(BlogCacheAOP));
             foreach (var assembly in assemblys)
@@ -42,7 +47,8 @@ namespace Common.Utility.Autofac
                 builder.RegisterAssemblyTypes(assembly)//注册类型
                        .AsImplementedInterfaces()//实现接口
                        .PropertiesAutowired()//允许属性自动注入
-                       .InstancePerLifetimeScope()//生命周期管理器
+                       //.InstancePerLifetimeScope()//生命周期管理器
+                       .InstancePerDependency()
                                                                         //.EnableClassInterceptors()//开启类拦截器，只有类才能开启
                        .EnableInterfaceInterceptors()//开启接口拦截器，只有接口才能开启
                        .InterceptedBy(aopServices);//允许将拦截器服务的列表分配给注册。 

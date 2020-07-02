@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Common.Models.Config.AppConfig.ServiceCollectionConfig;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -32,5 +33,9 @@ namespace Common.Utility.Models.Config.AppConfig
         /// 后台任务配置
         /// </summary>
         public BackgroundTasksConfig BackgroundTasks { get; set; }
+        /// <summary>
+        /// 请求服务配置
+        /// </summary>
+        public RequestServiceConfig RequestService { get; set; }
     }
 }

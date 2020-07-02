@@ -27,6 +27,8 @@ namespace Common.Utility.Autofac
             return Container.Resolve<T>();
         }
 
+        /*
+        请使用GetService
         /// <summary>
         /// 获取服务(请求生命周期内)
         /// </summary>
@@ -35,6 +37,6 @@ namespace Common.Utility.Autofac
         public static T GetScopeService<T>() where T : class
         {
             return (T)GetService<IHttpContextAccessor>().HttpContext.RequestServices.GetService(typeof(T));
-        }
+        }*/
     }
 }

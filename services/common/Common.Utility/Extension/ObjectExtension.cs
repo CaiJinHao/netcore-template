@@ -4,7 +4,7 @@ using System.Text;
 using System.Linq;
 using Common.Utility.Other;
 using System.Reflection;
-using System.Text.Json;
+using KellermanSoftware.CompareNetObjects;
 
 namespace Common.Utility.Extension
 {
@@ -50,12 +50,24 @@ namespace Common.Utility.Extension
                 return false;
             }
             var _type = sourceObj.GetType();
+            if (_type.IsEnum)
+            {
+                return ((Int32)sourceObj) > 0;
+            }
             switch (_type.Name)
             {
                 case "String":
                     {
                         var _value = (string)sourceObj;
                         return !string.IsNullOrEmpty(_value);
+                    }
+                case "Int16":
+                    {
+                        return (Int64)sourceObj > 0;
+                    }
+                case "Int32":
+                    {
+                        return (Int64)sourceObj > 0;
                     }
                 case "Int64":
                     {
@@ -75,6 +87,19 @@ namespace Common.Utility.Extension
                     break;
             }
             return false;
+        }
+
+        /// <summary>
+        /// 比对连个对象
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="sourceObj"></param>
+        /// <param name="toObj"></param>
+        /// <returns></returns>
+        public static bool CompareTo<T>(this object sourceObj, T toObj)
+        {
+            var _compare = new CompareLogic();
+            return _compare.Compare(sourceObj,toObj).AreEqual;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Common.Utility.Models.Config.AppConfig;
+﻿using Common.Models.Config.AppConfig;
+using Common.Utility.Models.Config.AppConfig;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -32,5 +33,13 @@ namespace Common.Utility.Models.Config
         /// 日志记录器配置
         /// </summary>
         public LoggerConfigModel LoggerConfig { get; set; }
+        /// <summary>
+        /// 系统文件路径
+        /// </summary>
+        public AppFilePathsModel AppFilePaths { get; set; }
+        /// <summary>
+        /// isc流媒体配置
+        /// </summary>
+        public IscLmtConfig IscLmtConfig { get; set; }
     }
 }

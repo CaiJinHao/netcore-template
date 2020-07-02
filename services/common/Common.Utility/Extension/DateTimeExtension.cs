@@ -133,7 +133,23 @@ namespace Common.Utility.Extension
         /// <returns></returns>
         public static DateTime Utc(this DateTime _time)
         {
-           return DateTime.SpecifyKind(_time, DateTimeKind.Utc);
+            return _time;
+            //mongodb时间
+            //return DateTime.SpecifyKind(_time, DateTimeKind.Utc);
+        }
+
+        /// <summary>
+        /// 转换为字符串 yyyy-MM-dd HH:mm:ss
+        /// </summary>
+        /// <param name="_time"></param>
+        /// <returns></returns>
+        public static string ToFormat(this DateTime? _time)
+        {
+            if (_time==null)
+            {
+                return string.Empty;
+            }
+            return ((DateTime)_time).ToString("yyyy-MM-dd HH:mm:ss");
         }
     }
 }

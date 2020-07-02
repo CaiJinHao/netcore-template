@@ -55,8 +55,6 @@ namespace Common.Utility.Extension
         public static void LogError(this ILogger logger,Exception exception)
         {
             logger.LogError(exception.Message + exception.StackTrace);
-            //TODO:邮件预警多选
-            //StaticEvents.SendWarning(WarningType.邮件预警| WarningType.短信预警);
         }
 
         public static void LogError(this ILogger logger, string info, Exception exception)

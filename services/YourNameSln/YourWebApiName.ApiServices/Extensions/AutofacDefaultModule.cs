@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using Common.Utility.Autofac;
 using System.Reflection;
 using System.IO;
+using Common.Utility.Models.Config;
+using Common.AOP;
 
 namespace YourWebApiName.ApiServices.Extensions
 {
@@ -23,8 +25,12 @@ namespace YourWebApiName.ApiServices.Extensions
         {
             //AOP面向切面编程服务
             var aopServices = new List<Type>();
-            //builder.RegisterType<LogAOP>();
-            //aopServices.Add(typeof(LogAOP));
+            var dbConfig = StaticConfig.AppSettings.ServiceCollectionExtension.DbConnection;
+            if (dbConfig.MiniProfiler)
+            {
+                builder.RegisterType<MiniProfilerAop>();
+                aopServices.Add(typeof(MiniProfilerAop));
+            }
 
             /*
              可以直接引用程序集，每次都要重新生成很麻烦 上线时可以这么搞

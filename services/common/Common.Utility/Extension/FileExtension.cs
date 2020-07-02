@@ -41,7 +41,7 @@ namespace Common.Utility.Extension
         }
 
         /// <summary>
-        /// 创建目录
+        /// 创建目录 自动检测没有创建的目录
         /// </summary>
         /// <param name="directory">new FileInfo(path).Directory</param>
         /// <returns></returns>

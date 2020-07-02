@@ -1,4 +1,5 @@
-﻿using IDataBase.DbExtensions;
+﻿using IDataBase.Common;
+using IDataBase.DbExtensions;
 using SqlSugar;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,7 @@ namespace DataBase.MySqlFromSqlSugar
         public MySqlSqlSugarDbContext(string connectionString) { 
             ConnectionString = connectionString;
         }
-        public SqlSugarClient CreateConnection()
+        public SqlSugarClient CreateConnection(DataBaseOption dataBaseOption = DataBaseOption.db0)
         {
             var db = new SqlSugarClient(new ConnectionConfig()
             {

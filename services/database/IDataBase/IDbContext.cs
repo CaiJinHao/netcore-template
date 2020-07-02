@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using IDataBase.Common;
+using System.Collections.Generic;
 
 namespace IDataBase
 {
@@ -9,10 +10,10 @@ namespace IDataBase
     public interface IDbContext<TDbConnection>
     {
         /// <summary>
-        /// 创建数据库连接
+        /// 创建数据库连接 默认db0
         /// </summary>
         /// <returns></returns>
-        TDbConnection CreateConnection();
+        TDbConnection CreateConnection(DataBaseOption dataBaseOption = DataBaseOption.db0);
 
         /// <summary>
         /// 获取class对应的表明

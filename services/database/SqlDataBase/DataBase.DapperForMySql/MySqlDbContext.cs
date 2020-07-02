@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using IDataBase.Common;
 using IDataBase.DbExtensions;
 using MySql.Data.MySqlClient;
 using System;
@@ -20,7 +21,7 @@ namespace DataBase.DapperForMySql
             ConnectionString = connectionString;
         }
 
-        public IDbConnection CreateConnection()
+        public IDbConnection CreateConnection(DataBaseOption dataBaseOption = DataBaseOption.db0)
         {
             //不释放，方便事务处理
             var conn = new MySqlConnection(ConnectionString);

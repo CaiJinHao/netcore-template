@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using IDataBase.Common;
 using IDataBase.DbExtensions;
 using System;
 using System.Collections.Generic;
@@ -24,23 +25,32 @@ namespace DataBase.DapperForSqlServer
         /// <summary>
         /// 创建连接对象委托  用于查看SQL
         /// </summary>
-        private Func<IDbConnection> CreateConnectionAction;
+        private Func<DataBaseOption, IDbConnection> CreateConnectionAction;
         public SqlServerDbContext(string connectionString)
         {
             ConnectionString = connectionString;
         }
-        public SqlServerDbContext(string connectionString,Func<IDbConnection> createConnectionAction)
+
+        /// <summary>
+        /// 自己创建
+        /// </summary>
+        /// <param name="createConnectionAction"></param>
+        public SqlServerDbContext(Func<DataBaseOption, IDbConnection> createConnectionAction)
         {
-            ConnectionString = connectionString;
             CreateConnectionAction = createConnectionAction;
         }
 
-        public IDbConnection CreateConnection()
+        /// <summary>
+        /// 创建指定db连接字符串的数据库
+        /// </summary>
+        /// <param name="dataBaseOption"></param>
+        /// <returns></returns>
+        public IDbConnection CreateConnection(DataBaseOption dataBaseOption= DataBaseOption.db0)
         {
             IDbConnection conn;
             if (CreateConnectionAction != null)
             {
-                conn = CreateConnectionAction();
+                conn = CreateConnectionAction(dataBaseOption);
             }
             else
             {

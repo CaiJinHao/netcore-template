@@ -21,7 +21,7 @@ namespace DataBase.MongoDb
             this.DbName = dbName;
         }
 
-        public IMongoDatabase CreateConnection()
+        public IMongoDatabase CreateConnection(DataBaseOption dataBaseOption = DataBaseOption.db0)
         {
             var client = new MongoClient(ConnectionUrl);
             return client.GetDatabase(DbName);

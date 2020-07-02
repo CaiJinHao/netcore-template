@@ -4,6 +4,8 @@ using DataBase.DapperForSqlServer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using StackExchange.Profiling;
+using StackExchange.Profiling.Data;
+using System.Data.Common;
 
 namespace YourWebApiName.ApiServices.Extensions.Service
 {
@@ -24,15 +26,32 @@ namespace YourWebApiName.ApiServices.Extensions.Service
                     .AddSingleton<IHttpInfo, HttpInfo>()
                     .AddSingleton<ISqlServerDbContext>(s =>
                     {
-#if DEBUG
-                        return new SqlServerDbContext(dbConfig.ConnectionString, () =>
+                        return new SqlServerDbContext((dbOption) =>
                         {
-                            var connection = new System.Data.SqlClient.SqlConnection(dbConfig.ConnectionString);
-                            return new StackExchange.Profiling.Data.ProfiledDbConnection(connection, MiniProfiler.Current);
+                            DbConnection connection;
+                            switch (dbOption)
+                            {
+                                case IDataBase.Common.DataBaseOption.db1:
+                                    {
+                                        connection = new System.Data.SqlClient.SqlConnection(dbConfig.ConnectionStringDb1);
+                                    }
+                                    break;
+                                case IDataBase.Common.DataBaseOption.db0:
+                                default:
+                                    {
+                                        connection = new System.Data.SqlClient.SqlConnection(dbConfig.ConnectionString);
+                                    }
+                                    break;
+                            }
+                            if (dbConfig.MiniProfiler)
+                            {
+                                return new ProfiledDbConnection(connection, MiniProfiler.Current);
+                            }
+                            else
+                            {
+                                return connection;
+                            }
                         });
-#else
-                        return new SqlServerDbContext(dbConfig.ConnectionString);
-#endif
                     })
                     //.AddSingleton<IMySqlDbContext>(s =>
                     //{

@@ -88,14 +88,22 @@ namespace DataBase.DapperForSqlServer
 
         public async Task<bool> CreateAsync<TTableModel>(TTableModel[] models, string[] notInFields = null) where TTableModel : class, new()
         {
-            using (var conn = CreateConnection())
+            if (models.Length > 30)
             {
-                var fields = GetFields<TTableModel>(notInFields);
-                var strFieldNames = string.Join(",", fields);
-                var strParamFiledNames = "@" + string.Join(",@", fields);
-                var sql = string.Format("INSERT INTO {0} ({1}) VALUES({2})", GetTableName<TTableModel>(), strFieldNames, strParamFiledNames);
-                var i = await conn.ExecuteAsync(sql, models);
+                var i = await CreateToBulk(models);
                 return i > 0;
+            }
+            else
+            {
+                using (var conn = CreateConnection())
+                {
+                    var fields = GetFields<TTableModel>(notInFields);
+                    var strFieldNames = string.Join(",", fields);
+                    var strParamFiledNames = "@" + string.Join(",@", fields);
+                    var sql = string.Format("INSERT INTO {0} ({1}) VALUES({2})", GetTableName<TTableModel>(), strFieldNames, strParamFiledNames);
+                    var i = await conn.ExecuteAsync(sql, models);
+                    return i > 0;
+                }
             }
         }
 
@@ -145,6 +153,21 @@ namespace DataBase.DapperForSqlServer
                 var sql = $"DELETE FROM {GetTableName<TTableModel>()} WHERE 1=1 {sqlWhere}";
                 return await conn.ExecuteAsync(sql, model);
             }
+        }
+
+        /// <summary>
+        /// 批量插入不支持带自增字段，需要把自增字段排除
+        /// </summary>
+        /// <typeparam name="TTableModel"></typeparam>
+        /// <param name="models"></param>
+        /// <returns></returns>
+        public async Task<long> CreateToBulk<TTableModel>(TTableModel[] models)
+        {
+            using (var conn = CreateConnection())
+            {
+               await conn.BulkInsertAsync(models, GetTableName<TTableModel>());
+            }
+            return 1;
         }
     }
 }

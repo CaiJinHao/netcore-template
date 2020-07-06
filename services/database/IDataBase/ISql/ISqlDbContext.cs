@@ -43,5 +43,12 @@ namespace IDataBase.ISql
         /// <param name="notInFields">要排除的字段</param>
         /// <returns></returns>
         Task<bool> CreateAsync<TTableModel>(TTableModel[] models, string[] notInFields = null) where TTableModel : class, new();
+        /// <summary>
+        /// 批量插入 暂时只支持SQLSERVER
+        /// </summary>
+        /// <typeparam name="TTableModel"></typeparam>
+        /// <param name="models"></param>
+        /// <returns></returns>
+        Task<long> CreateToBulk<TTableModel>(TTableModel[] models);
     }
 }

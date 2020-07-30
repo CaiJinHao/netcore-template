@@ -62,7 +62,7 @@ namespace YourWebApiName.ApiServices.Extensions.Service
                     //    var mongoDb = dbConfig.MongoDB;
                     //    return new MongoDbContext(mongoDb.ConnectionUrl, mongoDb.DbName);
                     //})
-                    //example 后台服务
+                    //example 全局服务
                     //.AddSingleton<IGrainThermonetryTaskTimingService, GrainThermonetryTaskTimingService>()
                     ;
         }

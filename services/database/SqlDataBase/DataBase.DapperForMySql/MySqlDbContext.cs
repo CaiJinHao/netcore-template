@@ -15,7 +15,10 @@ namespace DataBase.DapperForMySql
         private string ConnectionString { get; set; }
 
         public string PrimaryKey => Guid.NewGuid().ToString("n");
-
+        /// <summary>
+        /// 创建连接对象委托  用于查看SQL
+        /// </summary>
+        private Func<DataBaseOption, IDbConnection> CreateConnectionAction;
         public MySqlDbContext(string connectionString)
         {
             ConnectionString = connectionString;
@@ -24,7 +27,15 @@ namespace DataBase.DapperForMySql
         public IDbConnection CreateConnection(DataBaseOption dataBaseOption = DataBaseOption.db0)
         {
             //不释放，方便事务处理
-            var conn = new MySqlConnection(ConnectionString);
+            IDbConnection conn;
+            if (CreateConnectionAction != null)
+            {
+                conn = CreateConnectionAction(dataBaseOption);
+            }
+            else
+            {
+                conn = new MySqlConnection(ConnectionString);
+            }
             conn.Open();
             return conn;
         }
@@ -103,6 +114,11 @@ namespace DataBase.DapperForMySql
         }
 
         public Task<long> DeleteAsync<TTableModel>(TTableModel model, string[] notInFields = null) where TTableModel : class, new()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<long> CreateToBulk<TTableModel>(TTableModel[] models)
         {
             throw new NotImplementedException();
         }

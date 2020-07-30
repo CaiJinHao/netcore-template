@@ -4,7 +4,7 @@ using System.Data;
 
 namespace DataBase.DapperForMySql
 {
-    public interface IMySqlDbContext: ISqlDbContext,IDbContext<IDbConnection>
+    public interface IMySqlDbContext: ISqlDbContext
     {
     }
 }

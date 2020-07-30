@@ -11,4 +11,10 @@ namespace CodeGenerator.App.Models.Enums
         None=0,
         指定表生成=1,
     }
+
+    public enum EnumDbType
+    {
+        SqlServer = 0,
+        MySql = 1,
+    }
 }

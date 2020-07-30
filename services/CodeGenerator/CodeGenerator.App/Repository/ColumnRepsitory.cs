@@ -1,8 +1,12 @@
 ﻿using CodeGenerator.App.DbModels;
 using CodeGenerator.App.Models;
+using CodeGenerator.App.Models.Enums;
 using Dapper;
+using DataBase.DapperForMySql;
+using DataBase.DapperForSqlServer;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,12 +17,22 @@ namespace CodeGenerator.App.Repository
     {
         public async Task<IEnumerable<ColumnsModel>> GetModelsAsync(string tableName)
         {
-            using (var conn = StaticConfig.DbContext.CreateConnection())
+            IDbConnection conn = null;
+            var dbconn = StaticConfig.AppSettings.DbConnection;
+            var querySql = string.Empty;
+            switch (dbconn.DbType)
             {
-                //var mySql = "select column_name,ordinal_position,is_nullable,data_type,character_maximum_length,column_key,column_comment from information_schema.COLUMNS where table_schema=@dbName and table_name = @tableName  order by ordinal_position";
-                //return await StaticConfig.DbContext.GetModelsAsync<ColumnsModel, object>(sqlServer, new { dbName = StaticConfig.AppSettings.DbConnection.DbName, tableName = tableName });
-
-                var sqlServer = $@"SELECT   
+                case Models.Enums.EnumDbType.MySql:
+                    {
+                        conn = new MySqlDbContext(dbconn.MySqlConnection).CreateConnection();
+                        querySql = $"select column_name,ordinal_position,is_nullable,data_type,character_maximum_length,column_key,column_comment from information_schema.COLUMNS where table_schema='{StaticConfig.AppSettings.DbConnection.DbName}' and table_name = '{tableName}'  order by ordinal_position";
+                        //return await StaticConfig.DbContext.GetModelsAsync<TablesModel, object>(sqlServer, new { dbName = StaticConfig.AppSettings.DbConnection.DbName });
+                    }
+                    break;
+                case Models.Enums.EnumDbType.SqlServer:
+                    {
+                        conn = new SqlServerDbContext(dbconn.SqlServerConnection).CreateConnection();
+                        querySql = $@"SELECT   
         col.colorder AS ordinal_position,  
         col.name AS column_name ,  
         ISNULL(ep.[value], col.name) AS column_comment,  
@@ -58,8 +72,12 @@ FROM    dbo.syscolumns col
                                                          AND epTwo.name = 'MS_Description'  
 WHERE   obj.name = '{tableName}'
 ORDER BY col.colorder";//解决了没有主键的问题，没有主见按第一个字段查询
-                return await conn.QueryAsync<ColumnsModel>(sqlServer);
+                    }
+                    break;
+                default:
+                    break;
             }
+            return await conn.QueryAsync<ColumnsModel>(querySql);
         }
     }
 }

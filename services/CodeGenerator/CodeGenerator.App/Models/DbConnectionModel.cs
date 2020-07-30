@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CodeGenerator.App.Models.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,5 +21,9 @@ namespace CodeGenerator.App.Models
         /// 数据库名称用于查询字段和表
         /// </summary>
         public string DbName { get; set; }
+        /// <summary>
+        /// 数据库类型
+        /// </summary>
+        public EnumDbType DbType { get; set; }
     }
 }

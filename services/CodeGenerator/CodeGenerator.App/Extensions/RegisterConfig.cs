@@ -1,4 +1,5 @@
 ﻿using CodeGenerator.App.Models;
+using DataBase.DapperForMySql;
 using DataBase.DapperForSqlServer;
 using System;
 using System.Threading.Tasks;
@@ -32,7 +33,8 @@ namespace CodeGenerator.App.Extensions
 
             var con = StaticConfig.AppSettings.DbConnection.SqlServerConnection;
             //StaticConfig.DbContext = new MySqlSqlSugarDbContext(con);
-            StaticConfig.DbContext = new SqlServerDbContext(con);
+            StaticConfig.SqlServerDbContext = new SqlServerDbContext(con);
+            StaticConfig.MySqlDbContext = new MySqlDbContext(con);
         }
     }
 }

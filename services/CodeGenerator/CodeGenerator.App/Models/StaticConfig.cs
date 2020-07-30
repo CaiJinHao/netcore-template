@@ -1,4 +1,6 @@
-﻿using DataBase.DapperForSqlServer;
+﻿using DataBase.DapperForMySql;
+using DataBase.DapperForSqlServer;
+using IDataBase.ISql;
 
 namespace CodeGenerator.App.Models
 {
@@ -9,9 +11,12 @@ namespace CodeGenerator.App.Models
         /// </summary>
         public static string ContentRootPath { get; set; }
         public static AppSettings AppSettings { get; set; }
+
         /// <summary>
         /// 尽量少的出现 更换数据上下文时比较简单
         /// </summary>
-        public static ISqlServerDbContext DbContext { get; set; }
+        public static ISqlServerDbContext SqlServerDbContext { get; set; }
+        public static IMySqlDbContext MySqlDbContext { get; set; }
     }
+
 }

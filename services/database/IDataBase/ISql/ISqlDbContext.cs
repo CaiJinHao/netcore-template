@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Data;
 using System.Threading.Tasks;
 
 namespace IDataBase.ISql
@@ -8,7 +9,7 @@ namespace IDataBase.ISql
     /// TODO:能不能做到集成所有方法,这样方便更换数据库，继承该接口的针对性数据库解决方案，不能定义方法
     /// 如果写的SQL是针对数据库更换数据库时要更换Repository层
     /// </summary>
-    public interface ISqlDbContext: IDbContextInteraction<string>
+    public interface ISqlDbContext: IDbContextInteraction<string>, IDbContext<IDbConnection>
     {
         /// <summary>
         /// 获取指定

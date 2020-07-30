@@ -24,6 +24,15 @@ namespace DataBase.DapperForMySql
             ConnectionString = connectionString;
         }
 
+        /// <summary>
+        /// 自己创建
+        /// </summary>
+        /// <param name="createConnectionAction"></param>
+        public MySqlDbContext(Func<DataBaseOption, IDbConnection> createConnectionAction)
+        {
+            CreateConnectionAction = createConnectionAction;
+        }
+
         public IDbConnection CreateConnection(DataBaseOption dataBaseOption = DataBaseOption.db0)
         {
             //不释放，方便事务处理

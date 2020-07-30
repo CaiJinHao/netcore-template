@@ -85,8 +85,7 @@ namespace YourWebApiName.ApiServices.Extensions
             //{
             //    services.AddHostedService<DataDeleteService>();
             //}
-            services.AddHostedService<TimerHostedService>();
-            services.AddHostedService<MyTimerHostedService>();
+            //services.AddHostedService<TimerHostedService>();
             return services;
         }
     }

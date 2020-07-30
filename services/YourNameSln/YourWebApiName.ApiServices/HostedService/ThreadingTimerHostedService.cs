@@ -2,15 +2,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
-using System.Timers;
 
 namespace YourWebApiName.ApiServices.HostedService
 {
     /// <summary>
-    /// System.Timers.Timer 定时器
+    /// System.Threading.Timer 定时器
     /// </summary>
-    public class TimerHostedService : IDisposable
+    public class ThreadingTimerHostedService : IDisposable
     {
         /// <summary>
         /// 定时器
@@ -32,9 +32,11 @@ namespace YourWebApiName.ApiServices.HostedService
         /// <summary>
         /// 停止
         /// </summary>
+        /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public Task StopAsync()
+        public Task StopAsync(CancellationToken cancellationToken)
         {
+            _timer?.Change(Timeout.Infinite, 0);
             _timer?.Dispose();
             return Task.CompletedTask;
         }

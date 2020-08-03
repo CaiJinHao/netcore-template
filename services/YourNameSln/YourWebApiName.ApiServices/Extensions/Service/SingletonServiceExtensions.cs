@@ -1,5 +1,4 @@
 ﻿using Common.Utility.Models.Config;
-using Common.Utility.Models.User;
 using DataBase.DapperForSqlServer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,7 +22,6 @@ namespace YourWebApiName.ApiServices.Extensions.Service
             //生命周期：整个应用程序有效
             var dbConfig = StaticConfig.AppSettings.ServiceCollectionExtension.DbConnection;
             return services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>()//全局HTTP
-                    .AddSingleton<IHttpInfo, HttpInfo>()
                     .AddSingleton<ISqlServerDbContext>(s =>
                     {
                         return new SqlServerDbContext((dbOption) =>

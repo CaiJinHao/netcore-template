@@ -1,16 +1,12 @@
 ﻿using Autofac.Extensions.DependencyInjection;
 using Common.NetCoreWebUtility.Extension;
 using Common.Utility.Autofac;
+using Common.Utility.Extension;
 using Common.Utility.Models.Config;
-using Common.Utility.Models.User;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace YourWebApiName.ApiServices.Extensions
 {

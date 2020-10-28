@@ -70,24 +70,9 @@ namespace @(name_space).MongoRepository.DbRepository
             return await DbContext.DeleteAsync(model);
         }
 
-        public @(table_name_pascal)Model GetModel(string id)
+        public async Task<@(table_name_pascal)Model> GetModelAsync(@(primary_key_data_type) id, IEnumerable<string> fields = null)
         {
-            return DbContext.GetModel<string, @(table_name_pascal)Model>(id);
-        }
-
-        public async Task<@(table_name_pascal)Model> GetModelAsync(@(primary_key_data_type) id)
-        {
-            return await DbContext.GetModelAsync<@(primary_key_data_type), @(table_name_pascal)Model>(id);
-        }
-
-        public async Task<IEnumerable<@(table_name_pascal)Model>> GetModelsAsync()
-        {
-            return await DbContext.GetModelsAsync<@(table_name_pascal)Model>();
-        }
-
-        public Task<IEnumerable<dynamic>> GetNamesAsync(@(table_name_pascal)RequestModel queryParameter)
-        {
-            throw new NotImplementedException();
+            return await DbContext.GetModelAsync<@(primary_key_data_type), @(table_name_pascal)Model>(id,fields);
         }
 
         private string GetQuery(@(table_name_pascal)RequestModel queryParameter, string table = null)
@@ -96,36 +81,41 @@ namespace @(name_space).MongoRepository.DbRepository
             {
                 default:
                     {
+                        var sb = new StringBuilder();
                         //如果需要模糊查询请处理参数值添加%
-                        return DbContext.GetSqlQueryString(queryParameter);
+                        sb.Append(DbContext.GetSqlQueryString<@(table_name_pascal)Model>(queryParameter));
+                        return sb.ToString();
                     }
             }
         }
 
-        public async Task<IEnumerable<@(table_name_pascal)Model>> GetCurrentModelsAsync(@(table_name_pascal)RequestModel queryParameter)
+        public async Task<IEnumerable<@(table_name_pascal)Model>> GetCurrentModelsAsync(@(table_name_pascal)RequestModel queryParameter, IEnumerable<string> fields = null)
         {
             using (var conn = DbContext.CreateConnection())
             {
                 var strWhere = GetQuery(queryParameter);
-                var dataQuery = $"SELECT b1.* FROM {tableName} b1 WHERE 1=1 {strWhere} ORDER BY b1.@(primary_key_name) ASC";
+            var strFieldNames = DbContext.GetFieldsToString<@(table_name_pascal)Model>("b1", fields);
+                var dataQuery = $"SELECT {strFieldNames} FROM {tableName} b1 WHERE 1=1 {strWhere} ORDER BY b1.@(primary_key_name) ASC";
                 return await conn.QueryAsync<@(table_name_pascal)Model>(dataQuery, queryParameter);
             }
         }
 
-        public async Task<IEnumerable<@(table_name_pascal)ResponeModel>> GetModelsAsync(@(table_name_pascal)RequestModel queryParameter)
+        public async Task<IEnumerable<@(table_name_pascal)ResponeModel>> GetModelsAsync(@(table_name_pascal)RequestModel queryParameter, IEnumerable<string> fields = null)
         {
             using (var conn = DbContext.CreateConnection())
             {
                 var strWhere = GetQuery(queryParameter);
-                var dataQuery = $"SELECT b1_result.* FROM (SELECT b1.* FROM {tableName}  b1 WHERE 1=1 {strWhere} ORDER BY @(primary_key_name) ASC) b1_result";//内查询，可以做连接查询 直接join
+            var strFieldNames = DbContext.GetFieldsToString<@(table_name_pascal)Model>("b1", fields);
+                var dataQuery = $"SELECT b1_result.* FROM (SELECT {strFieldNames} FROM {tableName}  b1 WHERE 1=1 {strWhere}) b1_result ORDER BY b1_result.@(primary_key_name) ASC";//内查询，可以做连接查询 直接join
                 return await conn.QueryAsync<@(table_name_pascal)ResponeModel>(dataQuery, queryParameter);
             }
         }
 
-        public async Task<IEnumerable<@(table_name_pascal)ResponeModel>> GetModelsAsync(PagingModel pagingModel, @(table_name_pascal)RequestModel queryParameter)
+        public async Task<IEnumerable<@(table_name_pascal)ResponeModel>> GetModelsAsync(PagingModel pagingModel, @(table_name_pascal)RequestModel queryParameter, IEnumerable<string> fields = null)
         {
             var strWhere = GetQuery(queryParameter);
-            var querySql = "SELECT {0} " + $"FROM (SELECT b1.* FROM {tableName}  b1 WHERE 1=1 {strWhere} ORDER BY @(primary_key_name) ASC) b1_result";//内查询，可以做连接查询 直接join
+            var strFieldNames = DbContext.GetFieldsToString<@(table_name_pascal)Model>("b1", fields);
+            var querySql = "SELECT {0} " + $"FROM (SELECT {strFieldNames} FROM {tableName}  b1 WHERE 1=1 {strWhere} ORDER BY @(primary_key_name) ASC) b1_result";//内查询，可以做连接查询 直接join
             var countQuery = string.Format(querySql, "COUNT(1)");
 
             var pagingSql = $" LIMIT {pagingModel.StartIndex()},{pagingModel.PageSize}";//分页
@@ -140,7 +130,8 @@ namespace @(name_space).MongoRepository.DbRepository
 
         public async Task<long> UpdateModelAsync(@(primary_key_data_type) id, @(table_name_pascal)Model model)
         {
-            return await DbContext.UpdateModelAsync(id, model);
+            //model.id = id;
+            return await DbContext.UpdateModelAsync( model);
         }
     }
 }

@@ -12,10 +12,11 @@
 
 using Common.Utility.Extension;
 using Common.Utility.Models.HttpModels;
+using DataBase.DapperForSqlServer;
 using Dapper;
 using System;
+using System.Linq;
 using System.Text;
-using DataBase.DapperForSqlServer;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using @(name_space).IRepository.IDbRepository;
@@ -129,7 +130,8 @@ namespace @(name_space).Repository.DbRepository
 
         public async Task<long> UpdateModelAsync(@(primary_key_data_type) id, @(table_name_pascal)Model model)
         {
-            return await DbContext.UpdateModelAsync(model);
+            model.id = id;
+            return await DbContext.UpdateModelAsync( model);
         }
     }
 }

@@ -2,6 +2,7 @@
 using DataBase.DapperForSqlServer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using MySql.Data.MySqlClient;
 using StackExchange.Profiling;
 using StackExchange.Profiling.Data;
 using System.Data.Common;

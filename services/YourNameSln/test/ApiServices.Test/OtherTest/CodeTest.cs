@@ -12,18 +12,6 @@ namespace ApiServices.Test.OtherTest
     public class CodeTest
     {
         [TestMethod]
-        public void ObjectEquest()
-        {
-            var t = new SysRolesRequestModel() {
-                Test=false,
-                 role_id="123",
-                  role_name="tearfsadsfsadfsa"
-            };
-            var s= new DbContextAbstract().GetSqlQueryString<SysRolesModel>(t);
-            Console.WriteLine(s);
-        }
-
-        [TestMethod]
         public void TimeTest()
         {
             var t = DateTime.Now.ToString();

@@ -296,6 +296,59 @@
             <param name="services"></param>
             <returns></returns>
         </member>
+        <member name="T:YourWebApiName.ApiServices.HostedService.ThreadingTimerHostedService">
+            <summary>
+            System.Threading.Timer 定时器
+            </summary>
+        </member>
+        <member name="P:YourWebApiName.ApiServices.HostedService.ThreadingTimerHostedService._timer">
+            <summary>
+            定时器
+            </summary>
+        </member>
+        <member name="F:YourWebApiName.ApiServices.HostedService.ThreadingTimerHostedService.logger">
+            <summary>
+            日志记录器
+            </summary>
+        </member>
+        <member name="M:YourWebApiName.ApiServices.HostedService.ThreadingTimerHostedService.Dispose">
+            <summary>
+            释放
+            </summary>
+        </member>
+        <member name="M:YourWebApiName.ApiServices.HostedService.ThreadingTimerHostedService.StopAsync(System.Threading.CancellationToken)">
+            <summary>
+            停止
+            </summary>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:YourWebApiName.ApiServices.HostedService.TimerHostedService">
+            <summary>
+            System.Timers.Timer 定时器
+            </summary>
+        </member>
+        <member name="P:YourWebApiName.ApiServices.HostedService.TimerHostedService._timer">
+            <summary>
+            定时器
+            </summary>
+        </member>
+        <member name="F:YourWebApiName.ApiServices.HostedService.TimerHostedService.logger">
+            <summary>
+            日志记录器
+            </summary>
+        </member>
+        <member name="M:YourWebApiName.ApiServices.HostedService.TimerHostedService.Dispose">
+            <summary>
+            释放
+            </summary>
+        </member>
+        <member name="M:YourWebApiName.ApiServices.HostedService.TimerHostedService.StopAsync">
+            <summary>
+            停止
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:YourWebApiName.ApiServices.Program">
             <summary>
             Program

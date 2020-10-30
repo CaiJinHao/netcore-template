@@ -26,7 +26,7 @@ namespace DataBase.DapperForSqlServer
         /// 创建连接对象委托  用于查看SQL
         /// </summary>
         private Func<DataBaseOption, IDbConnection> CreateConnectionAction;
-        public SqlServerDbContext(string connectionString)
+        public SqlServerDbContext(string connectionString) : base("[{0}]")
         {
             ConnectionString = connectionString;
         }
@@ -35,7 +35,7 @@ namespace DataBase.DapperForSqlServer
         /// 自己创建
         /// </summary>
         /// <param name="createConnectionAction"></param>
-        public SqlServerDbContext(Func<DataBaseOption, IDbConnection> createConnectionAction)
+        public SqlServerDbContext(Func<DataBaseOption, IDbConnection> createConnectionAction) : base("[{0}]")
         {
             CreateConnectionAction = createConnectionAction;
         }

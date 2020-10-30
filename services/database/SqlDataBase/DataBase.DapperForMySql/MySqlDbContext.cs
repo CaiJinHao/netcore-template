@@ -19,7 +19,7 @@ namespace DataBase.DapperForMySql
         /// 创建连接对象委托  用于查看SQL
         /// </summary>
         private Func<DataBaseOption, IDbConnection> CreateConnectionAction;
-        public MySqlDbContext(string connectionString)
+        public MySqlDbContext(string connectionString) : base("`{0}`")
         {
             ConnectionString = connectionString;
         }
@@ -28,7 +28,7 @@ namespace DataBase.DapperForMySql
         /// 自己创建
         /// </summary>
         /// <param name="createConnectionAction"></param>
-        public MySqlDbContext(Func<DataBaseOption, IDbConnection> createConnectionAction)
+        public MySqlDbContext(Func<DataBaseOption, IDbConnection> createConnectionAction) : base("`{0}`")
         {
             CreateConnectionAction = createConnectionAction;
         }
@@ -117,16 +117,32 @@ namespace DataBase.DapperForMySql
             }
         }
 
-        public Task<long> CreateAsync<TTableModel>(TTableModel model, string[] notInFields) where TTableModel : class, new()
+        public async Task<long> CreateAsync<TTableModel>(TTableModel model, string[] notInFields) where TTableModel : class, new()
         {
-            throw new NotImplementedException();
+            using (var conn = CreateConnection())
+            {
+                var fields = GetFields<TTableModel>(notInFields);
+                var strFieldNames = string.Join(",", fields);
+                var strParamFiledNames = "@" + string.Join(",@", fields);
+                var sql = string.Format("INSERT INTO {0} ({1}) VALUES({2});select last_insert_id();", GetTableName<TTableModel>(), strFieldNames, strParamFiledNames);
+                var multi = await conn.QueryMultipleAsync(sql, model);
+                return multi.Read<long>().FirstOrDefault();
+            }
         }
 
-        public Task<long> DeleteAsync<TTableModel>(TTableModel model, string[] notInFields = null) where TTableModel : class, new()
+        public async Task<long> DeleteAsync<TTableModel>(TTableModel model, string[] notInFields = null) where TTableModel : class, new()
         {
-            throw new NotImplementedException();
+            using (var conn = CreateConnection())
+            {
+                var fields = GetFields<TTableModel>();
+                var strFieldNames = string.Join(",", fields);
+                var sqlWhere = GetSqlQueryString(model, notInFields, string.Empty);
+                var sql = $"DELETE FROM {GetTableName<TTableModel>()} WHERE 1=1 {sqlWhere}";
+                return await conn.ExecuteAsync(sql, model);
+            }
         }
 
+        [Obsolete("已过期")]
         public Task<long> CreateToBulk<TTableModel>(TTableModel[] models)
         {
             throw new NotImplementedException();

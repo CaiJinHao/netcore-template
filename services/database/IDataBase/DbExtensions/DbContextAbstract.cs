@@ -14,6 +14,17 @@ namespace IDataBase.DbExtensions
     public class DbContextAbstract
     {
         /// <summary>
+        /// 字段的符号SQLSERVER
+        /// </summary>
+        public string FiledFormat { get; set; }
+        public DbContextAbstract()
+        {
+        }
+        public DbContextAbstract(string filedFormat)
+        {
+            FiledFormat = filedFormat;
+        }
+        /// <summary>
         /// 获取表名
         /// </summary>
         /// <typeparam name="TTableModel"></typeparam>
@@ -68,7 +79,7 @@ namespace IDataBase.DbExtensions
                 //注意每个数据库的标识方法不一样 SQL SERVER []/MYSQL ``
                 if (isAutoFields)
                 {
-                    return string.Join(",", fields.Select(a => $"[{a}]"));
+                    return string.Join(",", fields.Select(a => string.Format(FiledFormat,a)));
                 }
                 else
                 {
@@ -77,7 +88,7 @@ namespace IDataBase.DbExtensions
             }
             else
             {
-                return string.Join(",", fields.Select(a => $"{fieldTableName}.[{a}]"));
+                return string.Join(",", fields.Select(a => $"{fieldTableName}.{string.Format(FiledFormat, a)}"));
             }
         }
 

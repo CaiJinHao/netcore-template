@@ -1,14 +1,13 @@
 ﻿//#define TEST
 
 using Autofac;
-using Common.Utility.AOP;
+using Common.AOP;
+using Common.Utility.Autofac;
+using Common.Utility.Models.Config;
 using System;
 using System.Collections.Generic;
-using Common.Utility.Autofac;
-using System.Reflection;
-using System.IO;
-using Common.Utility.Models.Config;
-using Common.AOP;
+using YourWebApiName.Repository;
+using YourWebApiName.Services;
 
 namespace YourWebApiName.ApiServices.Extensions
 {
@@ -37,20 +36,8 @@ namespace YourWebApiName.ApiServices.Extensions
              其他程序集只有继承接口才会自动注入,非依赖程序集的需要通过构造函数注入、如common
             */
 
-#if TEST
-            var basePath = Common.Utility.Models.Config.StaticConfig.ContentRootPath;//test使用
-#else
-            var basePath = Microsoft.DotNet.PlatformAbstractions.ApplicationEnvironment.ApplicationBasePath;
-#endif
-
-#if DEBUG
-            var assemblysServices = Assembly.LoadFrom(Path.Combine(basePath, "netstandard2.0/YourWebApiName.Services.dll"));
-            var assemblysRepository = Assembly.LoadFrom(Path.Combine(basePath, "netstandard2.0/YourWebApiName.Repository.dll"));
-#else
-            var assemblysServices = Assembly.LoadFrom(Path.Combine(basePath, "YourWebApiName.Services.dll"));
-            var assemblysRepository = Assembly.LoadFrom(Path.Combine(basePath, "YourWebApiName.Repository.dll"));
-#endif
-
+            var assemblysServices = typeof(ServicesAssembly).Assembly;
+            var assemblysRepository = typeof(RepositoryAssembly).Assembly;
             builder.
                 RegisterDefaultModuleImplementedInterfaces(
                 aopServices.ToArray()

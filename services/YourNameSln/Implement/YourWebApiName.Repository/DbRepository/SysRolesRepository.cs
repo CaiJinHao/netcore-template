@@ -1,10 +1,7 @@
-
-
-using Common.Utility.Extension;
 using Common.Utility.Models.HttpModels;
 using Dapper;
+using DataBase.DapperForMySql;
 using System;
-using DataBase.DapperForSqlServer;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using YourWebApiName.IRepository.IDbRepository;
@@ -29,7 +26,7 @@ namespace YourWebApiName.Repository.DbRepository
             tableName = "sys_roles";
        }
 
-        public ISqlServerDbContext DbContext { get; set; }
+        public IMySqlDbContext DbContext { get; set; }
 
         public async Task<bool> CreateAsync(SysRolesModel model)
         {

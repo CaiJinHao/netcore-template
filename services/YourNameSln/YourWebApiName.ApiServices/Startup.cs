@@ -63,7 +63,7 @@ namespace YourWebApiName.ApiServices
         /// <summary>
         /// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         /// </summary>
-        public void Configure(IApplicationBuilder app, Microsoft.AspNetCore.Hosting.IHostingEnvironment env
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env
             //, IHost host
             , IApiVersionDescriptionProvider provider)
         {

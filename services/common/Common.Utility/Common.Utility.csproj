@@ -23,9 +23,9 @@
 		<PackageId>Common.Utilitys</PackageId>
 	</PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="Autofac" Version="5.2.0" />
-		<PackageReference Include="Autofac.Extensions.DependencyInjection" Version="6.0.0" />
-		<PackageReference Include="Autofac.Extras.DynamicProxy" Version="5.0.0" />
+		<PackageReference Include="Autofac" Version="6.0.0" />
+		<PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.1.0" />
+		<PackageReference Include="Autofac.Extras.DynamicProxy" Version="6.0.0" />
 		<PackageReference Include="Castle.Core" Version="4.4.1" />
     <PackageReference Include="CompareNETObjects" Version="4.66.0" />
     <PackageReference Include="EPPlus" Version="4.5.3.2" />

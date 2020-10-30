@@ -45,8 +45,6 @@ namespace YourWebApiName.ApiServices.Extensions
                 , assemblysRepository
                 ,typeof(Common.NetCoreWebUtility.NetCoreWebUtilityAssembly).Assembly
                 //, typeof(你需要注入的程序集的类).Assembly //或者使用上面的dll加载的方式
-                //, typeof(Services.ServicesAssembly).Assembly
-                //, typeof(Repository.RepositoryAssembly).Assembly
                 );
 
 

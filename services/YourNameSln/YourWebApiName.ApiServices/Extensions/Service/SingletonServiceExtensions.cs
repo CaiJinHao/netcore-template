@@ -1,5 +1,5 @@
 ﻿using Common.Utility.Models.Config;
-using DataBase.DapperForSqlServer;
+using DataBase.DapperForMySql;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using MySql.Data.MySqlClient;
@@ -23,9 +23,9 @@ namespace YourWebApiName.ApiServices.Extensions.Service
             //生命周期：整个应用程序有效
             var dbConfig = StaticConfig.AppSettings.ServiceCollectionExtension.DbConnection;
             return services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>()//全局HTTP
-                    .AddSingleton<ISqlServerDbContext>(s =>
+                    .AddSingleton<IMySqlDbContext>(s =>
                     {
-                        return new SqlServerDbContext((dbOption) =>
+                        return new MySqlDbContext((dbOption) =>
                         {
                             DbConnection connection;
                             switch (dbOption)
@@ -54,6 +54,37 @@ namespace YourWebApiName.ApiServices.Extensions.Service
                             }
                         });
                     })
+                    //.AddSingleton<ISqlServerDbContext>(s =>
+                    //{
+                    //    return new SqlServerDbContext((dbOption) =>
+                    //    {
+                    //        DbConnection connection;
+                    //        switch (dbOption)
+                    //        {
+                    //            case IDataBase.Common.DataBaseOption.db1:
+                    //                {
+                    //                    //connection = new System.Data.SqlClient.SqlConnection(dbConfig.ConnectionStringDb1);
+                    //                    connection = new MySqlConnection(dbConfig.ConnectionStringDb1);
+                    //                }
+                    //                break;
+                    //            case IDataBase.Common.DataBaseOption.db0:
+                    //            default:
+                    //                {
+                    //                    //connection = new System.Data.SqlClient.SqlConnection(dbConfig.ConnectionString);
+                    //                    connection = new MySqlConnection(dbConfig.ConnectionString);
+                    //                }
+                    //                break;
+                    //        }
+                    //        if (dbConfig.MiniProfiler)
+                    //        {
+                    //            return new ProfiledDbConnection(connection, MiniProfiler.Current);
+                    //        }
+                    //        else
+                    //        {
+                    //            return connection;
+                    //        }
+                    //    });
+                    //})
                     //.AddSingleton<IMySqlDbContext>(s =>
                     //{
                     //    return new MySqlDbContext(dbConfig.ConnectionString);

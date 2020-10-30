@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-
+using System.Collections.ObjectModel;
 
 namespace YourWebApiName.IdentityServer.Service
 {
@@ -30,7 +30,7 @@ namespace YourWebApiName.IdentityServer.Service
             var customProfile = new IdentityResource(
                 name: "custom.profile",
                 displayName: "Custom profile",
-                claimTypes: new[] { "name", "authlist", "status" });
+                userClaims: new[] { "name", "authlist", "status" });
 
             return new List<IdentityResource>
             {
@@ -69,10 +69,11 @@ namespace YourWebApiName.IdentityServer.Service
                 {
                     //定义API资源的scope,可结合授权策略是否通过GET、POST、ALL请求
                     // API 验证Token Scope使用
-                    Scopes = {
-                        new Scope(){ Name=$"{item.Name}.read_access",DisplayName=$"Read only access to {item.Name}"},//只读
-                        new Scope(){ Name=$"{item.Name}.read_write_access",DisplayName=$"Write only access to {item.Name}"},//只写
-                    }
+                    Scopes = new Collection<string>() { $"{item.Name}.read_write_access", $"{item.Name}.read_access" }
+                    //Scopes = {
+                    //    new Scope(){ Name=$"{item.Name}.read_access",DisplayName=$"Read only access to {item.Name}"},//只读
+                    //    new Scope(){ Name=$"{item.Name}.read_write_access",DisplayName=$"Write only access to {item.Name}"},//只写
+                    //}
                 };
             }
         }

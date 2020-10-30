@@ -435,7 +435,7 @@
             启动类
             </summary>
         </member>
-        <member name="M:YourWebApiName.ApiServices.Startup.#ctor(Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+        <member name="M:YourWebApiName.ApiServices.Startup.#ctor(Microsoft.AspNetCore.Hosting.IHostingEnvironment)">
             <summary>
             启动构造函数DI
             </summary>
@@ -447,20 +447,10 @@
             </summary>
             <param name="services"></param>
         </member>
-        <member name="M:YourWebApiName.ApiServices.Startup.ConfigureContainer(Autofac.ContainerBuilder)">
-            <summary>
-            AutoFac调用
-            </summary>
-            <param name="builder"></param>
-        </member>
-        <member name="M:YourWebApiName.ApiServices.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment,Microsoft.Extensions.Hosting.IHost,Microsoft.AspNetCore.Mvc.ApiExplorer.IApiVersionDescriptionProvider)">
+        <member name="M:YourWebApiName.ApiServices.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IHostingEnvironment,Microsoft.AspNetCore.Mvc.ApiExplorer.IApiVersionDescriptionProvider)">
             <summary>
             This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
             </summary>
-            <param name="app"></param>
-            <param name="env"></param>
-            <param name="host"></param>
-            <param name="provider"></param>
         </member>
     </members>
 </doc>

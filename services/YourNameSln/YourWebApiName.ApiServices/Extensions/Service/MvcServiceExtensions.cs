@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +28,7 @@ namespace YourWebApiName.ApiServices.Extensions.Service
             //DI 使用属性自动注入，需要替换以下规则
             services.Replace(ServiceDescriptor.Transient<IControllerActivator, ServiceBasedControllerActivator>());
             //此方法将不注册用于视图或页面的服务
-            services.AddControllers(options =>
+            services.AddMvc(options =>
             {
                 //全局异常过滤器,谁最后添加先执行谁
                 options.Filters.Add(typeof(MvcExceptionsFilter));
@@ -48,15 +49,13 @@ namespace YourWebApiName.ApiServices.Extensions.Service
             }).SetCompatibilityVersion(CompatibilityVersion.Latest)
             .AddJsonOptions(options =>
             {
-                options.JsonSerializerOptions.Encoder = JsonExtension.jsOptions.Encoder;
-                options.JsonSerializerOptions.IgnoreNullValues = JsonExtension.jsOptions.IgnoreNullValues;
-                options.JsonSerializerOptions.PropertyNameCaseInsensitive = JsonExtension.jsOptions.PropertyNameCaseInsensitive;
-                options.JsonSerializerOptions.PropertyNamingPolicy = JsonExtension.jsOptions.PropertyNamingPolicy;
-                options.JsonSerializerOptions.AllowTrailingCommas = JsonExtension.jsOptions.AllowTrailingCommas;
-                options.JsonSerializerOptions.Converters.Add(new Common.Utility.JsonConverter.JsonDateTimeConverter());
-                /*
-                 options.SerializerSettings.ContractResolver = new NullToEmptyStringResolver();//自动将Null自动换位空字符串
-                 */
+                //使用model中的属性 名称返回
+                options.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
+                options.SerializerSettings.ContractResolver = new DefaultContractResolver();//使用字段原名称
+                //options.SerializerSettings.ContractResolver = new NullToEmptyStringResolver();//自动将Null自动换位空字符串
+                //options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                //不包含属性null的序列化
+                //options.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
             });
 
             return services.Configure<ApiBehaviorOptions>(options =>

@@ -1,30 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Autofac;
+﻿using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using Common.Utility.Models.Config;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
+using System;
 using YourWebApiName.ApiServices.Extensions;
 using YourWebApiName.ApiServices.Extensions.Middleware;
 
 namespace YourWebApiName.ApiServices
 {
-   /// <summary>
-   /// 启动类
-   /// </summary>
+    /// <summary>
+    /// 启动类
+    /// </summary>
     public class Startup
     {
         /// <summary>
         /// 启动构造函数DI
         /// </summary>
         /// <param name="env"></param>
-        public Startup(IWebHostEnvironment env)
+        public Startup(IHostingEnvironment env)
         {
             StaticConfig.ContentRootPath = env.ContentRootPath;
         }
@@ -35,44 +33,55 @@ namespace YourWebApiName.ApiServices
         /// 配置服务
         /// </summary>
         /// <param name="services"></param>
-        public void ConfigureServices(IServiceCollection services)
+        public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            services.AddAppServices();
-        }
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
 
-        /// <summary>
-        /// AutoFac调用
-        /// </summary>
-        /// <param name="builder"></param>
-        public void ConfigureContainer(ContainerBuilder builder)
-        {
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.AddAppServices();
+
+            var builder = new ContainerBuilder();
             builder.RegisterModule<AutofacDefaultModule>();
+            //builder.RegisterType<AdvertisementServices>().As<IAdvertisementServices>();
+
+            //将services填充到Autofac容器生成器中
+            builder.Populate(services);
+
+            //使用已进行的组件登记创建新容器
+            var ApplicationContainer = builder.Build();
+
+            //将AutoFac反馈到管道中
+            return new AutofacServiceProvider(ApplicationContainer);
         }
 
         /// <summary>
         /// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         /// </summary>
-        /// <param name="app"></param>
-        /// <param name="env"></param>
-        /// <param name="host"></param>
-        /// <param name="provider"></param>
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IHost host
+        public void Configure(IApplicationBuilder app, Microsoft.AspNetCore.Hosting.IHostingEnvironment env
+            //, IHost host
             , IApiVersionDescriptionProvider provider)
         {
 
-            app.UseSwaggerMiddleware(provider)
+            app
+                .UseSwaggerMiddleware(provider)
                .UseMiddleware();
 
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            app.UseEndpoints(endpoints =>
+            app.UseMvc(routes =>
             {
-                endpoints.MapControllerRoute(
+                //默认控制器
+                routes.MapRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Home}/{action=Index}/{id?}");
             });
 
 

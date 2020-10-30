@@ -30,7 +30,6 @@ namespace YourWebApiName.ApiServices.Extensions.Service
 
 
                 options.SqlFormatter = new StackExchange.Profiling.SqlFormatters.InlineFormatter();
-                options.EnableServerTimingHeader = true;
 
                 options.IgnoredPaths.Add("/wwwroot");
             });

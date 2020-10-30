@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Authorization.Policy;
 
 namespace YourWebApiName.ApiServices.Extensions
 {
@@ -39,25 +40,26 @@ namespace YourWebApiName.ApiServices.Extensions
         private static IApplicationBuilder UseAppMiddleware(this IApplicationBuilder app)
         {
             // ↓↓↓↓↓↓ 注意下边这些中间件的顺序，很重要 ↓↓↓↓↓↓
-
+            foreach (var item in StaticConfig.AppSettings.ServiceCollectionExtension.Cors.Policy)
+            {
+                app.UseCors(item.Name);
+            }
             return app
                 .UseResponseCompression()//启用响应压缩可以返回更大的数据内容,必须在app.UseMvc 之前调用。
                 .UseForwardedHeaders(new ForwardedHeadersOptions
                 {
                     ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
                 })
-                .UseCors("LimitRequests")
-                .UseHsts()//强制客户端（如浏览器）使用HTTPS与服务器创建连接
-                          //.UseHttpsRedirection() //跳转https
+                //.UseHsts()//强制客户端（如浏览器）使用HTTPS与服务器创建连接
+                //.UseHttpsRedirection() //跳转https
                 .UseStaticHttpContextMiddleware()//全局HTTP
                 .UseStaticFilesMiddleware()//使用静态文件
                 .UseCookiePolicy()//使用cookie
                 .UseStatusCodePages()//把错误码返回前台，比如是404
-                .UseRouting()//Routing
+                //.UseRouting()//Routing
                 .UseAuthentication()//开启认证
-                .UseAuthorization()//开启授权策略
+                //.UseAuthorization()//开启授权策略
                 .UseMiniProfiler() //http 请求分析
-
                 //.UseConsulComponentMiddleware()//TODO:使用consul组件服务注册
                 ;
         }

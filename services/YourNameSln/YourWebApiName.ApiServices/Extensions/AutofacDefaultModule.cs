@@ -38,16 +38,21 @@ namespace YourWebApiName.ApiServices.Extensions
 
             var assemblysServices = typeof(ServicesAssembly).Assembly;
             var assemblysRepository = typeof(RepositoryAssembly).Assembly;
-            builder.
+            try
+            {
+                builder.
                 RegisterDefaultModuleImplementedInterfaces(
-                aopServices.ToArray()
-                , assemblysServices
-                , assemblysRepository
-                ,typeof(Common.NetCoreWebUtility.NetCoreWebUtilityAssembly).Assembly
+                aopServices.ToArray(), 
+                assemblysServices,
+                assemblysRepository,
+                typeof(Common.NetCoreWebUtility.NetCoreWebUtilityAssembly).Assembly
                 //, typeof(你需要注入的程序集的类).Assembly //或者使用上面的dll加载的方式
-                //, typeof(Services.ServicesAssembly).Assembly
-                //, typeof(Repository.RepositoryAssembly).Assembly
                 );
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
 
 
             builder.RegisterDefaultModule(

@@ -47,11 +47,6 @@ namespace YourWebApiName.ApiServices.Extensions.Service
                 var xmlPath = Path.Combine(basePath, "Swagger/YourWebApiName.ApiServices.xml");
                 options.IncludeXmlComments(xmlPath, true);
 
-                //TODO:暂时没有Models的注释文档
-                //var xmlModelPath = Path.Combine(basePath, "Swagger/YourWebApiName.Models.xml");
-                //options.IncludeXmlComments(xmlModelPath);
-
-
                 #region Swagger添加授权验证服务
 
                 options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()

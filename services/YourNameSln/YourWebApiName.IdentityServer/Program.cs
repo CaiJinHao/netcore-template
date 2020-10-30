@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -13,22 +14,28 @@ namespace YourWebApiName.IdentityServer
             CreateHostBuilder(args).Build().Run();
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
+        /// <summary>
+        /// 创建web主机
+        /// </summary>
+        /// <param name="args"></param>
+        /// <returns></returns>
+        public static IWebHostBuilder CreateHostBuilder(string[] args)
+        {
+            var _path = Directory.GetCurrentDirectory();
+            var config = new ConfigurationBuilder()
+                            .SetBasePath(_path)
+                             .AddJsonFile("hostsettings.json", optional: true)
+                            .AddCommandLine(args)
+                            .Build();
+
+            return WebHost.CreateDefaultBuilder(args)
+                .ConfigureLogging((loggingBuilder) =>
                 {
-                    var _path = Directory.GetCurrentDirectory();
-                    var config = new ConfigurationBuilder()
-                                    .SetBasePath(_path)
-                                    .AddJsonFile("hostsettings.json", optional: true)
-                                    .AddCommandLine(args)
-                                    .Build();
-                    webBuilder.UseConfiguration(config);
-                    webBuilder.ConfigureLogging(loggingBuilder => {
-                        //去除打印Info信息
-                        loggingBuilder.AddFilter(f => f == LogLevel.Error);
-                    });
-                    webBuilder.UseStartup<Startup>();
-                });
+                    //Replace the default Logging with Log4Net
+                    loggingBuilder.AddFilter(f => f == LogLevel.Error);
+                })
+                 .UseConfiguration(config)
+                 .UseStartup<Startup>();
+        }
     }
 }

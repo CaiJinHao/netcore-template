@@ -2,21 +2,22 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using YourWebApiName.IdentityServer.Extensions;
-using YourWebApiName.IdentityServer.Models;
-using YourWebApiName.IdentityServer.Service;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
+using YourWebApiName.IdentityServer.Extensions;
+using YourWebApiName.IdentityServer.Models;
+using YourWebApiName.IdentityServer.Service;
 
 namespace YourWebApiName.IdentityServer
 {
     public class Startup
     {
-        public Startup(IWebHostEnvironment env)
+        public Startup(IHostingEnvironment env)
         {
             StaticConfigModel.ContentRootPath = env.ContentRootPath;
         }
@@ -25,10 +26,12 @@ namespace YourWebApiName.IdentityServer
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddHsts(opts => {
-                opts.Preload = true;
-                opts.IncludeSubDomains = true;
-            });
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            //services.AddHsts(opts => {
+            //    opts.Preload = true;
+            //    opts.IncludeSubDomains = true;
+            //});
 
             //报错，请清除掉tempkey.rsa再启动
             //请求测试 路径 /.well-known/openid-configuration
@@ -37,6 +40,7 @@ namespace YourWebApiName.IdentityServer
                         using (var _service = _s.BuildServiceProvider())
                         {
                             IdentityConfigService.AppSettings = _service.GetService<IOptions<AppSettingsModel>>().Value;
+                            StaticConfigModel.AppSettings = IdentityConfigService.AppSettings;
                         }
                         return _s;
                     })
@@ -53,28 +57,21 @@ namespace YourWebApiName.IdentityServer
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IOptions<AppSettingsModel> appSettingsOptions)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            StaticConfigModel.AppSettings = appSettingsOptions.Value;
+            //StaticConfigModel.AppSettings = appSettingsOptions.Value;
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseRouting();
             app.UseIdentityServer();
-            app.UseHsts();
-            app.UseHttpsRedirection();
+            //app.UseHsts();
+            //app.UseHttpsRedirection();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapGet("/", async context =>
-                {
-                    await context.Response.WriteAsync("Hello World!");
-                });
 
-                //endpoints.MapDefaultControllerRoute();
-            });
+            app.UseMvc();
         }
     }
 }

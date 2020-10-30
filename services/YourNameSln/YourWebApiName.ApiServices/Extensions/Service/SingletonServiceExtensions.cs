@@ -31,13 +31,15 @@ namespace YourWebApiName.ApiServices.Extensions.Service
                             {
                                 case IDataBase.Common.DataBaseOption.db1:
                                     {
-                                        connection = new System.Data.SqlClient.SqlConnection(dbConfig.ConnectionStringDb1);
+                                        //connection = new System.Data.SqlClient.SqlConnection(dbConfig.ConnectionStringDb1);
+                                        connection = new MySqlConnection(dbConfig.ConnectionStringDb1);
                                     }
                                     break;
                                 case IDataBase.Common.DataBaseOption.db0:
                                 default:
                                     {
-                                        connection = new System.Data.SqlClient.SqlConnection(dbConfig.ConnectionString);
+                                        //connection = new System.Data.SqlClient.SqlConnection(dbConfig.ConnectionString);
+                                        connection = new MySqlConnection(dbConfig.ConnectionString);
                                     }
                                     break;
                             }

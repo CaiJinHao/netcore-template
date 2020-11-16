@@ -53,15 +53,12 @@ layui.use(['jquery', 'form', 'layer', 'ajaxmod', 'formvalidate'], function () {
                 layer.msg("登录成功", {
                     time: 5000
                 });
-                // window.location.href = "./main/index.html";
+                window.location.href = "./main/index.html";
             } else {
                 layer.msg(_json.Msg, {
                     icon: 5,
                     time: 5000
                 });
-                setTimeout(function () {
-                    window.location.reload();
-                }, 5000);
             }
         });
         return false;

@@ -41,11 +41,6 @@ namespace YourWebApiName.Services.DbServices
             return await sysRolesRepository.DeleteAsync(model);
         }
 
-        public async Task<IEnumerable<SysRolesModel>> GetCurrentModelsAsync(SysRolesRequestModel queryParameter, IEnumerable<string> fields = null)
-        {
-            return await sysRolesRepository.GetCurrentModelsAsync(queryParameter);
-        }
-
         public async Task<SysRolesModel> GetModelAsync(string id, IEnumerable<string> fields = null)
         {
             return await sysRolesRepository.GetModelAsync(id, fields);
@@ -54,6 +49,11 @@ namespace YourWebApiName.Services.DbServices
         public async Task<IEnumerable<SysRolesResponeModel>> GetModelsAsync(SysRolesRequestModel queryParameter, IEnumerable<string> fields = null)
         {
             return await sysRolesRepository.GetModelsAsync(queryParameter, fields);
+        }
+
+        public async Task<IEnumerable<SysRolesModel>> GetCurrentModelsAsync(SysRolesRequestModel queryParameter, IEnumerable<string> fields = null)
+        {
+            return await sysRolesRepository.GetCurrentModelsAsync(queryParameter, fields);
         }
 
         public async Task<IEnumerable<SysRolesResponeModel>> GetModelsAsync(PagingModel pagingModel, SysRolesRequestModel queryParameter, IEnumerable<string> fields = null)

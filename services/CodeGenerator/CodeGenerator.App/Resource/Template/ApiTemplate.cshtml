@@ -116,10 +116,10 @@ namespace @(api_controller_name_space)
         /// <param name="parameter">修改的字段</param>
         /// <returns></returns>
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(@(primary_key_data_type) id, [FromBody]@(table_name_pascal)RequestModel parameter)
+        public async Task<IActionResult> Put(@(primary_key_data_type) id, [FromBody]@(table_name_pascal)Model parameter)
         {
             var apiResult = new ApiResultModel(ErrorCodeType.Success);
-            parameter.id = id;
+            parameter.@(primary_key_name) = id;
             //var model = new @(table_name_pascal)Model();
             //parameter.CloneTo(model);
             var c = await @(table_name_camel)Service.UpdateModelAsync(parameter);
@@ -137,7 +137,7 @@ namespace @(api_controller_name_space)
         /// <param name="parameter"></param>
         /// <returns></returns>
         [HttpPatch()]
-        public async Task<IActionResult> Patch([FromBody]SysRolesModel parameter)
+        public async Task<IActionResult> Patch([FromBody]@(table_name_pascal)Model parameter)
         {
             var apiResult = new ApiResultModel(ErrorCodeType.Success);
             //var model = new @(table_name_pascal)Model();

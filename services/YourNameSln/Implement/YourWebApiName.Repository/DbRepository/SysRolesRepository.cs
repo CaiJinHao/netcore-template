@@ -118,7 +118,7 @@ namespace YourWebApiName.MongoRepository.DbRepository
 
         public async Task<long> UpdateAllModelAsync(SysRolesModel model)
         {
-            return await DbContext.UpdateAllModelAsync(model);
+            return await DbContext.UpdateAllModelAsync( model);
         }
     }
 }

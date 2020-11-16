@@ -41,10 +41,6 @@ namespace @(name_space).Models.DbModels
             {
          @:[Required]
             }
-            if(col.data_type=="DateTime")
-                {
-         @:[JsonConverter(typeof(JsonDateTimeConverter))]
-                }
          @:public @(col.data_type) @(col.column_name) { get; set; }
          }
         }

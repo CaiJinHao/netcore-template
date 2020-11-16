@@ -102,11 +102,13 @@ namespace YourWebApiName.ApiServices.RestApi.v1
         /// <param name="parameter">修改的字段</param>
         /// <returns></returns>
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(string id, [FromBody] SysRolesModel parameter)
+        public async Task<IActionResult> Put(string id, [FromBody]SysRolesModel parameter)
         {
             var apiResult = new ApiResultModel(ErrorCodeType.Success);
             parameter.role_id = id;
-            var c = await sysRolesService.UpdateAllModelAsync(parameter);
+            //var model = new SysRolesModel();
+            //parameter.CloneTo(model);
+            var c = await sysRolesService.UpdateModelAsync(parameter);
             if (c > 0)
             {
                 return Ok(apiResult);

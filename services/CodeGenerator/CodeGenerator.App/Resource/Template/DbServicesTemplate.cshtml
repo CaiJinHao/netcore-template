@@ -61,6 +61,11 @@ namespace @(table.name_space).Services.DbServices
             return await @(table_name_camel)Repository.GetModelsAsync(queryParameter, fields);
         }
 
+        public async Task<IEnumerable<@(table_name_pascal)Model>> GetCurrentModelsAsync(@(table_name_pascal)RequestModel queryParameter, IEnumerable<string> fields = null)
+        {
+            return await @(table_name_camel)Repository.GetCurrentModelsAsync(queryParameter, fields);
+        }
+
         public async Task<IEnumerable<@(table_name_pascal)ResponeModel>> GetModelsAsync(PagingModel pagingModel, @(table_name_pascal)RequestModel queryParameter, IEnumerable<string> fields = null)
         {
             return await @(table_name_camel)Repository.GetModelsAsync(pagingModel, queryParameter, fields);
@@ -68,12 +73,12 @@ namespace @(table.name_space).Services.DbServices
 
         public async Task<long> UpdateAllModelAsync(@(table_name_pascal)Model model)
         {
-            return await @(table_name_camel)Repository.UpdateAllModelAsync(id, model);
+            return await @(table_name_camel)Repository.UpdateAllModelAsync(model);
         }
 
         public async Task<long> UpdateModelAsync(@(table_name_pascal)Model model)
         {
-            return await @(table_name_camel)Repository.UpdateModelAsync(id, model);
+            return await @(table_name_camel)Repository.UpdateModelAsync(model);
         }
     }
 }

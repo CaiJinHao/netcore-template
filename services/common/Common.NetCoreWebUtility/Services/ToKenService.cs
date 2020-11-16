@@ -31,8 +31,7 @@ namespace Common.NetCoreWebUtility.Services
             var disco = await client.GetDiscoveryDocumentAsync(passwordToken.Address);
             if (disco.IsError)
             {
-                rdata.Error = disco.Error;
-                //logger.LogError(disco.Error);
+                rdata.IsError = disco.IsError;
                 return rdata;
             }
             var tokenResponse = await client.RequestPasswordTokenAsync(new PasswordTokenRequest()
@@ -47,7 +46,7 @@ namespace Common.NetCoreWebUtility.Services
 
             if (tokenResponse.IsError)
             {
-                rdata.Error = tokenResponse.ErrorDescription;
+                rdata.IsError = tokenResponse.IsError;
                 return rdata;
             }
             rdata.AccessToken = tokenResponse.AccessToken;

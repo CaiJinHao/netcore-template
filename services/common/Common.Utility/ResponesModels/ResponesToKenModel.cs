@@ -11,7 +11,7 @@ namespace Common.Utility.ResponesModels
         public string TokenType { get; set; }
         public int ExpiresIn { get; set; }
         [JsonIgnore]
-        public string Error { get; set; }
+        public bool IsError { get; set; }
         /// <summary>
         /// RSA 签名私匙
         /// </summary>

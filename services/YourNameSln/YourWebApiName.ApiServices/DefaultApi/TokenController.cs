@@ -34,10 +34,10 @@ namespace YourWebApiName.ApiServices.DefaultApi
         {
             var apiData = new ApiResultModel();
             var responesToken = await new ToKenService().GetTokenAsync(authModel);
-            if (!string.IsNullOrEmpty(responesToken.Error))
+            if (responesToken.IsError)
             {
                 apiData.Code = ErrorCodeType.KeyOrSecretError;
-                apiData.Msg = responesToken.Error;
+                apiData.SetErrorCodeTypeMsg();
             }
             else
             {
@@ -63,10 +63,10 @@ namespace YourWebApiName.ApiServices.DefaultApi
             };
             //通过用户信息获取最新的token
             var responesToken = await new ToKenService().GetTokenAsync(requestAuth);
-            if (!string.IsNullOrEmpty(responesToken.Error))
+            if (responesToken.IsError)
             {
                 apiData.Code = ErrorCodeType.ServerError;
-                apiData.Msg = responesToken.Error;
+                apiData.SetErrorCodeTypeMsg();
             }
             else
             {

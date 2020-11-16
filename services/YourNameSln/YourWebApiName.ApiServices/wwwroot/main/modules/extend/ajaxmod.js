@@ -15,6 +15,8 @@
      * error ： 请求失败后执行的函数
      */
 
+     //上传文件使用 FormData ,提交后台表单不能从FormBody中读取
+
     var ajaxobj = {
         ajaxArray:function(_opts,callback){
             var _the=this;
@@ -70,7 +72,7 @@
                         _the.ajaxStatus = true; //初始化状态
                     }, 500);
                 },
-                optSuccess: function (_json) {
+                success: function (_json) {
                     //暂时不添加数据响应加密
                     //if (optDefault.isDecrypt) {
                     //    console.log(_json);
@@ -115,7 +117,7 @@
                     optDefault.ajaxStatus = true;
                 }, 1000);
             }
-            if (optDefault.type !== 'Get') { //post 必须要转为json字符串  get 必须不能转
+            if (optDefault.type !== 'Get'&& optDefault.contentType!==false) { //post 必须要转为json字符串  get 必须不能转
                 optDefault.data = JSON.stringify(optDefault.data);
             }
             var _ajaxUrl = "";
@@ -132,7 +134,7 @@
                     type: optDefault.type,
                     dataType: optDefault.dataType,
                     contentType: optDefault.contentType,
-                    success: optDefault.optSuccess,
+                    success: optDefault.success,
                     error: optDefault.error,
                     headers: optDefault.headers,
                     jsonpCallback: 'jsonp' + (new Date()).valueOf().toString().substr(-4),
@@ -388,7 +390,6 @@
             strVar += "\n";
             return strVar;
         },
-
     };
 
     exports('ajaxmod', ajaxobj);

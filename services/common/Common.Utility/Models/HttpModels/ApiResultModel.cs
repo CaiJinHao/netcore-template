@@ -46,7 +46,7 @@ namespace Common.Utility.Models
             SetErrorCodeTypeMsg();
         }
 
-        private void SetErrorCodeTypeMsg()
+        public void SetErrorCodeTypeMsg()
         {
             var _codeMsg = string.Empty;
             switch (Code)

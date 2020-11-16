@@ -169,5 +169,20 @@ namespace DataBase.DapperForSqlServer
             }
             return 1;
         }
+
+        public async Task<long> UpdateAllModelAsync<TTableModel>(TTableModel model, string[] whereFields = null) where TTableModel : class, new()
+        {
+            using (var conn = CreateConnection())
+            {
+                string whereSql = string.Empty;
+                if (whereFields == null)
+                {
+                    whereFields = GetKeyName<TTableModel>().ToArray();
+                }
+                whereSql = string.Join(" and ", whereFields.Select(item => $"[{item}]=@{item}"));
+                var strFieldNames = GetSqlUpdateString(model, whereFields);
+                return await conn.ExecuteAsync($"UPDATE {GetTableName<TTableModel>()} SET {strFieldNames} WHERE {whereSql}", model);
+            }
+        }
     }
 }

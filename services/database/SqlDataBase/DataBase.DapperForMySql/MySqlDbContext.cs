@@ -80,7 +80,7 @@ namespace DataBase.DapperForMySql
             using (var conn = CreateConnection())
             {
                 var strFieldNames = GetFieldsToString<TTableModel>("A", fields);
-                var keyName = GetKeyName<TTableModel>();
+                var keyName = GetKeyName<TTableModel>().FirstOrDefault();
                 var sql = $"SELECT {strFieldNames} FROM {GetTableName<TTableModel>()} AS A WHERE {keyName}=@key";
                 var models = await conn.QueryAsync<TTableModel>(sql, new { key = id });
                 return models.FirstOrDefault();
@@ -91,9 +91,27 @@ namespace DataBase.DapperForMySql
         {
             using (var conn = CreateConnection())
             {
-                var keyName = GetKeyName<TTableModel>();
+                if (whereFields == null)
+                {
+                    whereFields = GetKeyName<TTableModel>().ToArray();
+                }
+                var whereSql = string.Join(" and ", whereFields.Select(item => $"{string.Format(FiledFormat, item)}=@{item}"));
                 var strFieldNames = GetSqlUpdateString(model, whereFields);
-                return await conn.ExecuteAsync($"UPDATE {GetTableName<TTableModel>()} SET {strFieldNames} WHERE {keyName}=@{keyName}", model);
+                return await conn.ExecuteAsync($"UPDATE {GetTableName<TTableModel>()} SET {strFieldNames} WHERE {whereSql}", model);
+            }
+        }
+
+        public async Task<long> UpdateAllModelAsync<TTableModel>(TTableModel model, string[] whereFields = null) where TTableModel : class, new()
+        {
+            using (var conn = CreateConnection())
+            {
+                if (whereFields == null)
+                {
+                    whereFields = GetKeyName<TTableModel>().ToArray();
+                }
+                var whereSql = string.Join(" and ", whereFields.Select(item => $"{string.Format(FiledFormat, item)}=@{item}"));
+                var strFieldNames = GetSqlUpdateAllString(model, whereFields);
+                return await conn.ExecuteAsync($"UPDATE {GetTableName<TTableModel>()} SET {strFieldNames} WHERE {whereSql}", model);
             }
         }
 
@@ -101,7 +119,7 @@ namespace DataBase.DapperForMySql
         {
             using (var conn = CreateConnection())
             {
-                return await conn.ExecuteAsync($"DELETE FROM {GetTableName<TTableModel>()} WHERE {GetKeyName<TTableModel>()} in @key", new { key = id });
+                return await conn.ExecuteAsync($"DELETE FROM {GetTableName<TTableModel>()} WHERE {GetKeyName<TTableModel>().FirstOrDefault()} in @key", new { key = id });
             }
         }
 

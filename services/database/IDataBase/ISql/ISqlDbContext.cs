@@ -28,6 +28,14 @@ namespace IDataBase.ISql
         /// <returns></returns>
         Task<long> UpdateModelAsync<TTableModel>(TTableModel model, string[] whereFields = null, string[] notValidateFields = null) where TTableModel : class, new();
         /// <summary>
+        /// 更新所有字段
+        /// </summary>
+        /// <typeparam name="TTableModel"></typeparam>
+        /// <param name="model"></param>
+        /// <param name="whereFields"></param>
+        /// <returns></returns>
+        Task<long> UpdateAllModelAsync<TTableModel>(TTableModel model, string[] whereFields = null) where TTableModel : class, new();
+        /// <summary>
         /// 自增使用
         /// </summary>
         /// <typeparam name="TTableModel"></typeparam>

@@ -293,5 +293,36 @@ namespace IDataBase.DbExtensions
             }
             return sqlWhere.ToString().Trim(',');
         }
+
+        /// <summary>
+        /// 根据Model生成更新的SQL
+        /// </summary>
+        /// <typeparam name="TModel"></typeparam>
+        /// <param name="model"></param>
+        /// <param name="notInFields">无法更新的字段类型可置位可空类型如:Bool</param>
+        /// <param name="notValidateFields">不需要验证值得字段</param>
+        /// <returns></returns>
+        public string GetSqlUpdateAllString<TModel>(TModel model, string[] notInFields = null)
+        {
+            var sqlWhere = new StringBuilder();//查询条件
+            Action<System.Reflection.PropertyInfo> appendField = (_field) =>
+            {
+                sqlWhere.Append($" {_field.Name} = @{_field.Name},");
+            };
+            var fieldsInfo = model.GetType().GetProperties();
+            if (notInFields != null)
+            {
+                fieldsInfo = fieldsInfo.Where(a => !notInFields.Contains(a.Name)).ToArray();//不包含字段集合的字段
+            }
+            foreach (var _field in fieldsInfo)
+            {
+                var v = _field.GetValue(model, null);
+                if (v != null)
+                {
+                    appendField(_field);
+                }
+            }
+            return sqlWhere.ToString().Trim(',');
+        }
     }
 }

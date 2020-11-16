@@ -25,11 +25,13 @@ namespace Common.Utility.Models.HttpModels
 
         /// <summary>
         /// 开始数据行索引
+        /// MySql不加1，SqlServer+1
         /// </summary>
         /// <returns></returns>
         public int StartIndex()
         {
-            return PageSize * (Page - 1) + 1;
+            return PageSize * (Page - 1);
+            //return PageSize * (Page - 1) + 1;
         }
 
         #region 当Page=1时返回

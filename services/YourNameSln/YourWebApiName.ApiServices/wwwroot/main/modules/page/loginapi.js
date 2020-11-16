@@ -25,12 +25,10 @@ var vm = new Vue({
 layui.use(['jquery', 'form', 'layer', 'ajaxmod', 'formvalidate'], function () {
     var $ = layui.jquery,
         form = layui.form,
-        layer = layui.layer,
-        ajaxmod = layui.ajaxmod,
-        formvalidate = layui.formvalidate;
+        layer = layui.layer;
 
-    if (localStorage.getItem('rememberme')) {
-        vm.loginUser = JSON.parse(localStorage.getItem('rememberme'));
+    if (localStorage.getItem('remembermeapi')) {
+        vm.loginUser = JSON.parse(localStorage.getItem('remembermeapi'));
         vm.RenderDom(form);
     }
 
@@ -52,9 +50,9 @@ layui.use(['jquery', 'form', 'layer', 'ajaxmod', 'formvalidate'], function () {
                 if (_json.Code === 0) {
                     localStorage.setItem("restapi_session_key", JSON.stringify(_json.Result));
                     if (userinfo.rememberMe === '1') {
-                        localStorage.setItem("rememberme", JSON.stringify(userinfo));
+                        localStorage.setItem('remembermeapi', JSON.stringify(userinfo));
                     } else {
-                        localStorage.removeItem("rememberme");
+                        localStorage.removeItem('remembermeapi');
                     }
                     layer.msg("登录成功", {
                         time: 5000

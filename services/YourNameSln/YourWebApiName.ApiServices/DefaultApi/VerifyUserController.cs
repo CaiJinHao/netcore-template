@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 using System.Threading.Tasks;
+using YourWebApiName.IServices.IDbServices;
+using System.Linq;
 
 namespace YourWebApiName.ApiServices.DefaultApi
 {
@@ -18,6 +20,10 @@ namespace YourWebApiName.ApiServices.DefaultApi
     [AllowAnonymous]//允许匿名访问
     public class VerifyUserController : ControllerBase
     {
+        /// <summary>
+        /// 用户服务
+        /// </summary>
+        public ISysUsersService sysUsersService { get; set; }
         /// <summary>
         /// 验证用户
         /// </summary>
@@ -46,18 +52,11 @@ namespace YourWebApiName.ApiServices.DefaultApi
         /// <returns></returns>
         private async Task<VerifyUserModel> VerifyUser(string key, string secret)
         {
-            await Task.Delay(1);
-            var pwd = string.Empty;
-            //判断密码是不是md5密码
-            if (EncrypHelper.IsMd5(secret))
-            {
-                pwd = secret;
-            }
-            else
-            {
-                pwd = EncrypHelper.EncryptToMD5(key + secret);
-            }
-            var user = new { user_id = "woshiuserid", role_name = "角色名称" };
+            var usersResult = await sysUsersService.GetModelsAsync(new Models.RequestModels.SysUsersRequestModel() { 
+                 user_account=key,
+                 user_pwd=secret
+            });
+            var user = usersResult.FirstOrDefault();
             if (user == null)
             {
                 //验证不通过

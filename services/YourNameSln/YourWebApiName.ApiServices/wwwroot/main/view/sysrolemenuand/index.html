@@ -1,0 +1,223 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>系统_角色菜单权限</title>
+    <link href="../../layui/css/layui.css" rel="stylesheet" media="all" />
+    <link href="../../build/css/common.css" rel="stylesheet" />
+</head>
+<body>
+    <div id="page-vm" class="layui-fluid iframe-top">
+        <div class="table_sysrolemenuand_mg">
+            <fieldset class="layui-elem-field">
+                <div class="layui-field-box">
+                    <form class="layui-form">
+                        <div class="layui-row">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">menu_id：</label>
+                                <div class="layui-input-inline">
+                                   <input type="text" class="layui-input" name="menu_id">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">role_id：</label>
+                                <div class="layui-input-inline">
+                                   <input type="text" class="layui-input" name="role_id">
+                                </div>
+                            </div>
+                        <div class="layui-inline btngroup">
+                            <a href="javascript:;" class="layui-btn" lay-submit lay-filter="btn_sysrolemenuand_from" id="btn_sysrolemenuand_from_query">查询</a>
+                            <a class="layui-btn" id="btn_add" href="javascript:;">新增</a>
+                            <a class="layui-btn" id="btn_del_batch" href="javascript:;">批量删除</a>
+                            <a href="javascript:;" class="layui-btn" lay-submit lay-filter="btn_sysrolemenuand_from_export">导出</a>
+                        </div>
+                        </div>
+                    </form>
+                </div>
+            </fieldset>
+            <table id="table_sysrolemenuand" class="layui-hide" lay-filter="table_sysrolemenuand_list"></table>
+            <div id="table_sysrolemenuand_page" class="laypage"></div>
+        </div>
+    </div>
+
+    <script type="text/html" id="table_sysrolemenuand_operator">
+        <a href="javascript:;" class="layui-btn layui-btn-xs" lay-event="edit" data-code="rma_id">编辑</a>
+        <a href="javascript:;" class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del" data-code="rma_id">删除</a>
+    </script>
+    <script src="../../layui/layui.js"></script>
+    <script src="../../plugins/vue/vue.min.js"></script>
+    <!--公共函数库-->
+    <script src="../../modules/extend/common.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#page-vm',
+            data: {
+                currPage: 1
+            },
+            methods: {
+				RenderDom: function(form, callback){
+                    vm.$forceUpdate();//强制重新渲染 dom
+                    // DOM 还没有更新
+                    vm.$nextTick(function () {
+                        // DOM 现在更新了
+                        form.render();
+                        if (callback) {
+                            callback();
+                        }
+                    });
+                }
+            }
+        });
+        layui.use(['table', 'layer', 'form', 'laypage', 'jquery', 'ajaxmod',  'datatable'], function () {
+            var table = layui.table,
+                $ = layui.jquery,
+                layer = layui.layer,
+                form = layui.form,
+                laypage = layui.laypage,
+                ajaxmod = layui.ajaxmod,
+                datatable = layui.datatable;
+            var _context = $('.table_sysrolemenuand_mg'),
+                _table_style = { align: 'center' };//公共样式
+
+            var sysrolemenuandObj = {
+                renderTable: function (_options) {
+                    var optDefault = {
+                        Page: vm.currPage,
+                        PageSize: PageSize,//common中定义的全局
+                    };
+                    $.extend(optDefault, _options);
+                    var _the = this;
+                    datatable.renderTable(optDefault, {
+                        url: '/sysrolemenuand',
+                        tableElem: 'table_sysrolemenuand',//laypage 自动加_page
+                        tableCols: [[
+                            { type: 'checkbox'},
+                          $.extend({ field: 'menu_id', title: 'menu_id' }, _table_style),
+                          $.extend({ field: 'role_id', title: 'role_id' }, _table_style),
+                          $.extend({ field: 'rma_time', title: 'rma_time' }, _table_style),
+                            $.extend({ field: 'rma_id', title: '操作', width: 190, templet: '#table_sysrolemenuand_operator', fixed: 'right' }, _table_style)
+                        ]],
+                    });
+                },
+                edit: function (_data) {
+                    var _the = this;
+                    datatable.edit({
+                        title: '编辑系统_角色菜单权限',
+                        area: ['850px', '500px'],
+                        content: 'view/sysrolemenuand/edit.html?rma_id=' + _data.rma_id,
+                    });
+                },
+                add: function () {
+                    var _the = this;
+                    datatable.add({
+                        title: '新增系统_角色菜单权限',
+                        area: ['850px', '500px'],
+                        content: 'view/sysrolemenuand/edit.html',
+                    });
+                },
+                del: function (_data) {
+                    var _the = this;
+                    datatable.del({
+                        url: '/sysrolemenuand/' + _data.rma_id,
+                        type: 'Delete',
+                        success: function (_json) {
+                            top.tool.publish('edit_sysrolemenuand_form_refresh');//触发事件刷新列表
+                        }
+                    });
+                },
+                delbatch: function (_data) {
+                    var checkStatus = table.checkStatus('table_sysrolemenuand'),
+                        data = checkStatus.data;
+                   var delIdList = [];
+                    $.each(data, function (k, v) {
+                        delIdList.push(v._id);
+                    });
+                    datatable.delbatch({
+                        url: '/sysrolemenuand',
+                        type: 'Delete',
+                        data: delIdList,
+                        success: function (_json) {
+                            top.tool.publish('edit_sysrolemenuand_form_refresh');//触发事件刷新列表
+                        }
+                    });
+                },
+				patchObj: function (_data) {
+                    ajaxmod.authorizeAjax({
+                        url: '/sysrolemenuand',
+                        type: 'Patch',
+                        data: _data,
+                        success: function (_json) {
+							top.tool.publish('edit_sysrolemenuand_form_refresh');
+                        }
+                    });
+                },
+                exportExcel: function (data) {
+                    //跟表格显示的数据一样
+                    data = excel.filterExportData(data, [
+                       'rma_id',
+                       'menu_id',
+                       'role_id',
+                       'rma_time',
+                    ]);
+
+                    data.unshift({
+                        rma_id:'rma_id',
+                        menu_id:'menu_id',
+                        role_id:'role_id',
+                        rma_time:'rma_time',
+                    });
+
+                    excel.exportExcel({
+                        sysrolemenuand: data
+                    }, 'sysrolemenuand' + new Date().toLocaleString() + '.xlsx', 'xlsx');
+                },
+                loadtable:function(){
+                    $('#btn_sysrolemenuand_from_query').click();
+                }
+            };
+
+            sysrolemenuandObj.renderTable();//加载第一页
+
+            //绑定编辑也保存事件
+            top.tool.subscribe("edit_sysrolemenuand_form_refresh", function () {
+                sysrolemenuandObj.renderTable();
+            });
+
+            $('#btn_add').on('click', $(_context), function () {
+                sysrolemenuandObj.add();
+            });
+
+            $('#btn_del_batch').on('click', $(_context), function () {
+                sysrolemenuandObj.delbatch();
+            });
+
+            table.on('tool(table_sysrolemenuand_list)', function (obj) {
+                var data = obj.data;
+                sysrolemenuandObj[obj.event] ? sysrolemenuandObj[obj.event].call(sysrolemenuandObj, data) : '';
+            });
+
+            form.on('submit(btn_sysrolemenuand_from)', function (data) {
+                vm.currPage = 1;
+                sysrolemenuandObj.renderTable(data.field);
+                return false;
+            });
+
+            form.on('submit(btn_sysrolemenuand_from_export)', function (data) {
+                ajaxmod.authorizeAjax({
+                    url: '/sysrolemenuand?option=1',
+                    type: 'Get',
+                    data: data.field,
+                    success: function (_json) {
+                        sysrolemenuandObj.exportExcel(_json.Result);
+                    }
+                });
+                return false;
+            });
+        });
+    </script>
+</body>
+</html>

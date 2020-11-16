@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 using System.Threading.Tasks;
+using YourWebApiName.IServices.IDbServices;
 
 namespace YourWebApiName.ApiServices.DefaultApi
 {
@@ -19,9 +20,9 @@ namespace YourWebApiName.ApiServices.DefaultApi
     public class TokenController : ControllerBase
     {
         /// <summary>
-        /// Token
+        /// 用户服务
         /// </summary>
-        public ToKenService toKenService { get; set; }
+        public ISysUsersService sysUsersService { get; set; }
         /// <summary>
         /// 获取TOKEN
         /// </summary>
@@ -32,7 +33,7 @@ namespace YourWebApiName.ApiServices.DefaultApi
         public async Task<IActionResult> Post([FromBody] RequestAuthModel authModel)
         {
             var apiData = new ApiResultModel();
-            var responesToken = await toKenService.GetTokenAsync(authModel);
+            var responesToken = await new ToKenService().GetTokenAsync(authModel);
             if (!string.IsNullOrEmpty(responesToken.Error))
             {
                 apiData.Code = ErrorCodeType.KeyOrSecretError;
@@ -53,15 +54,15 @@ namespace YourWebApiName.ApiServices.DefaultApi
         public async Task<IActionResult> Get()
         {
             var apiData = new ApiResultModel();
-            var userJson = UserHttpInfo.GetValueByToken(Common.Utility.Models.Config.TokenInfoType.UserInfo);//这个应该封装到UserService中
-            var user = JsonSerializer.Deserialize<dynamic>(userJson, new JsonSerializerOptions() { Converters = { new DynamicJsonConverter() } });
+            var userId = UserHttpInfo.GetValueByToken(Common.Utility.Models.Config.TokenInfoType.UserId);
+            var user =await sysUsersService.GetModelAsync(userId);//根据id获取用户信息
             var requestAuth = new RequestAuthModel()
             {
-                Key = (string)user.key,
-                Secret = (string)user.secret
+                Key = user.user_account,
+                Secret = user.user_pwd
             };
             //通过用户信息获取最新的token
-            var responesToken = await toKenService.GetTokenAsync(requestAuth);
+            var responesToken = await new ToKenService().GetTokenAsync(requestAuth);
             if (!string.IsNullOrEmpty(responesToken.Error))
             {
                 apiData.Code = ErrorCodeType.ServerError;

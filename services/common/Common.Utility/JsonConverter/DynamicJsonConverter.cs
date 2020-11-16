@@ -7,8 +7,13 @@ using System.Text.Json.Serialization;
 
 namespace Common.JsonConverter
 {
+    /*
+     使用方式：
+    var obj= JsonSerializer.Deserialize<dynamic>(userJson, new JsonSerializerOptions() { Converters = { new DynamicJsonConverter() } })
+     */
     /// <summary>
     /// Dynamic Converter
+    /// 将Dynamic类型的Json 序列化
     /// </summary>
     public class DynamicJsonConverter : JsonConverter<dynamic>
     {

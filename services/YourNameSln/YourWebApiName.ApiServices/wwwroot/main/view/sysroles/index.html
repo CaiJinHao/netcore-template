@@ -1,0 +1,256 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>系统_角色</title>
+    <link href="../../layui/css/layui.css" rel="stylesheet" media="all" />
+    <link href="../../build/css/common.css" rel="stylesheet" />
+</head>
+<body>
+    <div id="page-vm" class="layui-fluid iframe-top">
+        <div class="table_sysroles_mg">
+            <fieldset class="layui-elem-field">
+                <div class="layui-field-box">
+                    <form class="layui-form">
+                        <div class="layui-row">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">role_名称：</label>
+                                <div class="layui-input-inline">
+                                   <input type="text" class="layui-input" name="role_name">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">role_附注：</label>
+                                <div class="layui-input-inline">
+                                   <input type="text" class="layui-input" name="role_remarks">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">role_父级角色：</label>
+                                <div class="layui-input-inline">
+                                   <input type="text" class="layui-input" name="role_parent_role">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">role_排序：</label>
+                                <div class="layui-input-inline">
+                                   <input type="text" class="layui-input" name="role_sort">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">role_角色等级：</label>
+                                <div class="layui-input-inline">
+                                   <input type="text" class="layui-input" name="role_grade">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">role_角色是否启用：</label>
+                                <div class="layui-input-inline">
+                                   <input type="text" class="layui-input" name="role_is_enable">
+                                </div>
+                            </div>
+                        <div class="layui-inline btngroup">
+                            <a href="javascript:;" class="layui-btn" lay-submit lay-filter="btn_sysroles_from" id="btn_sysroles_from_query">查询</a>
+                            <a class="layui-btn" id="btn_add" href="javascript:;">新增</a>
+                            <a class="layui-btn" id="btn_del_batch" href="javascript:;">批量删除</a>
+                            <a href="javascript:;" class="layui-btn" lay-submit lay-filter="btn_sysroles_from_export">导出</a>
+                        </div>
+                        </div>
+                    </form>
+                </div>
+            </fieldset>
+            <table id="table_sysroles" class="layui-hide" lay-filter="table_sysroles_list"></table>
+            <div id="table_sysroles_page" class="laypage"></div>
+        </div>
+    </div>
+
+    <script type="text/html" id="table_sysroles_operator">
+        <a href="javascript:;" class="layui-btn layui-btn-xs" lay-event="edit" data-code="role_id">编辑</a>
+        <a href="javascript:;" class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del" data-code="role_id">删除</a>
+    </script>
+    <script src="../../layui/layui.js"></script>
+    <script src="../../plugins/vue/vue.min.js"></script>
+    <!--公共函数库-->
+    <script src="../../modules/extend/common.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#page-vm',
+            data: {
+                currPage: 1
+            },
+            methods: {
+				RenderDom: function(form, callback){
+                    vm.$forceUpdate();//强制重新渲染 dom
+                    // DOM 还没有更新
+                    vm.$nextTick(function () {
+                        // DOM 现在更新了
+                        form.render();
+                        if (callback) {
+                            callback();
+                        }
+                    });
+                }
+            }
+        });
+        layui.use(['table', 'layer', 'form', 'laypage', 'jquery', 'ajaxmod',  'datatable'], function () {
+            var table = layui.table,
+                $ = layui.jquery,
+                layer = layui.layer,
+                form = layui.form,
+                laypage = layui.laypage,
+                ajaxmod = layui.ajaxmod,
+                datatable = layui.datatable;
+            var _context = $('.table_sysroles_mg'),
+                _table_style = { align: 'center' };//公共样式
+
+            var sysrolesObj = {
+                renderTable: function (_options) {
+                    var optDefault = {
+                        Page: vm.currPage,
+                        PageSize: PageSize,//common中定义的全局
+                    };
+                    $.extend(optDefault, _options);
+                    var _the = this;
+                    datatable.renderTable(optDefault, {
+                        url: '/sysroles',
+                        tableElem: 'table_sysroles',//laypage 自动加_page
+                        tableCols: [[
+                            { type: 'checkbox'},
+                          $.extend({ field: 'role_name', title: 'role_名称' }, _table_style),
+                          $.extend({ field: 'role_remarks', title: 'role_附注' }, _table_style),
+                          $.extend({ field: 'role_parent_role', title: 'role_父级角色' }, _table_style),
+                          $.extend({ field: 'role_sort', title: 'role_排序' }, _table_style),
+                          $.extend({ field: 'role_grade', title: 'role_角色等级' }, _table_style),
+                          $.extend({ field: 'role_is_enable', title: 'role_角色是否启用' }, _table_style),
+                            $.extend({ field: 'role_id', title: '操作', width: 190, templet: '#table_sysroles_operator', fixed: 'right' }, _table_style)
+                        ]],
+                    });
+                },
+                edit: function (_data) {
+                    var _the = this;
+                    datatable.edit({
+                        title: '编辑系统_角色',
+                        area: ['850px', '500px'],
+                        content: 'view/sysroles/edit.html?role_id=' + _data.role_id,
+                    });
+                },
+                add: function () {
+                    var _the = this;
+                    datatable.add({
+                        title: '新增系统_角色',
+                        area: ['850px', '500px'],
+                        content: 'view/sysroles/edit.html',
+                    });
+                },
+                del: function (_data) {
+                    var _the = this;
+                    datatable.del({
+                        url: '/sysroles/' + _data.role_id,
+                        type: 'Delete',
+                        success: function (_json) {
+                            top.tool.publish('edit_sysroles_form_refresh');//触发事件刷新列表
+                        }
+                    });
+                },
+                delbatch: function (_data) {
+                    var checkStatus = table.checkStatus('table_sysroles'),
+                        data = checkStatus.data;
+                   var delIdList = [];
+                    $.each(data, function (k, v) {
+                        delIdList.push(v._id);
+                    });
+                    datatable.delbatch({
+                        url: '/sysroles',
+                        type: 'Delete',
+                        data: delIdList,
+                        success: function (_json) {
+                            top.tool.publish('edit_sysroles_form_refresh');//触发事件刷新列表
+                        }
+                    });
+                },
+				patchObj: function (_data) {
+                    ajaxmod.authorizeAjax({
+                        url: '/sysroles',
+                        type: 'Patch',
+                        data: _data,
+                        success: function (_json) {
+							top.tool.publish('edit_sysroles_form_refresh');
+                        }
+                    });
+                },
+                exportExcel: function (data) {
+                    //跟表格显示的数据一样
+                    data = excel.filterExportData(data, [
+                       'role_id',
+                       'role_name',
+                       'role_remarks',
+                       'role_parent_role',
+                       'role_sort',
+                       'role_grade',
+                       'role_is_enable',
+                    ]);
+
+                    data.unshift({
+                        role_id:'role_id',
+                        role_name:'role_名称',
+                        role_remarks:'role_附注',
+                        role_parent_role:'role_父级角色',
+                        role_sort:'role_排序',
+                        role_grade:'role_角色等级',
+                        role_is_enable:'role_角色是否启用',
+                    });
+
+                    excel.exportExcel({
+                        sysroles: data
+                    }, 'sysroles' + new Date().toLocaleString() + '.xlsx', 'xlsx');
+                },
+                loadtable:function(){
+                    $('#btn_sysroles_from_query').click();
+                }
+            };
+
+            sysrolesObj.renderTable();//加载第一页
+
+            //绑定编辑也保存事件
+            top.tool.subscribe("edit_sysroles_form_refresh", function () {
+                sysrolesObj.renderTable();
+            });
+
+            $('#btn_add').on('click', $(_context), function () {
+                sysrolesObj.add();
+            });
+
+            $('#btn_del_batch').on('click', $(_context), function () {
+                sysrolesObj.delbatch();
+            });
+
+            table.on('tool(table_sysroles_list)', function (obj) {
+                var data = obj.data;
+                sysrolesObj[obj.event] ? sysrolesObj[obj.event].call(sysrolesObj, data) : '';
+            });
+
+            form.on('submit(btn_sysroles_from)', function (data) {
+                vm.currPage = 1;
+                sysrolesObj.renderTable(data.field);
+                return false;
+            });
+
+            form.on('submit(btn_sysroles_from_export)', function (data) {
+                ajaxmod.authorizeAjax({
+                    url: '/sysroles?option=1',
+                    type: 'Get',
+                    data: data.field,
+                    success: function (_json) {
+                        sysrolesObj.exportExcel(_json.Result);
+                    }
+                });
+                return false;
+            });
+        });
+    </script>
+</body>
+</html>

@@ -15,7 +15,7 @@ namespace YourWebApiName.Services.DbServices
     public class SysRolesService : ISysRolesService
     {
         /// <summary>
-        /// 服务 DbServices sys_roles
+        /// 服务 DbServices 系统_角色
         /// </summary>
         public SysRolesService()
         {
@@ -23,6 +23,7 @@ namespace YourWebApiName.Services.DbServices
         }        
     
         public ISysRolesRepository sysRolesRepository { get; set; }
+        //解决依赖循环问题private { get => AutofacHelper.GetScopeService<ISysRolesRepository>(); }
 
 
         public async Task<bool> CreateAsync(SysRolesModel model)
@@ -35,9 +36,14 @@ namespace YourWebApiName.Services.DbServices
             return await sysRolesRepository.DeleteAsync(id);
         }
 
-        public Task<long> DeleteAsync(SysRolesModel model, string[] notInFields = null)
+        public async Task<long> DeleteAsync(SysRolesModel model)
         {
-            throw new NotImplementedException();
+            return await sysRolesRepository.DeleteAsync(model);
+        }
+
+        public async Task<IEnumerable<SysRolesModel>> GetCurrentModelsAsync(SysRolesRequestModel queryParameter, IEnumerable<string> fields = null)
+        {
+            return await sysRolesRepository.GetCurrentModelsAsync(queryParameter);
         }
 
         public async Task<SysRolesModel> GetModelAsync(string id, IEnumerable<string> fields = null)
@@ -55,15 +61,14 @@ namespace YourWebApiName.Services.DbServices
             return await sysRolesRepository.GetModelsAsync(pagingModel, queryParameter, fields);
         }
 
-        public async Task<string> GetOk()
+        public async Task<long> UpdateAllModelAsync(SysRolesModel model)
         {
-            await Task.Delay(1);
-            return "成功返回";
+            return await sysRolesRepository.UpdateAllModelAsync(model);
         }
 
-        public async Task<long> UpdateModelAsync(string id, SysRolesModel model)
+        public async Task<long> UpdateModelAsync(SysRolesModel model)
         {
-            return await sysRolesRepository.UpdateModelAsync(id, model);
+            return await sysRolesRepository.UpdateModelAsync(model);
         }
     }
 }

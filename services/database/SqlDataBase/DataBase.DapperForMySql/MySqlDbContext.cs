@@ -160,7 +160,7 @@ namespace DataBase.DapperForMySql
             }
         }
 
-        [Obsolete("已过期")]
+        [Obsolete("MySql没有实现批量插入，请使用普通插入")]
         public Task<long> CreateToBulk<TTableModel>(TTableModel[] models)
         {
             throw new NotImplementedException();

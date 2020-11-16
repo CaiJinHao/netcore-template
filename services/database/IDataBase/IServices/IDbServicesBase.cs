@@ -24,15 +24,13 @@ namespace IDataBase.IServices
         /// <param name="id"></param>
         /// <returns></returns>
         Task<long> DeleteAsync(Tid[] id);
-  /*    公司的项目不用这个，自己的项目用
-   *    /// <summary>
+
+        /// <summary>
         /// 根据条件删除多条数据
         /// </summary>
-        /// <typeparam name="Tid"></typeparam>
-        /// <typeparam name="TTableModel"></typeparam>
         /// <param name="model"></param>
         /// <returns></returns>
-        Task<long> DeleteAsync(TTableModel model, string[] notInFields = null);*/
+        Task<long> DeleteAsync(TTableModel model);
 
         /// <summary>
         /// 根据主键更新对象中的指定属性
@@ -40,7 +38,8 @@ namespace IDataBase.IServices
         /// <param name="id"></param>
         /// <param name="model"></param>
         /// <returns></returns>
-        Task<long> UpdateModelAsync(Tid id, TTableModel model);
+        Task<long> UpdateModelAsync(TTableModel model);
+        Task<long> UpdateAllModelAsync(TTableModel model);
         /// <summary>
         /// 获取指定
         /// </summary>
@@ -55,6 +54,13 @@ namespace IDataBase.IServices
         /// <param name="fields">结果字段集合</param>
         /// <returns></returns>
         Task<IEnumerable<TResponeModel>> GetModelsAsync(TRequestModel queryParameter, IEnumerable<string> fields = null);
+        /// <summary>
+        /// 获取当前表表中有条件的数据
+        /// </summary>
+        /// <param name="queryParameter"></param>
+        /// <param name="fields"></param>
+        /// <returns></returns>
+        Task<IEnumerable<TTableModel>> GetCurrentModelsAsync(TRequestModel queryParameter, IEnumerable<string> fields = null);
         /// <summary>
         /// 获取分页数据
         /// </summary>

@@ -9,7 +9,7 @@ namespace DataBse.Extensions
     {
         public static bool IsNull(this ObjectId pObjectId)
         {
-            if (pObjectId.Increment > 0)
+            if (pObjectId.Timestamp > 0)
             {
                 return true;
             }

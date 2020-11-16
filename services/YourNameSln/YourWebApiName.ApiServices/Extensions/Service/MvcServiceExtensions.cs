@@ -1,5 +1,6 @@
 ﻿using Common.NetCoreWebUtility.Filters;
 using Common.Utility.Extension;
+using Common.Utility.JsonConverter;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Mvc.Controllers;
@@ -53,7 +54,7 @@ namespace YourWebApiName.ApiServices.Extensions.Service
                 options.JsonSerializerOptions.PropertyNameCaseInsensitive = JsonExtension.jsOptions.PropertyNameCaseInsensitive;
                 options.JsonSerializerOptions.PropertyNamingPolicy = JsonExtension.jsOptions.PropertyNamingPolicy;
                 options.JsonSerializerOptions.AllowTrailingCommas = JsonExtension.jsOptions.AllowTrailingCommas;
-                options.JsonSerializerOptions.Converters.Add(new Common.Utility.JsonConverter.JsonDateTimeConverter());
+                options.JsonSerializerOptions.Converters.Add(new DateTimeJsonConverter("yyyy-MM-dd HH:mm:ss"));
                 /*
                  options.SerializerSettings.ContractResolver = new NullToEmptyStringResolver();//自动将Null自动换位空字符串
                  */

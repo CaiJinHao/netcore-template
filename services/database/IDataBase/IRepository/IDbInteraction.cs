@@ -22,27 +22,5 @@ namespace IDataBase.IRepository
         /// <param name="models"></param>
         /// <returns></returns>
         Task<bool> CreateAsync(TTableModel[] models);
-
-        /*        /// <summary>
-                /// 获取信息名称数据供下拉列表使用
-                /// </summary>
-                /// <typeparam name="TTableModel"></typeparam>
-                /// <returns></returns>
-                Task<IEnumerable<dynamic>> GetNamesAsync(TRequestModel queryParameter);*/
-
-        /// <summary>
-        /// 获取当前model表
-        /// </summary>
-        /// <param name="queryParameter">过滤条件</param>
-        /// <param name="fields">结果字段集合</param>
-        /// <returns></returns>
-        Task<IEnumerable<TTableModel>> GetCurrentModelsAsync(TRequestModel queryParameter,IEnumerable<string> fields=null);
-
-        /// <summary>
-        /// 根据条件删除多条数据
-        /// </summary>
-        /// <param name="model"></param>
-        /// <returns></returns>
-        Task<long> DeleteAsync(TTableModel model);
     }
 }

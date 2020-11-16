@@ -119,9 +119,30 @@ namespace @(api_controller_name_space)
         public async Task<IActionResult> Put(@(primary_key_data_type) id, [FromBody]@(table_name_pascal)RequestModel parameter)
         {
             var apiResult = new ApiResultModel(ErrorCodeType.Success);
-            var model = new @(table_name_pascal)Model();
-            parameter.CloneTo(model);
-            var c = await @(table_name_camel)Service.UpdateModelAsync(id, model);
+            parameter.id = id;
+            //var model = new @(table_name_pascal)Model();
+            //parameter.CloneTo(model);
+            var c = await @(table_name_camel)Service.UpdateModelAsync(parameter);
+            if (c > 0)
+            {
+                return Ok(apiResult);
+            }
+            apiResult.Code = ErrorCodeType.PutError;
+            return BadRequest(apiResult);
+        }
+
+        /// <summary>
+        /// 局部更新
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
+        [HttpPatch()]
+        public async Task<IActionResult> Patch([FromBody]SysRolesModel parameter)
+        {
+            var apiResult = new ApiResultModel(ErrorCodeType.Success);
+            //var model = new @(table_name_pascal)Model();
+            //parameter.CloneTo(model);
+            var c = await @(table_name_camel)Service.UpdateModelAsync(parameter);
             if (c > 0)
             {
                 return Ok(apiResult);

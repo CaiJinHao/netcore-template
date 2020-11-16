@@ -13,6 +13,6 @@ namespace YourWebApiName.Models.RequestModels
     /// </summary>
     public class SysRolesRequestModel : SysRolesModel
     {
-        public bool Test { get; set; }
+    
     }
 }

@@ -1,15 +1,17 @@
-﻿using System;
+
+
+using System;
+using Common.Utility.Models.HttpModels;
 using Common.Utility.Extension;
 using Common.Utility.Models;
-using Common.Utility.Models.HttpModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using YourWebApiName.IServices.IDbServices;
 using YourWebApiName.Models.DbModels;
 using YourWebApiName.Models.RequestModels;
-using Common.Utility.Autofac;
 
-namespace YourWebApiName.ApiServices.RestApi.v1.sys
+
+namespace YourWebApiName.ApiServices.RestApi.v1
 {
     /// <summary>
     /// 系统_角色
@@ -36,14 +38,16 @@ namespace YourWebApiName.ApiServices.RestApi.v1.sys
         /// <param name="queryParameter"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> Get([FromQuery]int oprator, [FromQuery]PagingModel paging, [FromQuery]SysRolesRequestModel queryParameter)
+        public async Task<IActionResult> Get([FromQuery]int oprator,[FromQuery]PagingModel paging, [FromQuery]SysRolesRequestModel queryParameter)
         {
             var apiResult = new ApiResultModel(ErrorCodeType.Success);
-            switch (oprator)
+            switch (paging.Oprator)
             {
                 case 1:
                     {
-                        apiResult.Result = await sysRolesService.GetModelsAsync(queryParameter);
+                        //获取不分页数据集合
+                        var data = await sysRolesService.GetModelsAsync(queryParameter);
+                        apiResult.Result = data;
                         return Ok(apiResult);
                     }
                 default:
@@ -98,12 +102,31 @@ namespace YourWebApiName.ApiServices.RestApi.v1.sys
         /// <param name="parameter">修改的字段</param>
         /// <returns></returns>
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(string id, [FromBody]SysRolesRequestModel parameter)
+        public async Task<IActionResult> Put(string id, [FromBody] SysRolesModel parameter)
         {
             var apiResult = new ApiResultModel(ErrorCodeType.Success);
-            var model = new SysRolesModel();
-            parameter.CloneTo(model);
-            var c = await sysRolesService.UpdateModelAsync(id, model);
+            parameter.role_id = id;
+            var c = await sysRolesService.UpdateAllModelAsync(parameter);
+            if (c > 0)
+            {
+                return Ok(apiResult);
+            }
+            apiResult.Code = ErrorCodeType.PutError;
+            return BadRequest(apiResult);
+        }
+
+        /// <summary>
+        /// 局部更新
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
+        [HttpPatch()]
+        public async Task<IActionResult> Patch([FromBody]SysRolesModel parameter)
+        {
+            var apiResult = new ApiResultModel(ErrorCodeType.Success);
+            //var model = new SysRolesModel();
+            //parameter.CloneTo(model);
+            var c = await sysRolesService.UpdateModelAsync(parameter);
             if (c > 0)
             {
                 return Ok(apiResult);
@@ -126,6 +149,7 @@ namespace YourWebApiName.ApiServices.RestApi.v1.sys
                 apiResult.Code = ErrorCodeType.ParamsError;
                 return BadRequest(apiResult);
             }
+            
             var c = await sysRolesService.DeleteAsync(new string[] { id });
             if (c > 0)
             {

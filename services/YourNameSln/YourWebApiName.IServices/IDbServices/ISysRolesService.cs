@@ -12,7 +12,6 @@ namespace YourWebApiName.IServices.IDbServices
     /// </summary>
     public interface ISysRolesService : IDbServicesBase<SysRolesModel,SysRolesResponeModel,SysRolesRequestModel, string, PagingModel>
     {
-        Task<string> GetOk();
     }
 }
 

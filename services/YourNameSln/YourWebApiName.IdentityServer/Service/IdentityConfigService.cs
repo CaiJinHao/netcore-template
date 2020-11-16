@@ -22,28 +22,6 @@ namespace YourWebApiName.IdentityServer.Service
         public static Models.AppSettingsModel AppSettings { get; set; }
 
         /// <summary>
-        /// 自定义身份资源 OpenID Connect 使用
-        /// </summary>
-        /// <returns></returns>
-        public static IEnumerable<IdentityResource> GetIdentityResourceResources()
-        {
-            var customProfile = new IdentityResource(
-                name: "custom.profile",
-                displayName: "Custom profile",
-                userClaims: new[] { "name", "authlist", "status" });
-
-            return new List<IdentityResource>
-            {
-                new IdentityResources.OpenId(),
-                new IdentityResources.Email(),
-                new IdentityResources.Profile(),
-                new IdentityResources.Phone(),
-                new IdentityResources.Address(),
-                customProfile
-            };
-        }
-
-        /// <summary>
         /// scopes define the API resources in your system
         /// 作用域定义系统中的API资源，能够获取什么属性和Clients有直接关系
         /// （JwtClaimTypes）请求此资源时应包含的相关用户身份单元信息列表。
@@ -69,11 +47,10 @@ namespace YourWebApiName.IdentityServer.Service
                 {
                     //定义API资源的scope,可结合授权策略是否通过GET、POST、ALL请求
                     // API 验证Token Scope使用
-                    Scopes = new Collection<string>() { $"{item.Name}.read_write_access", $"{item.Name}.read_access" }
-                    //Scopes = {
-                    //    new Scope(){ Name=$"{item.Name}.read_access",DisplayName=$"Read only access to {item.Name}"},//只读
-                    //    new Scope(){ Name=$"{item.Name}.read_write_access",DisplayName=$"Write only access to {item.Name}"},//只写
-                    //}
+                    Scopes = {
+                        new Scope(){ Name=$"{item.Name}.read_access",DisplayName=$"Read only access to {item.Name}"},//只读
+                        new Scope(){ Name=$"{item.Name}.read_write_access",DisplayName=$"Write only access to {item.Name}"},//只写
+                    }
                 };
             }
         }

@@ -24,7 +24,7 @@ namespace Common.Utility.JsonConverter
 
         public override void Write(Utf8JsonWriter writer, DateTime value, JsonSerializerOptions options)
         {
-            writer.WriteStringValue(value.ToUniversalTime().ToString(_dateFormatString));
+            writer.WriteStringValue(value.ToString(_dateFormatString));
         }
     }
 }

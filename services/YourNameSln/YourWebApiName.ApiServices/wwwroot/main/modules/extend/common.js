@@ -40,6 +40,7 @@ layui.config({
 
     //页面js
     login: 'page/login',
+    loginapi: 'page/loginapi',
     loginqr: 'page/loginqr',
     index: 'page/index',
     main: 'page/main',

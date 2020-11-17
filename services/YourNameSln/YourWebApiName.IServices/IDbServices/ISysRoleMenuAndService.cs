@@ -1,7 +1,10 @@
 
 
 using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Common.Utility.Models.HttpModels;
+using Common.Utility.Models.UiModels;
 using IDataBase.IServices;
 using YourWebApiName.Models.DbModels;
 using YourWebApiName.Models.RequestModels;
@@ -14,6 +17,7 @@ namespace YourWebApiName.IServices.IDbServices
     /// </summary>
     public interface ISysRoleMenuAndService : IDbServicesBase<SysRoleMenuAndModel,SysRoleMenuAndResponeModel,SysRoleMenuAndRequestModel, string, PagingModel>
     {
+        Task<IEnumerable<LayoutMenusModel>> GetLayoutMenusAsync(string role_id);
     }
 }
 

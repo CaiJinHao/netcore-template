@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using YourWebApiName.IServices.IDbServices;
 using YourWebApiName.Models.DbModels;
 using YourWebApiName.Models.RequestModels;
-
+using Common.Utility.Models.Config;
 
 namespace YourWebApiName.ApiServices.RestApi.v1
 {
@@ -46,7 +46,14 @@ namespace YourWebApiName.ApiServices.RestApi.v1
                 case 1:
                     {
                         //获取不分页数据集合
-                        var data = await sysUsersService.GetModelsAsync(queryParameter);
+                        apiResult.Result = await sysUsersService.GetModelsAsync(queryParameter);
+                        return Ok(apiResult);
+                    }
+                case 10:
+                    {
+                        var userid = UserHttpInfo.GetValueByToken(TokenInfoType.UserId);
+                        var data = await sysUsersService.GetModelAsync(userid);
+                        data.user_pwd = string.Empty;
                         apiResult.Result = data;
                         return Ok(apiResult);
                     }

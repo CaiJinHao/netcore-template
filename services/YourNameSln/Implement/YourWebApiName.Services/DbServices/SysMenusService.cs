@@ -1,6 +1,3 @@
-
-
-using System;
 using Common.Utility.Models.HttpModels;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -24,7 +21,6 @@ namespace YourWebApiName.Services.DbServices
     
         public ISysMenusRepository sysMenusRepository { get; set; }
         //解决依赖循环问题private { get => AutofacHelper.GetScopeService<ISysMenusRepository>(); }
-
 
         public async Task<bool> CreateAsync(SysMenusModel model)
         {

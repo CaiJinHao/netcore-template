@@ -66,7 +66,7 @@ namespace YourWebApiName.ApiServices.DefaultApi
             return new VerifyUserModel()
             {
                 user_id = user.user_id,
-                role_id = "none",
+                role_id = user.role_id,
                 role_name = user.role_name,
                 user_info = string.Empty
             };

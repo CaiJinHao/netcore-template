@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using YourWebApiName.IServices.IDbServices;
 using YourWebApiName.Models.DbModels;
 using YourWebApiName.Models.RequestModels;
-
+using Common.Utility.Models.Config;
 
 namespace YourWebApiName.ApiServices.RestApi.v1
 {
@@ -48,6 +48,12 @@ namespace YourWebApiName.ApiServices.RestApi.v1
                         //获取不分页数据集合
                         var data = await sysRoleMenuAndService.GetModelsAsync(queryParameter);
                         apiResult.Result = data;
+                        return Ok(apiResult);
+                    }
+                case 10:
+                    {
+                        var roleid = UserHttpInfo.GetValueByToken(TokenInfoType.RoleId);
+                        apiResult.Result = await sysRoleMenuAndService.GetLayoutMenusAsync(roleid);
                         return Ok(apiResult);
                     }
                 default:

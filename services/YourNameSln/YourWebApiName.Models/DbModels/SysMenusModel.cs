@@ -1,6 +1,7 @@
 
 
 using Common.Utility.JsonConverter;
+using Common.Utility.Models;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -53,6 +54,6 @@ namespace YourWebApiName.Models.DbModels
          /// <summary>
          /// menu_菜单是否启用
          /// </summary>
-         public int menu_is_enabled { get; set; }
+         public EnumIsNot menu_is_enabled { get; set; }
     }
 }

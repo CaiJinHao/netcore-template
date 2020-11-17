@@ -15,7 +15,6 @@
      * error ： 请求失败后执行的函数
      */
 
-     //上传文件使用 FormData ,提交后台表单不能从FormBody中读取
 
     var ajaxobj = {
         ajaxArray:function(_opts,callback){
@@ -37,6 +36,40 @@
                     }
                 });
             });
+        },
+        request: function (_options) {
+            //上传文件使用 FormData ,提交后台表单不能从FormBody中读取
+            var optDefault = {
+                url: '',
+                data: {},
+                type: 'Get',
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                ajaxStatus: true,
+                beforeSend: function () { },
+                error: function () { },
+                success: function () { },
+                always: function () { },
+                jsonpCallback: 'jsonp' + (new Date()).valueOf().toString().substr(-4),
+                headers: {}, //需要每次携带当前用户的信息 否则不知道权限
+            };
+            Object.assign(optDefault,_options);
+            optDefault.url = baseUrl + _options.url;
+            /*判断是否可以发送请求*/
+            if (!optDefault.ajaxStatus) {
+                return false;
+            }
+            optDefault.ajaxStatus = false; //禁用掉  防止多次点击
+            if (optDefault.type !== 'Get' && optDefault.contentType!==false) { //post 必须要转为json字符串  get 必须不能转
+                optDefault.data = JSON.stringify(optDefault.data);
+            }
+            $.ajax(optDefault)
+                .done(function (data) { })
+                .fail(function (data) { })
+                .always(function (data) {
+                    optDefault.ajaxStatus = true;//js为单线程
+                    optDefault.always();
+                });
         },
         ajax: function (_options) {
             var _athe = this;
@@ -304,7 +337,7 @@
             var _the = this;
             var myToken = _the.validateLogin();
             var optDefault = {
-                url: '/sysuserinfo',
+                url: '/sysusers',
                 data: {
                     Oprator: 10
                 },
@@ -316,7 +349,7 @@
                 success: function (_json) {
                     if (_json.Code === 0) {
                         // 缓存用户信息 放到index 页面 每次刷新都会执行
-                        cookie.set("userinfo", JSON.stringify(_json.Result));
+                        cookie.set('userinfo', JSON.stringify(_json.Result));
                         if (callback) {
                             callback(_json);
                         }

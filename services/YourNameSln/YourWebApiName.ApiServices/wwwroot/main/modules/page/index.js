@@ -1,21 +1,13 @@
-﻿/**
- * Name:app.js
- * Author:Anspray
- * LICENSE:MIT
-window.sessionStorage.setItem("lockcms", true);  没打开一个页面一个session 会话结束
-       localStorage.setItem("rememberme", JSON.stringify(userinfo)); 全局有效
- */
-
-//新增 pajax 无状态刷新页面
+﻿//新增 pajax 无状态刷新页面
 var vm = new Vue({
     el: '#page-wrapper',
     data: {
         navList: [],
-        userinfo: {}
+        userinfo: {},
     },
     methods: {
-        RenderDom: function(form){
-            vm.$forceUpdate();//强制重新渲染 dom
+        RenderDom: function (form) {
+            vm.$forceUpdate(); //强制重新渲染 dom
             // DOM 还没有更新
             vm.$nextTick(function () {
                 // DOM 现在更新了
@@ -58,24 +50,19 @@ layui.define(['tab', 'navbar', 'jquery', 'form', 'layer', 'ajaxmod'], function (
     tab = layui.tab;
 
 
-    ajaxmod.validateLogin();//验证是否登录了
+    ajaxmod.validateLogin(); //验证是否登录了
     ajaxmod.GetUserInfo(function (_json) {
         vm.$set(vm, 'userinfo', _json.Result);
     });
 
     //验证是否锁屏
     if (localStorage.getItem("lockcms") === "true") {
-        tab.lockPage();//锁屏
+        tab.lockPage(); //锁屏
     }
 
-    // 转换
-    //var parameter = $.param(layui.device());
-
-    //主页面对象
     var pageHome = {
-        searchMenuList: [],//搜索菜单列表 只包含带链接的 可点击的
+        searchMenuList: [], //搜索菜单列表 只包含带链接的 可点击的
         changePage: function (data) {
-            console.log(data);
             data = data === undefined ? {
                 icon: "",
                 id: "1tab1",
@@ -109,19 +96,23 @@ layui.define(['tab', 'navbar', 'jquery', 'form', 'layer', 'ajaxmod'], function (
         initMenuList: function (_options) {
             var _the = this;
             ajaxmod.authorizeAjax({
-                url: '/androleandmodule',
-                data:{Oprator:10},
+                url: '/sysrolemenuand',
+                data: {
+                    Oprator: 10
+                },
                 type: 'Get',
                 success: function (_json) {
                     vm.$set(vm, 'navList', _json.Result);
-                    if (_json.Result.length<1) {
-                        console.log("没有任何权限");
+                    if (_json.Result.length < 1) {
+                        layer.msg('没有任何权限', {
+                            icon: 5,
+                            time: 5000
+                        });
                         return false;
                     }
                     navbar.set({
-                        data: _json.Result[0].children//初始化菜单 默认使用第一个
+                        data: _json.Result[0].children //初始化菜单 默认使用第一个
                     }).render(function (data) {
-                        console.log(data);
                         tab.tabAdd(data);
                     });
 
@@ -135,29 +126,21 @@ layui.define(['tab', 'navbar', 'jquery', 'form', 'layer', 'ajaxmod'], function (
             var _the = this;
             var str = '<option value="">便捷菜单查询</option>';
 
-            var getChild = function (_leaf) {
-                if (_leaf.IsLeaf === 1) {
-                    _leaf.children.forEach(function (i) {
+            var getChild = function (_node) {
+                if (_node.url.length == 0) {
+                    _node.children.forEach(function (i) {
                         getChild(i);
                     });
-                }
-                else if (_leaf.url.length > 1) {
-                    _the.searchMenuList.push(_leaf);
-                    str += '<option value=“'+_leaf.id+'”>'+_leaf.title+'</option>';
-                    
+                } else {
+                    _the.searchMenuList.push(_node);
+                    str += '<option value="' + _node.id + '">' + _node.title + '</option>';
                 }
             };
-            vm.navList.forEach(function (v) {
-                if (v.is_module === 1) {
-                    v.children.forEach(function (i) {
-                        getChild(i);
-                    });
-                }
-                else if (v.url && v.url.length > 1) {
-                    _the.searchMenuList.push(v);
-                    str += '<option value=${v.id}>${v.title}</option>';
-                }
-            });
+            
+            for (const item of vm.navList) {
+                getChild(item);
+            }
+
             $("#search-menu").html(str);
             form.render();
         }
@@ -221,11 +204,11 @@ layui.define(['tab', 'navbar', 'jquery', 'form', 'layer', 'ajaxmod'], function (
         if (!_lock_pwd || _lock_pwd === '') {
             layer.msg("请输入登陆密码进行解锁！");
         } else {
-            if (_lock_pwd=='123456'){
+            if (_lock_pwd == '123456') {
                 $('#lock-box #lockPwd').val('');
                 localStorage.setItem("lockcms", false);
                 layer.closeAll("page");
-            }else{
+            } else {
                 layer.msg("密码错误，请重新输入!");
             }
         }
@@ -239,11 +222,11 @@ layui.define(['tab', 'navbar', 'jquery', 'form', 'layer', 'ajaxmod'], function (
 
     // 便捷查询菜单事件
     form.on('select(select-search)', function (data) {
-        pageHome.searchMenuList.forEach(function (e) {
-            if (e.id === data.value) {
-                pageHome.changePage(e);
+        for (const item of pageHome.searchMenuList) {
+            if (item.id === data.value) {
+                pageHome.changePage(item);
             }
-        });
+        }
     });
 
     //皮肤
@@ -283,7 +266,7 @@ layui.define(['tab', 'navbar', 'jquery', 'form', 'layer', 'ajaxmod'], function (
             resize: false,
             move: false,
             skin: 'color-class',
-            btn: ['主题蓝','橘子橙', '原谅绿', '少女粉', '天空蓝', '枫叶红'],
+            btn: ['主题蓝', '橘子橙', '原谅绿', '少女粉', '天空蓝', '枫叶红'],
             yes: function (index, layero) {
                 switchSkin('default');
                 return false;
@@ -332,10 +315,10 @@ layui.define(['tab', 'navbar', 'jquery', 'form', 'layer', 'ajaxmod'], function (
                 return false;
             }
         }, function (value, index, elem) {
-                var jsonobj = {
-                    time: new Date(),
-                    value: value
-                };
+            var jsonobj = {
+                time: new Date(),
+                value: value
+            };
             localStorage.setItem("tag", value);
             layer.close(index);
         });

@@ -108,7 +108,7 @@ namespace YourWebApiName.ApiServices.RestApi.v1
             parameter.menu_id = id;
             //var model = new SysMenusModel();
             //parameter.CloneTo(model);
-            var c = await sysMenusService.UpdateModelAsync(parameter);
+            var c = await sysMenusService.UpdateAllModelAsync(parameter);
             if (c > 0)
             {
                 return Ok(apiResult);

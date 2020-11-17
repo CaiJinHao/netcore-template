@@ -78,7 +78,7 @@ namespace YourWebApiName.MongoRepository.DbRepository
             {
                 var strWhere = GetQuery(queryParameter);
             var strFieldNames = DbContext.GetFieldsToString<SysRolesModel>("b1", fields);
-                var dataQuery = $"SELECT {strFieldNames} FROM {tableName} b1 WHERE 1=1 {strWhere} ORDER BY b1.role_id ASC";
+                var dataQuery = $"SELECT {strFieldNames} FROM {tableName} b1 WHERE b1.role_id!=-1 {strWhere} ORDER BY b1.role_id ASC";
                 return await conn.QueryAsync<SysRolesModel>(dataQuery, queryParameter);
             }
         }
@@ -89,7 +89,7 @@ namespace YourWebApiName.MongoRepository.DbRepository
             {
                 var strWhere = GetQuery(queryParameter);
             var strFieldNames = DbContext.GetFieldsToString<SysRolesModel>("b1", fields);
-                var dataQuery = $"SELECT b1_result.* FROM (SELECT {strFieldNames} FROM {tableName}  b1 WHERE 1=1 {strWhere}) b1_result ORDER BY b1_result.role_id ASC";//内查询，可以做连接查询 直接join
+                var dataQuery = $"SELECT b1_result.* FROM (SELECT {strFieldNames} FROM {tableName}  b1 WHERE b1.role_id!=-1 {strWhere}) b1_result ORDER BY b1_result.role_id ASC";//内查询，可以做连接查询 直接join
                 return await conn.QueryAsync<SysRolesResponeModel>(dataQuery, queryParameter);
             }
         }
@@ -98,7 +98,7 @@ namespace YourWebApiName.MongoRepository.DbRepository
         {
             var strWhere = GetQuery(queryParameter);
             var strFieldNames = DbContext.GetFieldsToString<SysRolesModel>("b1", fields);
-            var querySql = "SELECT {0} " + $"FROM (SELECT {strFieldNames} FROM {tableName}  b1 WHERE 1=1 {strWhere} ORDER BY role_id ASC) b1_result";//内查询，可以做连接查询 直接join
+            var querySql = "SELECT {0} " + $"FROM (SELECT {strFieldNames} FROM {tableName}  b1 WHERE b1.role_id!=-1 {strWhere} ORDER BY role_id ASC) b1_result";//内查询，可以做连接查询 直接join
             var countQuery = string.Format(querySql, "COUNT(1)");
 
             var pagingSql = $" LIMIT {pagingModel.StartIndex()},{pagingModel.PageSize}";//分页

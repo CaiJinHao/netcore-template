@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>系统_用户</title>
+    <title>用户</title>
     <link href="../../layui/css/layui.css" rel="stylesheet" media="all" />
     <link href="../../build/css/common.css" rel="stylesheet" />
 </head>
@@ -18,55 +18,55 @@
                     <form class="layui-form">
                         <div class="layui-row">
                             <div class="layui-inline">
-                                <label class="layui-form-label">role_id：</label>
+                                <label class="layui-form-label">id：</label>
                                 <div class="layui-input-inline">
                                    <input type="text" class="layui-input" name="role_id">
                                 </div>
                             </div>
                             <div class="layui-inline">
-                                <label class="layui-form-label">user_账号：</label>
+                                <label class="layui-form-label">账号：</label>
                                 <div class="layui-input-inline">
                                    <input type="text" class="layui-input" name="user_account">
                                 </div>
                             </div>
                             <div class="layui-inline">
-                                <label class="layui-form-label">user_密码：</label>
+                                <label class="layui-form-label">密码：</label>
                                 <div class="layui-input-inline">
                                    <input type="text" class="layui-input" name="user_pwd">
                                 </div>
                             </div>
                             <div class="layui-inline">
-                                <label class="layui-form-label">user_是否启用：</label>
+                                <label class="layui-form-label">是否启用：</label>
                                 <div class="layui-input-inline">
                                    <input type="text" class="layui-input" name="user_is_enable">
                                 </div>
                             </div>
                             <div class="layui-inline">
-                                <label class="layui-form-label">user_手机号：</label>
+                                <label class="layui-form-label">手机号：</label>
                                 <div class="layui-input-inline">
                                    <input type="text" class="layui-input" name="user_phone">
                                 </div>
                             </div>
                             <div class="layui-inline">
-                                <label class="layui-form-label">user_邮箱：</label>
+                                <label class="layui-form-label">邮箱：</label>
                                 <div class="layui-input-inline">
                                    <input type="text" class="layui-input" name="user_email">
                                 </div>
                             </div>
                             <div class="layui-inline">
-                                <label class="layui-form-label">user_头像：</label>
+                                <label class="layui-form-label">头像：</label>
                                 <div class="layui-input-inline">
                                    <input type="text" class="layui-input" name="user_icon">
                                 </div>
                             </div>
                             <div class="layui-inline">
-                                <label class="layui-form-label">user_名称：</label>
+                                <label class="layui-form-label">名称：</label>
                                 <div class="layui-input-inline">
                                    <input type="text" class="layui-input" name="user_name">
                                 </div>
                             </div>
                             <div class="layui-inline">
-                                <label class="layui-form-label">user_性别：</label>
+                                <label class="layui-form-label">性别：</label>
                                 <div class="layui-input-inline">
                                    <input type="text" class="layui-input" name="user_sex">
                                 </div>
@@ -138,16 +138,16 @@
                         tableElem: 'table_sysusers',//laypage 自动加_page
                         tableCols: [[
                             { type: 'checkbox'},
-                          $.extend({ field: 'role_id', title: 'role_id' }, _table_style),
-                          $.extend({ field: 'user_account', title: 'user_账号' }, _table_style),
-                          $.extend({ field: 'user_pwd', title: 'user_密码' }, _table_style),
-                          $.extend({ field: 'user_is_enable', title: 'user_是否启用' }, _table_style),
-                          $.extend({ field: 'user_phone', title: 'user_手机号' }, _table_style),
-                          $.extend({ field: 'user_email', title: 'user_邮箱' }, _table_style),
-                          $.extend({ field: 'user_time', title: 'user_创建时间' }, _table_style),
-                          $.extend({ field: 'user_icon', title: 'user_头像' }, _table_style),
-                          $.extend({ field: 'user_name', title: 'user_名称' }, _table_style),
-                          $.extend({ field: 'user_sex', title: 'user_性别' }, _table_style),
+                          $.extend({ field: 'role_id', title: 'id' }, _table_style),
+                          $.extend({ field: 'user_account', title: '账号' }, _table_style),
+                          $.extend({ field: 'user_pwd', title: '密码' }, _table_style),
+                          $.extend({ field: 'user_is_enable', title: '是否启用' }, _table_style),
+                          $.extend({ field: 'user_phone', title: '手机号' }, _table_style),
+                          $.extend({ field: 'user_email', title: '邮箱' }, _table_style),
+                          $.extend({ field: 'user_time', title: '创建时间' }, _table_style),
+                          $.extend({ field: 'user_icon', title: '头像' }, _table_style),
+                          $.extend({ field: 'user_name', title: '名称' }, _table_style),
+                          $.extend({ field: 'user_sex', title: '性别' }, _table_style),
                             $.extend({ field: 'user_id', title: '操作', width: 190, templet: '#table_sysusers_operator', fixed: 'right' }, _table_style)
                         ]],
                     });
@@ -155,7 +155,7 @@
                 edit: function (_data) {
                     var _the = this;
                     datatable.edit({
-                        title: '编辑系统_用户',
+                        title: '编辑用户',
                         area: ['850px', '500px'],
                         content: 'view/sysusers/edit.html?user_id=' + _data.user_id,
                     });
@@ -163,7 +163,7 @@
                 add: function () {
                     var _the = this;
                     datatable.add({
-                        title: '新增系统_用户',
+                        title: '新增用户',
                         area: ['850px', '500px'],
                         content: 'view/sysusers/edit.html',
                     });
@@ -221,17 +221,17 @@
                     ]);
 
                     data.unshift({
-                        user_id:'user_id',
-                        role_id:'role_id',
-                        user_account:'user_账号',
-                        user_pwd:'user_密码',
-                        user_is_enable:'user_是否启用',
-                        user_phone:'user_手机号',
-                        user_email:'user_邮箱',
-                        user_time:'user_创建时间',
-                        user_icon:'user_头像',
-                        user_name:'user_名称',
-                        user_sex:'user_性别',
+                        user_id:'id',
+                        role_id:'id',
+                        user_account:'账号',
+                        user_pwd:'密码',
+                        user_is_enable:'是否启用',
+                        user_phone:'手机号',
+                        user_email:'邮箱',
+                        user_time:'创建时间',
+                        user_icon:'头像',
+                        user_name:'名称',
+                        user_sex:'性别',
                     });
 
                     excel.exportExcel({

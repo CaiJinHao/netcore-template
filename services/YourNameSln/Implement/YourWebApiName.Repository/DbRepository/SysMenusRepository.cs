@@ -35,6 +35,7 @@ namespace YourWebApiName.MongoRepository.DbRepository
 
         public async Task<bool> CreateAsync(SysMenusModel model)
         {
+            model.menu_is_enabled = Common.Utility.Models.EnumIsNot.Yes;
             return await DbContext.CreateAsync(model);
         }
 

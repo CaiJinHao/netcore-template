@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>系统_角色</title>
+    <title>角色</title>
     <link href="../../layui/css/layui.css" rel="stylesheet" media="all" />
     <link href="../../build/css/common.css" rel="stylesheet" />
 </head>
@@ -18,37 +18,37 @@
                     <form class="layui-form">
                         <div class="layui-row">
                             <div class="layui-inline">
-                                <label class="layui-form-label">role_名称：</label>
+                                <label class="layui-form-label">名称：</label>
                                 <div class="layui-input-inline">
                                    <input type="text" class="layui-input" name="role_name">
                                 </div>
                             </div>
                             <div class="layui-inline">
-                                <label class="layui-form-label">role_附注：</label>
+                                <label class="layui-form-label">附注：</label>
                                 <div class="layui-input-inline">
                                    <input type="text" class="layui-input" name="role_remarks">
                                 </div>
                             </div>
                             <div class="layui-inline">
-                                <label class="layui-form-label">role_父级角色：</label>
+                                <label class="layui-form-label">父级角色：</label>
                                 <div class="layui-input-inline">
                                    <input type="text" class="layui-input" name="role_parent_role">
                                 </div>
                             </div>
                             <div class="layui-inline">
-                                <label class="layui-form-label">role_排序：</label>
+                                <label class="layui-form-label">排序：</label>
                                 <div class="layui-input-inline">
                                    <input type="text" class="layui-input" name="role_sort">
                                 </div>
                             </div>
                             <div class="layui-inline">
-                                <label class="layui-form-label">role_角色等级：</label>
+                                <label class="layui-form-label">角色等级：</label>
                                 <div class="layui-input-inline">
                                    <input type="text" class="layui-input" name="role_grade">
                                 </div>
                             </div>
                             <div class="layui-inline">
-                                <label class="layui-form-label">role_角色是否启用：</label>
+                                <label class="layui-form-label">角色是否启用：</label>
                                 <div class="layui-input-inline">
                                    <input type="text" class="layui-input" name="role_is_enable">
                                 </div>
@@ -120,12 +120,12 @@
                         tableElem: 'table_sysroles',//laypage 自动加_page
                         tableCols: [[
                             { type: 'checkbox'},
-                          $.extend({ field: 'role_name', title: 'role_名称' }, _table_style),
-                          $.extend({ field: 'role_remarks', title: 'role_附注' }, _table_style),
-                          $.extend({ field: 'role_parent_role', title: 'role_父级角色' }, _table_style),
-                          $.extend({ field: 'role_sort', title: 'role_排序' }, _table_style),
-                          $.extend({ field: 'role_grade', title: 'role_角色等级' }, _table_style),
-                          $.extend({ field: 'role_is_enable', title: 'role_角色是否启用' }, _table_style),
+                          $.extend({ field: 'role_name', title: '名称' }, _table_style),
+                          $.extend({ field: 'role_remarks', title: '附注' }, _table_style),
+                          $.extend({ field: 'role_parent_role', title: '父级角色' }, _table_style),
+                          $.extend({ field: 'role_sort', title: '排序' }, _table_style),
+                          $.extend({ field: 'role_grade', title: '角色等级' }, _table_style),
+                          $.extend({ field: 'role_is_enable', title: '角色是否启用' }, _table_style),
                             $.extend({ field: 'role_id', title: '操作', width: 190, templet: '#table_sysroles_operator', fixed: 'right' }, _table_style)
                         ]],
                     });
@@ -133,7 +133,7 @@
                 edit: function (_data) {
                     var _the = this;
                     datatable.edit({
-                        title: '编辑系统_角色',
+                        title: '编辑角色',
                         area: ['850px', '500px'],
                         content: 'view/sysroles/edit.html?role_id=' + _data.role_id,
                     });
@@ -141,7 +141,7 @@
                 add: function () {
                     var _the = this;
                     datatable.add({
-                        title: '新增系统_角色',
+                        title: '新增角色',
                         area: ['850px', '500px'],
                         content: 'view/sysroles/edit.html',
                     });
@@ -195,13 +195,13 @@
                     ]);
 
                     data.unshift({
-                        role_id:'role_id',
-                        role_name:'role_名称',
-                        role_remarks:'role_附注',
-                        role_parent_role:'role_父级角色',
-                        role_sort:'role_排序',
-                        role_grade:'role_角色等级',
-                        role_is_enable:'role_角色是否启用',
+                        role_id:'id',
+                        role_name:'名称',
+                        role_remarks:'附注',
+                        role_parent_role:'父级角色',
+                        role_sort:'排序',
+                        role_grade:'角色等级',
+                        role_is_enable:'角色是否启用',
                     });
 
                     excel.exportExcel({

@@ -21,10 +21,10 @@ namespace YourWebApiName.Models.DbModels
          [Key]
          [Required]
          public string menu_id { get; set; }
-         /// <summary>
-         /// menu_菜单名称
-         /// </summary>
-         [Required]
+        /// <summary>
+        /// menu_菜单名称
+        /// </summary>
+        [Required]
          public string menu_name { get; set; }
          /// <summary>
          /// menu_菜单图标
@@ -45,7 +45,6 @@ namespace YourWebApiName.Models.DbModels
          /// <summary>
          /// menu_菜单URL
          /// </summary>
-         [Required]
          public string menu_url { get; set; }
          /// <summary>
          /// menu_菜单描述

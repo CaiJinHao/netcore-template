@@ -109,12 +109,13 @@
                         tableElem: 'table_sysmenus',//laypage 自动加_page
                         tableCols: [[
                             { type: 'checkbox'},
+                          $.extend({ field: 'menu_id', title: '菜单ID' }, _table_style),
                           $.extend({ field: 'menu_name', title: '菜单名称' }, _table_style),
+                          $.extend({ field: 'menu_parent_id', title: '父级菜单ID' }, _table_style),
                           $.extend({ field: 'menu_icon', title: '菜单图标' }, _table_style),
-                          $.extend({ field: 'menu_sort', title: '菜单排序' }, _table_style),
-                          $.extend({ field: 'menu_parent_id', title: '父级菜单' }, _table_style),
                           $.extend({ field: 'menu_grade', title: '菜单等级' }, _table_style),
                           $.extend({ field: 'menu_url', title: '菜单URL' }, _table_style),
+                          $.extend({ field: 'menu_sort', title: '菜单排序' }, _table_style),
                           $.extend({ field: 'menu_description', title: '菜单描述' }, _table_style),
                           $.extend({ field: 'menu_is_enabled', title: '菜单是否启用',templet:'#tpl_menu_is_enabled' }, _table_style),
                             $.extend({ field: 'menu_id', title: '操作', width: 190, templet: '#table_sysmenus_operator', fixed: 'right' }, _table_style)

@@ -48,7 +48,7 @@ namespace CodeGenerator.App
             if (is_template.Equals("1"))
             {
             startInPutTable:
-                Console.WriteLine("请输入要构建的模板文件夹名称以“,”隔开：");
+                Console.WriteLine("请输入要构建的模板文件夹名称(FileDirName)以“,”隔开：");
                 templateStr = Console.ReadLine();
                 try
                 {

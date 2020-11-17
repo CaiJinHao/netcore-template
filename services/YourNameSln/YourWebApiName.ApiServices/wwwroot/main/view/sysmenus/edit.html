@@ -14,8 +14,40 @@
     <div id="page-vm" class="layui-fluid iframe-top lable-len">
         <form class="layui-form edit_sysmenus_form">
             <div class="layui-fluid">
-                <input type="hidden" name="menu_id" v-model="sysmenus.menu_id" />
                 <div class="layui-row">
+                    <div class="layui-col-sm6">
+                        <div class="layui-row">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">父级菜单ID：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" class="layui-input" placeholder="请输入父级菜单"
+                                        v-model="sysmenus.menu_parent_id">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-sm6">
+                        <div class="layui-row">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">菜单等级：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" class="layui-input" lay-verify="required" placeholder="请输入菜单等级"
+                                        v-model="sysmenus.menu_grade">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-sm6">
+                        <div class="layui-row">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">新增菜单ID：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" class="layui-input" placeholder="请输入父级菜单"
+                                        v-model="sysmenus.menu_id">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="layui-col-sm6">
                         <div class="layui-row">
                             <div class="layui-inline">
@@ -52,28 +84,6 @@
                     <div class="layui-col-sm6">
                         <div class="layui-row">
                             <div class="layui-inline">
-                                <label class="layui-form-label">父级菜单：</label>
-                                <div class="layui-input-inline">
-                                    <input type="text" class="layui-input" placeholder="请输入父级菜单"
-                                        v-model="sysmenus.menu_parent_id">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="layui-col-sm6">
-                        <div class="layui-row">
-                            <div class="layui-inline">
-                                <label class="layui-form-label">菜单等级：</label>
-                                <div class="layui-input-inline">
-                                    <input type="text" class="layui-input" lay-verify="required" placeholder="请输入菜单等级"
-                                        v-model="sysmenus.menu_grade">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="layui-col-sm6">
-                        <div class="layui-row">
-                            <div class="layui-inline">
                                 <label class="layui-form-label">菜单URL：</label>
                                 <div class="layui-input-inline">
                                     <input type="text" class="layui-input" placeholder="请输入菜单URL"
@@ -93,18 +103,18 @@
                             </div>
                         </div>
                     </div>
-                    <div class="layui-col-sm6">
+                    <!-- <div class="layui-col-sm6">
                         <div class="layui-row">
                             <div class="layui-inline">
                                 <label class="layui-form-label">菜单是否启用：</label>
                                 <div class="layui-input-inline">
-                                    <input type="checkbox" lay-filter="fil_menu_is_enabled" name="menu_is_enabled"
+                                    <input type="checkbox" lay-filter="fil_menu_is_enabled" checked name="menu_is_enabled"
                                         lay-skin="switch" lay-text="是|否" value="1"
                                         v-bind:checked="sysmenus.menu_is_enabled===1">
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
                 <br />
                 <div class="layui-row" style="text-align:center;">
@@ -136,7 +146,7 @@
                     menu_grade: 0,
                     menu_url: '',
                     menu_description: '',
-                    menu_is_enabled: 0,
+                    menu_is_enabled: 1,
                 }
             },
             watch: {

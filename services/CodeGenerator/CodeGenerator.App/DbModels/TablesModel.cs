@@ -10,6 +10,19 @@ namespace CodeGenerator.App.DbModels
         /// 表名 文件名
         /// </summary>
         public string table_name { get; set; }
-        public string table_comment { get; set; }
+        private string _table_comment;
+        public string table_comment {
+            get { return _table_comment; }
+            set
+            {
+                if (!string.IsNullOrEmpty(value))
+                {
+                    var _v = value.Replace("\r\n", " ");
+                    var _i = _v.IndexOf('_') + 1;
+                    _v = value.Substring(_i, value.Length - _i);
+                    this._table_comment = _v;
+                }
+            }
+        }
     }
 }

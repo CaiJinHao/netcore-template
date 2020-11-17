@@ -122,7 +122,7 @@ namespace @(api_controller_name_space)
             parameter.@(primary_key_name) = id;
             //var model = new @(table_name_pascal)Model();
             //parameter.CloneTo(model);
-            var c = await @(table_name_camel)Service.UpdateModelAsync(parameter);
+            var c = await @(table_name_camel)Service.UpdateAllModelAsync(parameter);
             if (c > 0)
             {
                 return Ok(apiResult);

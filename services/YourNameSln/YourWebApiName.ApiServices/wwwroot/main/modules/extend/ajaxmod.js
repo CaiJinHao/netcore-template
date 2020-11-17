@@ -105,7 +105,7 @@
                         _the.ajaxStatus = true; //初始化状态
                     }, 500);
                 },
-                success: function (_json) {
+                optSuccess: function (_json) {
                     //暂时不添加数据响应加密
                     //if (optDefault.isDecrypt) {
                     //    console.log(_json);
@@ -167,7 +167,7 @@
                     type: optDefault.type,
                     dataType: optDefault.dataType,
                     contentType: optDefault.contentType,
-                    success: optDefault.success,
+                    success: optDefault.optSuccess,
                     error: optDefault.error,
                     headers: optDefault.headers,
                     jsonpCallback: 'jsonp' + (new Date()).valueOf().toString().substr(-4),

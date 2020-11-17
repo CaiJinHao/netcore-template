@@ -13,7 +13,7 @@
             <summary>
             给下拉列表使用
             </summary>
-            <param name="option"></param>
+            <param name="Oprator"></param>
             <returns></returns>
         </member>
         <member name="T:YourWebApiName.ApiServices.DefaultApi.ProcessController">

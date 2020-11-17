@@ -1,7 +1,6 @@
-
-
 <!DOCTYPE html>
 <html lang="zh-cn">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,6 +9,7 @@
     <link href="../../layui/css/layui.css" rel="stylesheet" media="all" />
     <link href="../../build/css/common.css" rel="stylesheet" />
 </head>
+
 <body>
     <div id="page-vm" class="layui-fluid iframe-top lable-len">
         <form class="layui-form edit_sysmenus_form">
@@ -19,9 +19,10 @@
                     <div class="layui-col-sm6">
                         <div class="layui-row">
                             <div class="layui-inline">
-                                <label class="layui-form-label">menu_菜单名称：</label>
+                                <label class="layui-form-label">菜单名称：</label>
                                 <div class="layui-input-inline">
-                                    <input type="text" class="layui-input" lay-verify="required" placeholder="请输入menu_菜单名称" v-model="sysmenus.menu_name">
+                                    <input type="text" class="layui-input" lay-verify="required" placeholder="请输入菜单名称"
+                                        v-model="sysmenus.menu_name">
                                 </div>
                             </div>
                         </div>
@@ -29,9 +30,10 @@
                     <div class="layui-col-sm6">
                         <div class="layui-row">
                             <div class="layui-inline">
-                                <label class="layui-form-label">menu_菜单图标：</label>
+                                <label class="layui-form-label">菜单图标：</label>
                                 <div class="layui-input-inline">
-                                    <input type="text" class="layui-input" lay-verify="required" placeholder="请输入menu_菜单图标" v-model="sysmenus.menu_icon">
+                                    <input type="text" class="layui-input" lay-verify="required" placeholder="请输入菜单图标"
+                                        v-model="sysmenus.menu_icon">
                                 </div>
                             </div>
                         </div>
@@ -39,9 +41,10 @@
                     <div class="layui-col-sm6">
                         <div class="layui-row">
                             <div class="layui-inline">
-                                <label class="layui-form-label">menu_菜单排序：</label>
+                                <label class="layui-form-label">菜单排序：</label>
                                 <div class="layui-input-inline">
-                                    <input type="text" class="layui-input" lay-verify="required" placeholder="请输入menu_菜单排序" v-model="sysmenus.menu_sort">
+                                    <input type="text" class="layui-input" lay-verify="required" placeholder="请输入菜单排序"
+                                        v-model="sysmenus.menu_sort">
                                 </div>
                             </div>
                         </div>
@@ -49,9 +52,10 @@
                     <div class="layui-col-sm6">
                         <div class="layui-row">
                             <div class="layui-inline">
-                                <label class="layui-form-label">menu_父级菜单：</label>
+                                <label class="layui-form-label">父级菜单：</label>
                                 <div class="layui-input-inline">
-                                    <input type="text" class="layui-input" lay-verify="required" placeholder="请输入menu_父级菜单" v-model="sysmenus.menu_parent_id">
+                                    <input type="text" class="layui-input" placeholder="请输入父级菜单"
+                                        v-model="sysmenus.menu_parent_id">
                                 </div>
                             </div>
                         </div>
@@ -59,9 +63,10 @@
                     <div class="layui-col-sm6">
                         <div class="layui-row">
                             <div class="layui-inline">
-                                <label class="layui-form-label">menu_菜单等级：</label>
+                                <label class="layui-form-label">菜单等级：</label>
                                 <div class="layui-input-inline">
-                                    <input type="text" class="layui-input" lay-verify="required" placeholder="请输入menu_菜单等级" v-model="sysmenus.menu_grade">
+                                    <input type="text" class="layui-input" lay-verify="required" placeholder="请输入菜单等级"
+                                        v-model="sysmenus.menu_grade">
                                 </div>
                             </div>
                         </div>
@@ -69,9 +74,10 @@
                     <div class="layui-col-sm6">
                         <div class="layui-row">
                             <div class="layui-inline">
-                                <label class="layui-form-label">menu_菜单URL：</label>
+                                <label class="layui-form-label">菜单URL：</label>
                                 <div class="layui-input-inline">
-                                    <input type="text" class="layui-input" lay-verify="required" placeholder="请输入menu_菜单URL" v-model="sysmenus.menu_url">
+                                    <input type="text" class="layui-input" placeholder="请输入菜单URL"
+                                        v-model="sysmenus.menu_url">
                                 </div>
                             </div>
                         </div>
@@ -79,9 +85,10 @@
                     <div class="layui-col-sm6">
                         <div class="layui-row">
                             <div class="layui-inline">
-                                <label class="layui-form-label">menu_菜单描述：</label>
+                                <label class="layui-form-label">菜单描述：</label>
                                 <div class="layui-input-inline">
-                                    <input type="text" class="layui-input" lay-verify="required" placeholder="请输入menu_菜单描述" v-model="sysmenus.menu_description">
+                                    <input type="text" class="layui-input" lay-verify="required" placeholder="请输入菜单描述"
+                                        v-model="sysmenus.menu_description">
                                 </div>
                             </div>
                         </div>
@@ -89,21 +96,24 @@
                     <div class="layui-col-sm6">
                         <div class="layui-row">
                             <div class="layui-inline">
-                                <label class="layui-form-label">menu_菜单是否启用：</label>
+                                <label class="layui-form-label">菜单是否启用：</label>
                                 <div class="layui-input-inline">
-                                    <input type="text" class="layui-input" lay-verify="required" placeholder="请输入menu_菜单是否启用" v-model="sysmenus.menu_is_enabled">
+                                    <input type="checkbox" lay-filter="fil_menu_is_enabled" name="menu_is_enabled"
+                                        lay-skin="switch" lay-text="是|否" value="1"
+                                        v-bind:checked="sysmenus.menu_is_enabled===1">
                                 </div>
                             </div>
                         </div>
                     </div>
-                            <br />
-                            <div class="layui-row" style="text-align:center;">
-                                <div class="layui-inline">
-                                    <a class="layui-btn layui-btn-normal" lay-submit lay-filter="btn_submit_sysmenus_form" href="javascript:;">保存</a>
-                                    <a class="layui-btn layui-btn-primary" id="cancel" href="javascript:;">关闭</a>
-                                </div>
-                            </div>
+                </div>
+                <br />
+                <div class="layui-row" style="text-align:center;">
+                    <div class="layui-inline">
+                        <a class="layui-btn layui-btn-normal" lay-submit lay-filter="btn_submit_sysmenus_form"
+                            href="javascript:;">保存</a>
+                        <a class="layui-btn layui-btn-primary" id="cancel" href="javascript:;">关闭</a>
                     </div>
+                </div>
             </div>
         </form>
     </div>
@@ -116,35 +126,35 @@
             el: '#page-vm',
             data: {
                 paramObj: {},//querystirng 参数对象
-				//默认值
-               sysmenus:{
-                    menu_id:'',
-                    menu_name:'',
-                    menu_icon:'',
-					menu_sort:0,
-                    menu_parent_id:'',
-					menu_grade:0,
-                    menu_url:'',
-                    menu_description:'',
-					menu_is_enabled:0,
-               }
+                //默认值
+                sysmenus: {
+                    menu_id: '',
+                    menu_name: '',
+                    menu_icon: '',
+                    menu_sort: 0,
+                    menu_parent_id: '',
+                    menu_grade: 0,
+                    menu_url: '',
+                    menu_description: '',
+                    menu_is_enabled: 0,
+                }
             },
-            watch:{
-                sysmenus:{
+            watch: {
+                sysmenus: {
                     deep: true,
-                    handler:function(val,old_val){
+                    handler: function (val, old_val) {
                         var _this = this;
-                                if((typeof val.menu_sort) === 'string')
-                                    val.menu_sort = parseInt(val.menu_sort);
-                                if((typeof val.menu_grade) === 'string')
-                                    val.menu_grade = parseInt(val.menu_grade);
-                                if((typeof val.menu_is_enabled) === 'string')
-                                    val.menu_is_enabled = parseInt(val.menu_is_enabled);
+                        if ((typeof val.menu_sort) === 'string')
+                            val.menu_sort = parseInt(val.menu_sort);
+                        if ((typeof val.menu_grade) === 'string')
+                            val.menu_grade = parseInt(val.menu_grade);
+                        if ((typeof val.menu_is_enabled) === 'string')
+                            val.menu_is_enabled = parseInt(val.menu_is_enabled);
                     }
                 }
             },
             methods: {
-                RenderDom: function(form,callback){
+                RenderDom: function (form, callback) {
                     vm.$forceUpdate();//强制重新渲染 dom
                     // DOM 还没有更新
                     vm.$nextTick(function () {
@@ -158,7 +168,7 @@
             }
         });
 
-        layui.use(['layer', 'form', 'ajaxmod', 'jquery','laydate','formvalidate'], function () {
+        layui.use(['layer', 'form', 'ajaxmod', 'jquery', 'laydate', 'formvalidate'], function () {
             var layer = layui.layer,
                 $ = layui.jquery,
                 form = layui.form,
@@ -176,16 +186,16 @@
                     _the.loadData();
                 },
                 loadData: function () {
-					if (vm.paramObj.menu_id) {
+                    if (vm.paramObj.menu_id) {
                         ajaxmod.authorizeAjax({
                             url: '/sysmenus/' + vm.paramObj.menu_id,
                             type: 'Get',
                             success: function (_json) {
-							    vm.$set(vm, 'sysmenus', _json.Result);
-							    vm.RenderDom(form);
+                                vm.$set(vm, 'sysmenus', _json.Result);
+                                vm.RenderDom(form);
                             }
                         });
-					}
+                    }
                 }
             };
             sysmenusObj.initPage();
@@ -217,7 +227,12 @@
                 });
                 return false;
             });
+
+            form.on('switch(fil_menu_is_enabled)', function (data) {
+                vm.sysmenus.menu_is_enabled = data.elem.checked ? 1 : 2;
+            });
         });
     </script>
 </body>
+
 </html>

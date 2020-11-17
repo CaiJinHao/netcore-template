@@ -18,51 +18,24 @@
                     <form class="layui-form">
                         <div class="layui-row">
                             <div class="layui-inline">
-                                <label class="layui-form-label">menu_菜单名称：</label>
+                                <label class="layui-form-label">菜单名称：</label>
                                 <div class="layui-input-inline">
-                                   <input type="text" class="layui-input" name="menu_name">
+                                   <input type="text" class="layui-input" id="menu_name" name="menu_name">
                                 </div>
                             </div>
                             <div class="layui-inline">
-                                <label class="layui-form-label">menu_菜单图标：</label>
+                                <label class="layui-form-label">上级菜单：</label>
                                 <div class="layui-input-inline">
-                                   <input type="text" class="layui-input" name="menu_icon">
+                                   <input type="text" class="layui-input" id="menu_parent_id" name="menu_parent_id">
                                 </div>
                             </div>
                             <div class="layui-inline">
-                                <label class="layui-form-label">menu_菜单排序：</label>
+                                <label class="layui-form-label">是否可用：</label>
                                 <div class="layui-input-inline">
-                                   <input type="text" class="layui-input" name="menu_sort">
-                                </div>
-                            </div>
-                            <div class="layui-inline">
-                                <label class="layui-form-label">menu_父级菜单：</label>
-                                <div class="layui-input-inline">
-                                   <input type="text" class="layui-input" name="menu_parent_id">
-                                </div>
-                            </div>
-                            <div class="layui-inline">
-                                <label class="layui-form-label">menu_菜单等级：</label>
-                                <div class="layui-input-inline">
-                                   <input type="text" class="layui-input" name="menu_grade">
-                                </div>
-                            </div>
-                            <div class="layui-inline">
-                                <label class="layui-form-label">menu_菜单URL：</label>
-                                <div class="layui-input-inline">
-                                   <input type="text" class="layui-input" name="menu_url">
-                                </div>
-                            </div>
-                            <div class="layui-inline">
-                                <label class="layui-form-label">menu_菜单描述：</label>
-                                <div class="layui-input-inline">
-                                   <input type="text" class="layui-input" name="menu_description">
-                                </div>
-                            </div>
-                            <div class="layui-inline">
-                                <label class="layui-form-label">menu_菜单是否启用：</label>
-                                <div class="layui-input-inline">
-                                   <input type="text" class="layui-input" name="menu_is_enabled">
+                                   <select lay-search name="menu_is_enabled">
+                                    <option value="">请选择</option>
+                                    <option v-for="option in menu_is_enabled" v-bind:value="option.Value">{{ option.Text }}</option>
+                                </select>
                                 </div>
                             </div>
                         <div class="layui-inline btngroup">
@@ -80,6 +53,9 @@
         </div>
     </div>
 
+    <script type="text/html" id="tpl_menu_is_enabled">
+        <input type="checkbox" name="menu_is_enabled" value="1" lay-skin="switch" data-code="{{d.menu_id}}"  lay-text="是|否" lay-filter="table_tpl_menu_is_enabled" {{d.menu_is_enabled==1?'checked':''}}>
+    </script>
     <script type="text/html" id="table_sysmenus_operator">
         <a href="javascript:;" class="layui-btn layui-btn-xs" lay-event="edit" data-code="menu_id">编辑</a>
         <a href="javascript:;" class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del" data-code="menu_id">删除</a>
@@ -92,7 +68,8 @@
         var vm = new Vue({
             el: '#page-vm',
             data: {
-                currPage: 1
+                currPage: 1,
+                menu_is_enabled:[]
             },
             methods: {
 				RenderDom: function(form, callback){
@@ -132,14 +109,14 @@
                         tableElem: 'table_sysmenus',//laypage 自动加_page
                         tableCols: [[
                             { type: 'checkbox'},
-                          $.extend({ field: 'menu_name', title: 'menu_菜单名称' }, _table_style),
-                          $.extend({ field: 'menu_icon', title: 'menu_菜单图标' }, _table_style),
-                          $.extend({ field: 'menu_sort', title: 'menu_菜单排序' }, _table_style),
-                          $.extend({ field: 'menu_parent_id', title: 'menu_父级菜单' }, _table_style),
-                          $.extend({ field: 'menu_grade', title: 'menu_菜单等级' }, _table_style),
-                          $.extend({ field: 'menu_url', title: 'menu_菜单URL' }, _table_style),
-                          $.extend({ field: 'menu_description', title: 'menu_菜单描述' }, _table_style),
-                          $.extend({ field: 'menu_is_enabled', title: 'menu_菜单是否启用' }, _table_style),
+                          $.extend({ field: 'menu_name', title: '菜单名称' }, _table_style),
+                          $.extend({ field: 'menu_icon', title: '菜单图标' }, _table_style),
+                          $.extend({ field: 'menu_sort', title: '菜单排序' }, _table_style),
+                          $.extend({ field: 'menu_parent_id', title: '父级菜单' }, _table_style),
+                          $.extend({ field: 'menu_grade', title: '菜单等级' }, _table_style),
+                          $.extend({ field: 'menu_url', title: '菜单URL' }, _table_style),
+                          $.extend({ field: 'menu_description', title: '菜单描述' }, _table_style),
+                          $.extend({ field: 'menu_is_enabled', title: '菜单是否启用',templet:'#tpl_menu_is_enabled' }, _table_style),
                             $.extend({ field: 'menu_id', title: '操作', width: 190, templet: '#table_sysmenus_operator', fixed: 'right' }, _table_style)
                         ]],
                     });
@@ -211,15 +188,15 @@
                     ]);
 
                     data.unshift({
-                        menu_id:'menu_id',
-                        menu_name:'menu_菜单名称',
-                        menu_icon:'menu_菜单图标',
-                        menu_sort:'menu_菜单排序',
-                        menu_parent_id:'menu_父级菜单',
-                        menu_grade:'menu_菜单等级',
-                        menu_url:'menu_菜单URL',
-                        menu_description:'menu_菜单描述',
-                        menu_is_enabled:'menu_菜单是否启用',
+                        menu_id:'id',
+                        menu_name:'菜单名称',
+                        menu_icon:'菜单图标',
+                        menu_sort:'菜单排序',
+                        menu_parent_id:'父级菜单',
+                        menu_grade:'菜单等级',
+                        menu_url:'菜单URL',
+                        menu_description:'菜单描述',
+                        menu_is_enabled:'菜单是否启用',
                     });
 
                     excel.exportExcel({
@@ -228,9 +205,23 @@
                 },
                 loadtable:function(){
                     $('#btn_sysmenus_from_query').click();
+                },
+                loadList:function(){
+                    var _the = this;
+                    ajaxmod.ajaxArray([
+                    {
+                        url: '/appenums/1000',
+                        type: 'Get',
+                        success: function (_json) {
+                            vm.menu_is_enabled=_json.Result;
+                        }
+                    }
+                    ],function(){
+                        vm.RenderDom(form);
+                    });
                 }
             };
-
+            sysmenusObj.loadList();
             sysmenusObj.renderTable();//加载第一页
 
             //绑定编辑也保存事件
@@ -268,6 +259,17 @@
                 });
                 return false;
             });
+
+            form.on('switch(table_tpl_menu_is_enabled)', function (data) {
+                let _id = data.elem.attributes["data-code"].value;
+                let _value = 1;
+                if (data.elem.checked) {
+                    _value = 1;
+                } else {
+                    _value = 2;
+                }
+                sysmenusObj.patchObj({ menu_id: _id, menu_is_enabled: _value });
+            });  
         });
     </script>
 </body>

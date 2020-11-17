@@ -18,9 +18,9 @@ namespace Common.NetCoreWebUtility.Filters
 
         public override void OnActionExecuting(ActionExecutingContext context)
         {
-            var notValidate = new List<string> { "GET", "DELETE" ,"PUT"};
+            var validateMethods = new List<string> { "POST" };
             var method = context.HttpContext.Request.Method.ToUpper();
-            if (!notValidate.Contains(method) && Validate)
+            if (validateMethods.Contains(method) && Validate)
             {
                 if (!context.ModelState.IsValid)
                 {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Common.Utility.Models;
+using Common.Utility.Other;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,13 +20,21 @@ namespace YourWebApiName.ApiServices.DefaultApi
         /// <summary>
         /// 给下拉列表使用
         /// </summary>
-        /// <param name="option"></param>
+        /// <param name="Oprator"></param>
         /// <returns></returns>
-        [HttpGet("{option}")]
-        public IActionResult Get(int option)
+        [HttpGet("{Oprator}")]
+        public IActionResult Get(int Oprator)
         {
-            switch (option)
+            switch (Oprator)
             {
+                case 1000:
+                    {
+                        var data = EnumsHelper.GetEnumListByDescription<EnumIsNot>();
+                        return Ok(new ApiResultModel()
+                        {
+                            Result = data
+                        });
+                    }
                 default:
                     return Ok(new ApiResultModel()
                     {

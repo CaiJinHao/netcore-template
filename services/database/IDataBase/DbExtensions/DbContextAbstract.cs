@@ -118,6 +118,15 @@ namespace IDataBase.DbExtensions
                 if (v != null)
                 {
                     var fieldType = v.GetType();
+                    if (fieldType.IsEnum)
+                    {
+                        var _value = (int)v;
+                        if (_value > 0)
+                        {
+                            appendWhere(_field);
+                        }
+                        continue;
+                    }
                     switch (fieldType.Name)
                     {
                         case "String":

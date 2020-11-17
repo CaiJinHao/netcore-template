@@ -12,6 +12,6 @@ namespace YourWebApiName.Models.ResponeModels
     /// </summary>
     public class SysRolesResponeModel : SysRolesModel
     {
-       
+       public string ParentName { get; set; }
     }
 }

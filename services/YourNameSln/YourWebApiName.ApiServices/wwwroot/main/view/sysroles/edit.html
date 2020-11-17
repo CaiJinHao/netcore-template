@@ -1,7 +1,6 @@
-
-
 <!DOCTYPE html>
 <html lang="zh-cn">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,18 +9,19 @@
     <link href="../../layui/css/layui.css" rel="stylesheet" media="all" />
     <link href="../../build/css/common.css" rel="stylesheet" />
 </head>
+
 <body>
     <div id="page-vm" class="layui-fluid iframe-top lable-len">
         <form class="layui-form edit_sysroles_form">
             <div class="layui-fluid">
-                <input type="hidden" name="role_id" v-model="sysroles.role_id" />
                 <div class="layui-row">
                     <div class="layui-col-sm6">
                         <div class="layui-row">
                             <div class="layui-inline">
-                                <label class="layui-form-label">名称：</label>
+                                <label class="layui-form-label">父级角色ID：</label>
                                 <div class="layui-input-inline">
-                                    <input type="text" class="layui-input" lay-verify="required" placeholder="请输入名称" v-model="sysroles.role_name">
+                                    <input type="text" class="layui-input" placeholder="请输入父级角色"
+                                        v-model="sysroles.role_parent_role">
                                 </div>
                             </div>
                         </div>
@@ -29,9 +29,10 @@
                     <div class="layui-col-sm6">
                         <div class="layui-row">
                             <div class="layui-inline">
-                                <label class="layui-form-label">附注：</label>
+                                <label class="layui-form-label">角色ID：</label>
                                 <div class="layui-input-inline">
-                                    <input type="text" class="layui-input" lay-verify="required" placeholder="请输入附注" v-model="sysroles.role_remarks">
+                                    <input type="text" class="layui-input" placeholder="请输入父级角色"
+                                        v-model="sysroles.role_id">
                                 </div>
                             </div>
                         </div>
@@ -39,9 +40,10 @@
                     <div class="layui-col-sm6">
                         <div class="layui-row">
                             <div class="layui-inline">
-                                <label class="layui-form-label">父级角色：</label>
+                                <label class="layui-form-label">角色名称：</label>
                                 <div class="layui-input-inline">
-                                    <input type="text" class="layui-input" lay-verify="required" placeholder="请输入父级角色" v-model="sysroles.role_parent_role">
+                                    <input type="text" class="layui-input" lay-verify="required" placeholder="请输入名称"
+                                        v-model="sysroles.role_name">
                                 </div>
                             </div>
                         </div>
@@ -51,7 +53,8 @@
                             <div class="layui-inline">
                                 <label class="layui-form-label">排序：</label>
                                 <div class="layui-input-inline">
-                                    <input type="text" class="layui-input" lay-verify="required" placeholder="请输入排序" v-model="sysroles.role_sort">
+                                    <input type="text" class="layui-input" lay-verify="required" placeholder="请输入排序"
+                                        v-model="sysroles.role_sort">
                                 </div>
                             </div>
                         </div>
@@ -61,7 +64,8 @@
                             <div class="layui-inline">
                                 <label class="layui-form-label">角色等级：</label>
                                 <div class="layui-input-inline">
-                                    <input type="text" class="layui-input" lay-verify="required" placeholder="请输入角色等级" v-model="sysroles.role_grade">
+                                    <input type="text" class="layui-input" lay-verify="required" placeholder="请输入角色等级"
+                                        v-model="sysroles.role_grade">
                                 </div>
                             </div>
                         </div>
@@ -69,21 +73,24 @@
                     <div class="layui-col-sm6">
                         <div class="layui-row">
                             <div class="layui-inline">
-                                <label class="layui-form-label">角色是否启用：</label>
+                                <label class="layui-form-label">附注：</label>
                                 <div class="layui-input-inline">
-                                    <input type="text" class="layui-input" lay-verify="required" placeholder="请输入角色是否启用" v-model="sysroles.role_is_enable">
+                                    <input type="text" class="layui-input" lay-verify="required" placeholder="请输入附注"
+                                        v-model="sysroles.role_remarks">
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                            <br />
-                            <div class="layui-row" style="text-align:center;">
-                                <div class="layui-inline">
-                                    <a class="layui-btn layui-btn-normal" lay-submit lay-filter="btn_submit_sysroles_form" href="javascript:;">保存</a>
-                                    <a class="layui-btn layui-btn-primary" id="cancel" href="javascript:;">关闭</a>
-                                </div>
-                            </div>
+
+                <br />
+                <div class="layui-row" style="text-align:center;">
+                    <div class="layui-inline">
+                        <a class="layui-btn layui-btn-normal" lay-submit lay-filter="btn_submit_sysroles_form"
+                            href="javascript:;">保存</a>
+                        <a class="layui-btn layui-btn-primary" id="cancel" href="javascript:;">关闭</a>
+                    </div>
+                </div>
             </div>
         </form>
     </div>
@@ -96,33 +103,33 @@
             el: '#page-vm',
             data: {
                 paramObj: {},//querystirng 参数对象
-				//默认值
-               sysroles:{
-                    role_id:'',
-                    role_name:'',
-                    role_remarks:'',
-                    role_parent_role:'',
-					role_sort:0,
-					role_grade:0,
-					role_is_enable:0,
-               }
+                //默认值
+                sysroles: {
+                    role_id: '',
+                    role_name: '',
+                    role_remarks: '',
+                    role_parent_role: '',
+                    role_sort: 0,
+                    role_grade: 0,
+                    role_is_enable: 1,
+                }
             },
-            watch:{
-                sysroles:{
+            watch: {
+                sysroles: {
                     deep: true,
-                    handler:function(val,old_val){
+                    handler: function (val, old_val) {
                         var _this = this;
-                                if((typeof val.role_sort) === 'string')
-                                    val.role_sort = parseInt(val.role_sort);
-                                if((typeof val.role_grade) === 'string')
-                                    val.role_grade = parseInt(val.role_grade);
-                                if((typeof val.role_is_enable) === 'string')
-                                    val.role_is_enable = parseInt(val.role_is_enable);
+                        if ((typeof val.role_sort) === 'string')
+                            val.role_sort = parseInt(val.role_sort);
+                        if ((typeof val.role_grade) === 'string')
+                            val.role_grade = parseInt(val.role_grade);
+                        if ((typeof val.role_is_enable) === 'string')
+                            val.role_is_enable = parseInt(val.role_is_enable);
                     }
                 }
             },
             methods: {
-                RenderDom: function(form,callback){
+                RenderDom: function (form, callback) {
                     vm.$forceUpdate();//强制重新渲染 dom
                     // DOM 还没有更新
                     vm.$nextTick(function () {
@@ -136,7 +143,7 @@
             }
         });
 
-        layui.use(['layer', 'form', 'ajaxmod', 'jquery','laydate','formvalidate'], function () {
+        layui.use(['layer', 'form', 'ajaxmod', 'jquery', 'laydate', 'formvalidate'], function () {
             var layer = layui.layer,
                 $ = layui.jquery,
                 form = layui.form,
@@ -154,16 +161,16 @@
                     _the.loadData();
                 },
                 loadData: function () {
-					if (vm.paramObj.role_id) {
+                    if (vm.paramObj.role_id) {
                         ajaxmod.authorizeAjax({
                             url: '/sysroles/' + vm.paramObj.role_id,
                             type: 'Get',
                             success: function (_json) {
-							    vm.$set(vm, 'sysroles', _json.Result);
-							    vm.RenderDom(form);
+                                vm.$set(vm, 'sysroles', _json.Result);
+                                vm.RenderDom(form);
                             }
                         });
-					}
+                    }
                 }
             };
             sysrolesObj.initPage();
@@ -198,4 +205,5 @@
         });
     </script>
 </body>
+
 </html>

@@ -127,7 +127,7 @@ namespace @(name_space).MongoRepository.DbRepository
             var countQuery = string.Format(querySql, "COUNT(1)");
 
             var pagingSql = $" LIMIT {pagingModel.StartIndex()},{pagingModel.PageSize}";//分页
-            var dataQuery = string.Format(querySql, "b1_result.*{joinFiles}") + pagingSql;
+            var dataQuery = string.Format(querySql, $"b1_result.*{joinFiles}") + pagingSql;
 
             using (var conn = DbContext.CreateConnection())
             {

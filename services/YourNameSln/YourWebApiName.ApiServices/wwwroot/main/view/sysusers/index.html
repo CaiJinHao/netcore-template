@@ -1,7 +1,6 @@
-
-
 <!DOCTYPE html>
 <html lang="zh-cn">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,73 +9,63 @@
     <link href="../../layui/css/layui.css" rel="stylesheet" media="all" />
     <link href="../../build/css/common.css" rel="stylesheet" />
 </head>
+
 <body>
     <div id="page-vm" class="layui-fluid iframe-top">
         <div class="table_sysusers_mg">
             <fieldset class="layui-elem-field">
                 <div class="layui-field-box">
-                    <form class="layui-form">
+                    <div class="layui-form">
                         <div class="layui-row">
-                            <div class="layui-inline">
-                                <label class="layui-form-label">id：</label>
-                                <div class="layui-input-inline">
-                                   <input type="text" class="layui-input" name="role_id">
-                                </div>
-                            </div>
                             <div class="layui-inline">
                                 <label class="layui-form-label">账号：</label>
                                 <div class="layui-input-inline">
-                                   <input type="text" class="layui-input" name="user_account">
-                                </div>
-                            </div>
-                            <div class="layui-inline">
-                                <label class="layui-form-label">密码：</label>
-                                <div class="layui-input-inline">
-                                   <input type="text" class="layui-input" name="user_pwd">
-                                </div>
-                            </div>
-                            <div class="layui-inline">
-                                <label class="layui-form-label">是否启用：</label>
-                                <div class="layui-input-inline">
-                                   <input type="text" class="layui-input" name="user_is_enable">
+                                    <input type="text" class="layui-input" name="user_account">
                                 </div>
                             </div>
                             <div class="layui-inline">
                                 <label class="layui-form-label">手机号：</label>
                                 <div class="layui-input-inline">
-                                   <input type="text" class="layui-input" name="user_phone">
+                                    <input type="text" class="layui-input" name="user_phone">
                                 </div>
                             </div>
                             <div class="layui-inline">
                                 <label class="layui-form-label">邮箱：</label>
                                 <div class="layui-input-inline">
-                                   <input type="text" class="layui-input" name="user_email">
+                                    <input type="text" class="layui-input" name="user_email">
                                 </div>
                             </div>
-                            <div class="layui-inline">
-                                <label class="layui-form-label">头像：</label>
-                                <div class="layui-input-inline">
-                                   <input type="text" class="layui-input" name="user_icon">
-                                </div>
-                            </div>
-                            <div class="layui-inline">
-                                <label class="layui-form-label">名称：</label>
-                                <div class="layui-input-inline">
-                                   <input type="text" class="layui-input" name="user_name">
-                                </div>
-                            </div>
+                        </div>
+                        <br/>
+                        <div class="layui-row">
                             <div class="layui-inline">
                                 <label class="layui-form-label">性别：</label>
                                 <div class="layui-input-inline">
-                                   <input type="text" class="layui-input" name="user_sex">
+                                    <select lay-search name="user_sex">
+                                        <option value="">请选择</option>
+                                        <option value="1">男</option>
+                                        <option value="">女</option>
+                                    </select>
                                 </div>
                             </div>
-                        <div class="layui-inline btngroup">
-                            <a href="javascript:;" class="layui-btn" lay-submit lay-filter="btn_sysusers_from" id="btn_sysusers_from_query">查询</a>
-                            <a class="layui-btn" id="btn_add" href="javascript:;">新增</a>
-                            <a class="layui-btn" id="btn_del_batch" href="javascript:;">批量删除</a>
-                            <a href="javascript:;" class="layui-btn" lay-submit lay-filter="btn_sysusers_from_export">导出</a>
-                        </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">是否可用：</label>
+                                <div class="layui-input-inline">
+                                    <select lay-search name="user_is_enable">
+                                        <option value="">请选择</option>
+                                        <option v-for="option in user_is_enable_list" v-bind:value="option.Value">
+                                            {{ option.Text }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline btngroup">
+                                <a href="javascript:;" class="layui-btn" lay-submit lay-filter="btn_sysusers_from"
+                                    id="btn_sysusers_from_query">查询</a>
+                                <a class="layui-btn" id="btn_add" href="javascript:;">新增</a>
+                                <a class="layui-btn" id="btn_del_batch" href="javascript:;">批量删除</a>
+                                <a href="javascript:;" class="layui-btn" lay-submit
+                                    lay-filter="btn_sysusers_from_export">导出</a>
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -86,6 +75,16 @@
         </div>
     </div>
 
+    <script type="text/html" id="tpl_user_sex">
+        {{# if(d.user_sex==1){ }}
+        <span>男</span>
+        {{# }else{ }}
+        <span>女</span>
+        {{# } }}
+    </script>
+    <script type="text/html" id="tpl_user_is_enable">
+        <input type="checkbox" name="user_is_enable" value="1" lay-skin="switch" data-code="{{d.user_id}}"  lay-text="是|否" lay-filter="table_tpl_user_is_enable" {{d.user_is_enable==1?'checked':''}}>
+    </script>
     <script type="text/html" id="table_sysusers_operator">
         <a href="javascript:;" class="layui-btn layui-btn-xs" lay-event="edit" data-code="user_id">编辑</a>
         <a href="javascript:;" class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del" data-code="user_id">删除</a>
@@ -98,10 +97,11 @@
         var vm = new Vue({
             el: '#page-vm',
             data: {
-                currPage: 1
+                currPage: 1,
+                user_is_enable_list: []
             },
             methods: {
-				RenderDom: function(form, callback){
+                RenderDom: function (form, callback) {
                     vm.$forceUpdate();//强制重新渲染 dom
                     // DOM 还没有更新
                     vm.$nextTick(function () {
@@ -114,7 +114,7 @@
                 }
             }
         });
-        layui.use(['table', 'layer', 'form', 'laypage', 'jquery', 'ajaxmod',  'datatable'], function () {
+        layui.use(['table', 'layer', 'form', 'laypage', 'jquery', 'ajaxmod', 'datatable'], function () {
             var table = layui.table,
                 $ = layui.jquery,
                 layer = layui.layer,
@@ -137,17 +137,17 @@
                         url: '/sysusers',
                         tableElem: 'table_sysusers',//laypage 自动加_page
                         tableCols: [[
-                            { type: 'checkbox'},
-                          $.extend({ field: 'role_id', title: 'id' }, _table_style),
-                          $.extend({ field: 'user_account', title: '账号' }, _table_style),
-                          $.extend({ field: 'user_pwd', title: '密码' }, _table_style),
-                          $.extend({ field: 'user_is_enable', title: '是否启用' }, _table_style),
-                          $.extend({ field: 'user_phone', title: '手机号' }, _table_style),
-                          $.extend({ field: 'user_email', title: '邮箱' }, _table_style),
-                          $.extend({ field: 'user_time', title: '创建时间' }, _table_style),
-                          $.extend({ field: 'user_icon', title: '头像' }, _table_style),
-                          $.extend({ field: 'user_name', title: '名称' }, _table_style),
-                          $.extend({ field: 'user_sex', title: '性别' }, _table_style),
+                            { type: 'checkbox' },
+                            $.extend({ field: 'user_account', title: '账号' }, _table_style),
+                            $.extend({ field: 'role_name', title: '角色' }, _table_style),
+                            $.extend({ field: 'user_pwd', title: '密码' }, _table_style),
+                            $.extend({ field: 'user_phone', title: '手机号' }, _table_style),
+                            $.extend({ field: 'user_email', title: '邮箱' }, _table_style),
+                            $.extend({ field: 'user_icon', title: '头像' }, _table_style),
+                            $.extend({ field: 'user_name', title: '名称' }, _table_style),
+                            $.extend({ field: 'user_sex', title: '性别', templet: '#tpl_user_sex' }, _table_style),
+                            $.extend({ field: 'user_is_enable', title: '是否启用', templet: '#tpl_user_is_enable' }, _table_style),
+                            $.extend({ field: 'user_time', title: '创建时间' }, _table_style),
                             $.extend({ field: 'user_id', title: '操作', width: 190, templet: '#table_sysusers_operator', fixed: 'right' }, _table_style)
                         ]],
                     });
@@ -181,7 +181,7 @@
                 delbatch: function (_data) {
                     var checkStatus = table.checkStatus('table_sysusers'),
                         data = checkStatus.data;
-                   var delIdList = [];
+                    var delIdList = [];
                     $.each(data, function (k, v) {
                         delIdList.push(v._id);
                     });
@@ -194,55 +194,70 @@
                         }
                     });
                 },
-				patchObj: function (_data) {
+                patchObj: function (_data) {
                     ajaxmod.authorizeAjax({
                         url: '/sysusers',
                         type: 'Patch',
                         data: _data,
                         success: function (_json) {
-							top.tool.publish('edit_sysusers_form_refresh');
+                            top.tool.publish('edit_sysusers_form_refresh');
                         }
                     });
                 },
                 exportExcel: function (data) {
                     //跟表格显示的数据一样
                     data = excel.filterExportData(data, [
-                       'user_id',
-                       'role_id',
-                       'user_account',
-                       'user_pwd',
-                       'user_is_enable',
-                       'user_phone',
-                       'user_email',
-                       'user_time',
-                       'user_icon',
-                       'user_name',
-                       'user_sex',
+                        'user_id',
+                        'user_id',
+                        'user_account',
+                        'user_pwd',
+                        'user_is_enable',
+                        'user_phone',
+                        'user_email',
+                        'user_time',
+                        'user_icon',
+                        'user_name',
+                        'user_sex',
                     ]);
 
                     data.unshift({
-                        user_id:'id',
-                        role_id:'id',
-                        user_account:'账号',
-                        user_pwd:'密码',
-                        user_is_enable:'是否启用',
-                        user_phone:'手机号',
-                        user_email:'邮箱',
-                        user_time:'创建时间',
-                        user_icon:'头像',
-                        user_name:'名称',
-                        user_sex:'性别',
+                        user_id: 'id',
+                        user_id: 'id',
+                        user_account: '账号',
+                        user_pwd: '密码',
+                        user_is_enable: '是否启用',
+                        user_phone: '手机号',
+                        user_email: '邮箱',
+                        user_time: '创建时间',
+                        user_icon: '头像',
+                        user_name: '名称',
+                        user_sex: '性别',
                     });
 
                     excel.exportExcel({
                         sysusers: data
                     }, 'sysusers' + new Date().toLocaleString() + '.xlsx', 'xlsx');
                 },
-                loadtable:function(){
+                loadtable: function () {
                     $('#btn_sysusers_from_query').click();
+                },
+                loadList: function () {
+                    var _the = this;
+                    ajaxmod.ajaxArray([
+                        {
+                            url: '/appenums/1000',
+                            type: 'Get',
+                            success: function (_json) {
+                                vm.user_is_enable_list = _json.Result;
+                            }
+                        }
+                    ], function () {
+                        vm.RenderDom(form);
+                    });
                 }
             };
 
+            sysusersObj.loadList();
             sysusersObj.renderTable();//加载第一页
 
             //绑定编辑也保存事件
@@ -280,7 +295,19 @@
                 });
                 return false;
             });
+
+            form.on('switch(table_tpl_user_is_enable)', function (data) {
+                let _id = data.elem.attributes["data-code"].value;
+                let _value = 1;
+                if (data.elem.checked) {
+                    _value = 1;
+                } else {
+                    _value = 2;
+                }
+                sysusersObj.patchObj({ user_id: _id, user_is_enable: _value });
+            });
         });
     </script>
 </body>
+
 </html>

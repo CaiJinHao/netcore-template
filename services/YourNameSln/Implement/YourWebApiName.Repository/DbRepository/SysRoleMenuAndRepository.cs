@@ -83,6 +83,14 @@ namespace YourWebApiName.MongoRepository.DbRepository
                 return await conn.QueryAsync<SysRoleMenuAndModel>(dataQuery, queryParameter);
             }
         }
+        /// <summary>
+        /// 角色表可用的角色 内联接 不需要直接置为空
+        /// </summary>
+        private const string joinTable = "";
+        /// <summary>
+        /// 连接表需要查询字段 不需要直接置为空
+        /// </summary>
+        private const string joinFiles = "";
 
         public async Task<IEnumerable<SysRoleMenuAndResponeModel>> GetModelsAsync(SysRoleMenuAndRequestModel queryParameter, IEnumerable<string> fields = null)
         {
@@ -90,7 +98,7 @@ namespace YourWebApiName.MongoRepository.DbRepository
             {
                 var strWhere = GetQuery(queryParameter);
             var strFieldNames = DbContext.GetFieldsToString<SysRoleMenuAndModel>("b1", fields);
-                var dataQuery = $"SELECT b1_result.* FROM (SELECT {strFieldNames} FROM {tableName}  b1 WHERE 1=1 {strWhere}) b1_result ORDER BY b1_result.rma_id ASC";//内查询，可以做连接查询 直接join
+                var dataQuery = $"SELECT b1_result.*{joinFiles} FROM (SELECT {strFieldNames} FROM {tableName}  b1 WHERE 1=1 {strWhere}) b1_result {joinTable} ORDER BY b1_result.rma_id ASC";//内查询，可以做连接查询 直接join
                 return await conn.QueryAsync<SysRoleMenuAndResponeModel>(dataQuery, queryParameter);
             }
         }
@@ -99,11 +107,11 @@ namespace YourWebApiName.MongoRepository.DbRepository
         {
             var strWhere = GetQuery(queryParameter);
             var strFieldNames = DbContext.GetFieldsToString<SysRoleMenuAndModel>("b1", fields);
-            var querySql = "SELECT {0} " + $"FROM (SELECT {strFieldNames} FROM {tableName}  b1 WHERE 1=1 {strWhere} ORDER BY rma_id ASC) b1_result";//内查询，可以做连接查询 直接join
+            var querySql = "SELECT {0} " + $"FROM (SELECT {strFieldNames} FROM {tableName}  b1 WHERE 1=1 {strWhere} ORDER BY rma_id ASC) b1_result {joinTable}";//内查询，可以做连接查询 直接join
             var countQuery = string.Format(querySql, "COUNT(1)");
 
             var pagingSql = $" LIMIT {pagingModel.StartIndex()},{pagingModel.PageSize}";//分页
-            var dataQuery = string.Format(querySql, "b1_result.*") + pagingSql;
+            var dataQuery = string.Format(querySql, $"b1_result.*{joinFiles}") + pagingSql;
 
             using (var conn = DbContext.CreateConnection())
             {

@@ -34,7 +34,7 @@
                                 <div class="layui-input-inline">
                                    <select lay-search name="menu_is_enabled">
                                     <option value="">请选择</option>
-                                    <option v-for="option in menu_is_enabled" v-bind:value="option.Value">{{ option.Text }}</option>
+                                    <option v-for="option in menu_is_enabledlist" v-bind:value="option.Value">{{ option.Text }}</option>
                                 </select>
                                 </div>
                             </div>
@@ -69,7 +69,7 @@
             el: '#page-vm',
             data: {
                 currPage: 1,
-                menu_is_enabled:[]
+                menu_is_enabledlist:[]
             },
             methods: {
 				RenderDom: function(form, callback){
@@ -214,7 +214,7 @@
                         url: '/appenums/1000',
                         type: 'Get',
                         success: function (_json) {
-                            vm.menu_is_enabled=_json.Result;
+                            vm.menu_is_enabledlist=_json.Result;
                         }
                     }
                     ],function(){

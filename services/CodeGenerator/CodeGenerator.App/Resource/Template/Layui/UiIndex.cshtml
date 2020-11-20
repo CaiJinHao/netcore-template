@@ -44,8 +44,6 @@
                            }
                         <div class="layui-inline btngroup">
                             <a href="javascript:;" class="layui-btn" lay-submit lay-filter="btn_@(table_name_lower)_from" id="btn_@(table_name_lower)_from_query">查询</a>
-                            <a class="layui-btn" id="btn_add" href="javascript:;">新增</a>
-                            <a class="layui-btn" id="btn_del_batch" href="javascript:;">批量删除</a>
                             <a href="javascript:;" class="layui-btn" lay-submit lay-filter="btn_@(table_name_lower)_from_export">导出</a>
                         </div>
                         </div>
@@ -56,7 +54,12 @@
             <div id="table_@(table_name_lower)_page" class="laypage"></div>
         </div>
     </div>
-
+    <script type="text/html" id="toolbarDemo">
+        <div class="layui-btn-container">
+            <button class="layui-btn layui-btn-sm" lay-event="add">添加</button>
+            <button class="layui-btn layui-btn-sm layui-btn-warm" lay-event="delbatch">批量删除</button>
+        </div>
+    </script>
     <script type="text/html" id="table_@(table_name_lower)_operator">
         <a href="javascript:;" class="layui-btn layui-btn-xs" lay-event="edit" data-code="@(primary_key_name)">编辑</a>
         <a href="javascript:;" class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del" data-code="@(primary_key_name)">删除</a>
@@ -201,15 +204,12 @@
                 @(table_name_lower)Obj.renderTable();
             });
 
-            $('#btn_add').on('click', $(_context), function () {
-                @(table_name_lower)Obj.add();
-            });
-
-            $('#btn_del_batch').on('click', $(_context), function () {
-                @(table_name_lower)Obj.delbatch();
-            });
-
             table.on('tool(table_@(table_name_lower)_list)', function (obj) {
+                var data = obj.data;
+                @(table_name_lower)Obj[obj.event] ? @(table_name_lower)Obj[obj.event].call(@(table_name_lower)Obj, data) : '';
+            });
+
+            table.on('toolbar(table_@(table_name_lower)_list)', function (obj) {
                 var data = obj.data;
                 @(table_name_lower)Obj[obj.event] ? @(table_name_lower)Obj[obj.event].call(@(table_name_lower)Obj, data) : '';
             });

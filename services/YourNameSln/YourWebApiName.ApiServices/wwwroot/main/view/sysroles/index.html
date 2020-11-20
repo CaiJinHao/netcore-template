@@ -1,4 +1,4 @@
-
+﻿
 
 <!DOCTYPE html>
 <html lang="zh-cn">
@@ -25,30 +25,28 @@
                             <div class="layui-inline">
                                 <label class="layui-form-label">角色名称：</label>
                                 <div class="layui-input-inline">
-                                   <input type="text" class="layui-input" name="role_name">
+                                    <input type="text" class="layui-input" name="role_name">
                                 </div>
                             </div>
                             <div class="layui-inline">
                                 <label class="layui-form-label">父级角色ID：</label>
                                 <div class="layui-input-inline">
-                                   <input type="text" class="layui-input" name="role_parent_role">
+                                    <input type="text" class="layui-input" name="role_parent_role">
                                 </div>
                             </div>
                             <div class="layui-inline">
                                 <label class="layui-form-label">是否可用：</label>
                                 <div class="layui-input-inline">
-                                   <select lay-search name="role_is_enable">
-                                    <option value="">请选择</option>
-                                    <option v-for="option in role_is_enable_list" v-bind:value="option.Value">{{ option.Text }}</option>
-                                </select>
+                                    <select lay-search name="role_is_enable">
+                                        <option value="">请选择</option>
+                                        <option v-for="option in role_is_enable_list" v-bind:value="option.Value">{{ option.Text }}</option>
+                                    </select>
                                 </div>
                             </div>
-                        <div class="layui-inline btngroup">
-                            <a href="javascript:;" class="layui-btn" lay-submit lay-filter="btn_sysroles_from" id="btn_sysroles_from_query">查询</a>
-                            <a class="layui-btn" id="btn_add" href="javascript:;">新增</a>
-                            <a class="layui-btn" id="btn_del_batch" href="javascript:;">批量删除</a>
-                            <a href="javascript:;" class="layui-btn" lay-submit lay-filter="btn_sysroles_from_export">导出</a>
-                        </div>
+                            <div class="layui-inline btngroup">
+                                <a href="javascript:;" class="layui-btn" lay-submit lay-filter="btn_sysroles_from" id="btn_sysroles_from_query">查询</a>
+                                <a href="javascript:;" class="layui-btn" lay-submit lay-filter="btn_sysroles_from_export">导出</a>
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -57,10 +55,15 @@
             <div id="table_sysroles_page" class="laypage"></div>
         </div>
     </div>
-
+    <script type="text/html" id="toolbarDemo">
+        <div class="layui-btn-container">
+            <button class="layui-btn layui-btn-sm" lay-event="add">添加</button>
+            <button class="layui-btn layui-btn-sm layui-btn-warm" lay-event="delbatch">批量删除</button>
+        </div>
+    </script>
     <script type="text/html" id="tpl_role_is_enable">
         {{# if(d.role_id!='-1'){ }}
-        <input type="checkbox" name="role_is_enable" value="1" lay-skin="switch" data-code="{{d.role_id}}"  lay-text="是|否" lay-filter="table_tpl_role_is_enable" {{d.role_is_enable==1?'checked':''}}>
+        <input type="checkbox" name="role_is_enable" value="1" lay-skin="switch" data-code="{{d.role_id}}" lay-text="是|否" lay-filter="table_tpl_role_is_enable" {{d.role_is_enable==1?'checked':''}}>
         {{# } }}
     </script>
     <script type="text/html" id="table_sysroles_operator">
@@ -78,10 +81,10 @@
             el: '#page-vm',
             data: {
                 currPage: 1,
-                role_is_enable_list:[]
+                role_is_enable_list: []
             },
             methods: {
-				RenderDom: function(form, callback){
+                RenderDom: function (form, callback) {
                     vm.$forceUpdate();//强制重新渲染 dom
                     // DOM 还没有更新
                     vm.$nextTick(function () {
@@ -94,7 +97,7 @@
                 }
             }
         });
-        layui.use(['table', 'layer', 'form', 'laypage', 'jquery', 'ajaxmod',  'datatable'], function () {
+        layui.use(['table', 'layer', 'form', 'laypage', 'jquery', 'ajaxmod', 'datatable'], function () {
             var table = layui.table,
                 $ = layui.jquery,
                 layer = layui.layer,
@@ -117,14 +120,14 @@
                         url: '/sysroles',
                         tableElem: 'table_sysroles',//laypage 自动加_page
                         tableCols: [[
-                            { type: 'checkbox'},
-                          $.extend({ field: 'role_id', title: '角色ID' }, _table_style),
-                          $.extend({ field: 'role_name', title: '角色名称' }, _table_style),
-                          $.extend({ field: 'role_parent_role', title: '父级角色' }, _table_style),
-                          $.extend({ field: 'role_grade', title: '角色等级' }, _table_style),
-                          $.extend({ field: 'role_remarks', title: '附注' }, _table_style),
-                          $.extend({ field: 'role_sort', title: '排序' }, _table_style),
-                          $.extend({ field: 'role_is_enable', title: '角色是否启用',templet:'#tpl_role_is_enable' }, _table_style),
+                            { type: 'checkbox' },
+                            $.extend({ field: 'role_id', title: '角色ID' }, _table_style),
+                            $.extend({ field: 'role_name', title: '角色名称' }, _table_style),
+                            $.extend({ field: 'role_parent_role', title: '父级角色' }, _table_style),
+                            $.extend({ field: 'role_grade', title: '角色等级' }, _table_style),
+                            $.extend({ field: 'role_remarks', title: '附注' }, _table_style),
+                            $.extend({ field: 'role_sort', title: '排序' }, _table_style),
+                            $.extend({ field: 'role_is_enable', title: '角色是否启用', templet: '#tpl_role_is_enable' }, _table_style),
                             $.extend({ field: 'role_id', title: '操作', width: 190, templet: '#table_sysroles_operator', fixed: 'right' }, _table_style)
                         ]],
                     });
@@ -158,7 +161,7 @@
                 delbatch: function (_data) {
                     var checkStatus = table.checkStatus('table_sysroles'),
                         data = checkStatus.data;
-                   var delIdList = [];
+                    var delIdList = [];
                     $.each(data, function (k, v) {
                         delIdList.push(v._id);
                     });
@@ -171,56 +174,56 @@
                         }
                     });
                 },
-				patchObj: function (_data) {
+                patchObj: function (_data) {
                     ajaxmod.authorizeAjax({
                         url: '/sysroles',
                         type: 'Patch',
                         data: _data,
                         success: function (_json) {
-							top.tool.publish('edit_sysroles_form_refresh');
+                            top.tool.publish('edit_sysroles_form_refresh');
                         }
                     });
                 },
                 exportExcel: function (data) {
                     //跟表格显示的数据一样
                     data = excel.filterExportData(data, [
-                       'role_id',
-                       'role_name',
-                       'role_remarks',
-                       'role_parent_role',
-                       'role_sort',
-                       'role_grade',
-                       'role_is_enable',
+                        'role_id',
+                        'role_name',
+                        'role_remarks',
+                        'role_parent_role',
+                        'role_sort',
+                        'role_grade',
+                        'role_is_enable',
                     ]);
 
                     data.unshift({
-                        role_id:'id',
-                        role_name:'名称',
-                        role_remarks:'附注',
-                        role_parent_role:'父级角色',
-                        role_sort:'排序',
-                        role_grade:'角色等级',
-                        role_is_enable:'角色是否启用',
+                        role_id: 'id',
+                        role_name: '名称',
+                        role_remarks: '附注',
+                        role_parent_role: '父级角色',
+                        role_sort: '排序',
+                        role_grade: '角色等级',
+                        role_is_enable: '角色是否启用',
                     });
 
                     excel.exportExcel({
                         sysroles: data
                     }, 'sysroles' + new Date().toLocaleString() + '.xlsx', 'xlsx');
                 },
-                loadtable:function(){
+                loadtable: function () {
                     $('#btn_sysroles_from_query').click();
                 },
-                loadList:function(){
+                loadList: function () {
                     var _the = this;
                     ajaxmod.ajaxArray([
-                    {
-                        url: '/appenums/1000',
-                        type: 'Get',
-                        success: function (_json) {
-                            vm.role_is_enable_list=_json.Result;
+                        {
+                            url: '/appenums/1000',
+                            type: 'Get',
+                            success: function (_json) {
+                                vm.role_is_enable_list = _json.Result;
+                            }
                         }
-                    }
-                    ],function(){
+                    ], function () {
                         vm.RenderDom(form);
                     });
                 }
@@ -233,15 +236,12 @@
                 sysrolesObj.renderTable();
             });
 
-            $('#btn_add').on('click', $(_context), function () {
-                sysrolesObj.add();
-            });
-
-            $('#btn_del_batch').on('click', $(_context), function () {
-                sysrolesObj.delbatch();
-            });
-
             table.on('tool(table_sysroles_list)', function (obj) {
+                var data = obj.data;
+                sysrolesObj[obj.event] ? sysrolesObj[obj.event].call(sysrolesObj, data) : '';
+            });
+
+            table.on('toolbar(table_sysroles_list)', function (obj) {
                 var data = obj.data;
                 sysrolesObj[obj.event] ? sysrolesObj[obj.event].call(sysrolesObj, data) : '';
             });
@@ -273,7 +273,7 @@
                     _value = 2;
                 }
                 sysrolesObj.patchObj({ role_id: _id, role_is_enable: _value });
-            });  
+            });
         });
     </script>
 </body>

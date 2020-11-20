@@ -46,7 +46,8 @@ layui.define(['table', 'layer', 'form', 'laypage', 'ajaxmod', 'jquery'], functio
                         elem: '#'+paramDefault.tableElem,
                         cols: paramDefault.tableCols,
                         data: data.data,
-                        //height: 'full-200',
+                        toolbar: '#toolbarDemo',
+                        defaultToolbar: ['filter'],
                         limit: optDefault.PageSize,
                         done:paramDefault.done
                     });

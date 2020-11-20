@@ -1,4 +1,4 @@
-
+﻿
 
 <!DOCTYPE html>
 <html lang="zh-cn">
@@ -20,30 +20,28 @@
                             <div class="layui-inline">
                                 <label class="layui-form-label">菜单名称：</label>
                                 <div class="layui-input-inline">
-                                   <input type="text" class="layui-input" id="menu_name" name="menu_name">
+                                    <input type="text" class="layui-input" id="menu_name" name="menu_name">
                                 </div>
                             </div>
                             <div class="layui-inline">
                                 <label class="layui-form-label">上级菜单：</label>
                                 <div class="layui-input-inline">
-                                   <input type="text" class="layui-input" id="menu_parent_id" name="menu_parent_id">
+                                    <input type="text" class="layui-input" id="menu_parent_id" name="menu_parent_id">
                                 </div>
                             </div>
                             <div class="layui-inline">
                                 <label class="layui-form-label">是否可用：</label>
                                 <div class="layui-input-inline">
-                                   <select lay-search name="menu_is_enabled">
-                                    <option value="">请选择</option>
-                                    <option v-for="option in menu_is_enabledlist" v-bind:value="option.Value">{{ option.Text }}</option>
-                                </select>
+                                    <select lay-search name="menu_is_enabled">
+                                        <option value="">请选择</option>
+                                        <option v-for="option in menu_is_enabledlist" v-bind:value="option.Value">{{ option.Text }}</option>
+                                    </select>
                                 </div>
                             </div>
-                        <div class="layui-inline btngroup">
-                            <a href="javascript:;" class="layui-btn" lay-submit lay-filter="btn_sysmenus_from" id="btn_sysmenus_from_query">查询</a>
-                            <a class="layui-btn" id="btn_add" href="javascript:;">新增</a>
-                            <a class="layui-btn" id="btn_del_batch" href="javascript:;">批量删除</a>
-                            <a href="javascript:;" class="layui-btn" lay-submit lay-filter="btn_sysmenus_from_export">导出</a>
-                        </div>
+                            <div class="layui-inline btngroup">
+                                <a href="javascript:;" class="layui-btn" lay-submit lay-filter="btn_sysmenus_from" id="btn_sysmenus_from_query">查询</a>
+                                <a href="javascript:;" class="layui-btn" lay-submit lay-filter="btn_sysmenus_from_export">导出</a>
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -52,9 +50,14 @@
             <div id="table_sysmenus_page" class="laypage"></div>
         </div>
     </div>
-
+    <script type="text/html" id="toolbarDemo">
+        <div class="layui-btn-container">
+            <button class="layui-btn layui-btn-sm" lay-event="add">添加</button>
+            <button class="layui-btn layui-btn-sm layui-btn-warm" lay-event="delbatch">批量删除</button>
+        </div>
+    </script>
     <script type="text/html" id="tpl_menu_is_enabled">
-        <input type="checkbox" name="menu_is_enabled" value="1" lay-skin="switch" data-code="{{d.menu_id}}"  lay-text="是|否" lay-filter="table_tpl_menu_is_enabled" {{d.menu_is_enabled==1?'checked':''}}>
+        <input type="checkbox" name="menu_is_enabled" value="1" lay-skin="switch" data-code="{{d.menu_id}}" lay-text="是|否" lay-filter="table_tpl_menu_is_enabled" {{d.menu_is_enabled==1?'checked':''}}>
     </script>
     <script type="text/html" id="table_sysmenus_operator">
         <a href="javascript:;" class="layui-btn layui-btn-xs" lay-event="edit" data-code="menu_id">编辑</a>
@@ -69,10 +72,10 @@
             el: '#page-vm',
             data: {
                 currPage: 1,
-                menu_is_enabledlist:[]
+                menu_is_enabledlist: []
             },
             methods: {
-				RenderDom: function(form, callback){
+                RenderDom: function (form, callback) {
                     vm.$forceUpdate();//强制重新渲染 dom
                     // DOM 还没有更新
                     vm.$nextTick(function () {
@@ -85,7 +88,7 @@
                 }
             }
         });
-        layui.use(['table', 'layer', 'form', 'laypage', 'jquery', 'ajaxmod',  'datatable'], function () {
+        layui.use(['table', 'layer', 'form', 'laypage', 'jquery', 'ajaxmod', 'datatable'], function () {
             var table = layui.table,
                 $ = layui.jquery,
                 layer = layui.layer,
@@ -108,16 +111,16 @@
                         url: '/sysmenus',
                         tableElem: 'table_sysmenus',//laypage 自动加_page
                         tableCols: [[
-                            { type: 'checkbox'},
-                          $.extend({ field: 'menu_id', title: '菜单ID' }, _table_style),
-                          $.extend({ field: 'menu_name', title: '菜单名称' }, _table_style),
-                          $.extend({ field: 'menu_parent_id', title: '父级菜单ID' }, _table_style),
-                          $.extend({ field: 'menu_icon', title: '菜单图标' }, _table_style),
-                          $.extend({ field: 'menu_grade', title: '菜单等级' }, _table_style),
-                          $.extend({ field: 'menu_url', title: '菜单URL' }, _table_style),
-                          $.extend({ field: 'menu_sort', title: '菜单排序' }, _table_style),
-                          $.extend({ field: 'menu_description', title: '菜单描述' }, _table_style),
-                          $.extend({ field: 'menu_is_enabled', title: '菜单是否启用',templet:'#tpl_menu_is_enabled' }, _table_style),
+                            { type: 'checkbox' },
+                            $.extend({ field: 'menu_id', title: '菜单ID' }, _table_style),
+                            $.extend({ field: 'menu_name', title: '菜单名称' }, _table_style),
+                            $.extend({ field: 'menu_parent_id', title: '父级菜单ID' }, _table_style),
+                            $.extend({ field: 'menu_icon', title: '菜单图标' }, _table_style),
+                            $.extend({ field: 'menu_grade', title: '菜单等级' }, _table_style),
+                            $.extend({ field: 'menu_url', title: '菜单URL' }, _table_style),
+                            $.extend({ field: 'menu_sort', title: '菜单排序' }, _table_style),
+                            $.extend({ field: 'menu_description', title: '菜单描述' }, _table_style),
+                            $.extend({ field: 'menu_is_enabled', title: '菜单是否启用', templet: '#tpl_menu_is_enabled' }, _table_style),
                             $.extend({ field: 'menu_id', title: '操作', width: 190, templet: '#table_sysmenus_operator', fixed: 'right' }, _table_style)
                         ]],
                     });
@@ -151,7 +154,7 @@
                 delbatch: function (_data) {
                     var checkStatus = table.checkStatus('table_sysmenus'),
                         data = checkStatus.data;
-                   var delIdList = [];
+                    var delIdList = [];
                     $.each(data, function (k, v) {
                         delIdList.push(v._id);
                     });
@@ -164,60 +167,60 @@
                         }
                     });
                 },
-				patchObj: function (_data) {
+                patchObj: function (_data) {
                     ajaxmod.authorizeAjax({
                         url: '/sysmenus',
                         type: 'Patch',
                         data: _data,
                         success: function (_json) {
-							top.tool.publish('edit_sysmenus_form_refresh');
+                            top.tool.publish('edit_sysmenus_form_refresh');
                         }
                     });
                 },
                 exportExcel: function (data) {
                     //跟表格显示的数据一样
                     data = excel.filterExportData(data, [
-                       'menu_id',
-                       'menu_name',
-                       'menu_icon',
-                       'menu_sort',
-                       'menu_parent_id',
-                       'menu_grade',
-                       'menu_url',
-                       'menu_description',
-                       'menu_is_enabled',
+                        'menu_id',
+                        'menu_name',
+                        'menu_icon',
+                        'menu_sort',
+                        'menu_parent_id',
+                        'menu_grade',
+                        'menu_url',
+                        'menu_description',
+                        'menu_is_enabled',
                     ]);
 
                     data.unshift({
-                        menu_id:'id',
-                        menu_name:'菜单名称',
-                        menu_icon:'菜单图标',
-                        menu_sort:'菜单排序',
-                        menu_parent_id:'父级菜单',
-                        menu_grade:'菜单等级',
-                        menu_url:'菜单URL',
-                        menu_description:'菜单描述',
-                        menu_is_enabled:'菜单是否启用',
+                        menu_id: 'id',
+                        menu_name: '菜单名称',
+                        menu_icon: '菜单图标',
+                        menu_sort: '菜单排序',
+                        menu_parent_id: '父级菜单',
+                        menu_grade: '菜单等级',
+                        menu_url: '菜单URL',
+                        menu_description: '菜单描述',
+                        menu_is_enabled: '菜单是否启用',
                     });
 
                     excel.exportExcel({
                         sysmenus: data
                     }, 'sysmenus' + new Date().toLocaleString() + '.xlsx', 'xlsx');
                 },
-                loadtable:function(){
+                loadtable: function () {
                     $('#btn_sysmenus_from_query').click();
                 },
-                loadList:function(){
+                loadList: function () {
                     var _the = this;
                     ajaxmod.ajaxArray([
-                    {
-                        url: '/appenums/1000',
-                        type: 'Get',
-                        success: function (_json) {
-                            vm.menu_is_enabledlist=_json.Result;
+                        {
+                            url: '/appenums/1000',
+                            type: 'Get',
+                            success: function (_json) {
+                                vm.menu_is_enabledlist = _json.Result;
+                            }
                         }
-                    }
-                    ],function(){
+                    ], function () {
                         vm.RenderDom(form);
                     });
                 }
@@ -230,15 +233,12 @@
                 sysmenusObj.renderTable();
             });
 
-            $('#btn_add').on('click', $(_context), function () {
-                sysmenusObj.add();
-            });
-
-            $('#btn_del_batch').on('click', $(_context), function () {
-                sysmenusObj.delbatch();
-            });
-
             table.on('tool(table_sysmenus_list)', function (obj) {
+                var data = obj.data;
+                sysmenusObj[obj.event] ? sysmenusObj[obj.event].call(sysmenusObj, data) : '';
+            });
+
+            table.on('toolbar(table_sysmenus_list)', function (obj) {
                 var data = obj.data;
                 sysmenusObj[obj.event] ? sysmenusObj[obj.event].call(sysmenusObj, data) : '';
             });
@@ -270,7 +270,7 @@
                     _value = 2;
                 }
                 sysmenusObj.patchObj({ menu_id: _id, menu_is_enabled: _value });
-            });  
+            });
         });
     </script>
 </body>

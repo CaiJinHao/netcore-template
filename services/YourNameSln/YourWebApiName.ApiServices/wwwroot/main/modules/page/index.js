@@ -46,8 +46,8 @@ layui.define(['tab', 'navbar', 'jquery', 'form', 'layer', 'ajaxmod'], function (
         layer = layui.layer,
         navbar = layui.navbar,
         ajaxmod = layui.ajaxmod,
-        form = layui.form;
-    tab = layui.tab;
+        form = layui.form,
+        tab = layui.tab;
 
 
     ajaxmod.validateLogin(); //验证是否登录了
@@ -204,13 +204,24 @@ layui.define(['tab', 'navbar', 'jquery', 'form', 'layer', 'ajaxmod'], function (
         if (!_lock_pwd || _lock_pwd === '') {
             layer.msg("请输入登陆密码进行解锁！");
         } else {
-            if (_lock_pwd == '123456') {
-                $('#lock-box #lockPwd').val('');
-                localStorage.setItem("lockcms", false);
-                layer.closeAll("page");
-            } else {
-                layer.msg("密码错误，请重新输入!");
-            }
+            var loading = layer.msg('正在验证...', {
+                time: 20000,
+                icon: 16,
+                shade: 0.06
+            });
+            ajaxmod.GetAuthorizeToken({ Key: vm.userinfo.user_account, Secret: _lock_pwd}, function (_json) {
+                layer.close(loading);
+                if (_json.Code === 0) {
+                    $('#lock-box #lockPwd').val('');
+                    localStorage.setItem("lockcms", false);
+                    layer.closeAll("page");
+                } else {
+                    layer.msg('密码错误，请重新输入!', {
+                        icon: 5,
+                        time: 5000
+                    });
+                }
+            });
         }
     });
 

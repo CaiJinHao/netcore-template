@@ -37,7 +37,7 @@
                 }
                 else if (_json.Code === 10003)
                 {
-                    $('#login-msg').html(_json.errorMsg);
+                    $('#login-msg').html(_json.Msg);
                     //loading = layer.msg('已扫码，登录中...', {
                     //    time: 20000,
                     //    icon: 16,

@@ -125,7 +125,7 @@
                         _options.success(_json); //传输过去
                     } else {
                         if (optDefault.isShowError) {
-                            top.layer.msg(_json.errorMsg, {
+                            top.layer.msg(_json.Msg, {
                                 icon: 5,
                                 time: 5000
                             });
@@ -298,6 +298,7 @@
                 type: 'Post',
                 data: userinfo,
                 isDecrypt: false,
+                isShowError:false,
                 isStatic: true, //是否静默状态
                 success: function (_json) {
                     if (_json.Code === 0) {

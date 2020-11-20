@@ -22,12 +22,11 @@
         }
     }
 });
-layui.use(['jquery', 'form', 'layer', 'ajaxmod', 'formvalidate'], function () {
+layui.use(['jquery', 'form', 'layer', 'ajaxmod'], function () {
     var $ = layui.jquery,
         form = layui.form,
         layer = layui.layer,
-        ajaxmod = layui.ajaxmod,
-        formvalidate = layui.formvalidate;
+        ajaxmod = layui.ajaxmod
 
     if (localStorage.getItem('rememberme')) {
         vm.loginUser = JSON.parse(localStorage.getItem('rememberme'));
@@ -50,6 +49,7 @@ layui.use(['jquery', 'form', 'layer', 'ajaxmod', 'formvalidate'], function () {
                 } else {
                     localStorage.removeItem("rememberme");
                 }
+                localStorage.setItem("lockcms", false);//取消锁屏
                 layer.msg("登录成功", {
                     time: 5000
                 });

@@ -30,7 +30,7 @@ namespace YourWebApiName.ApiServices.DefaultApi
         /// <returns></returns>
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Post([FromBody] RequestAuthModel authModel)
+        public async Task<IActionResult> Post([FromBody]RequestAuthModel authModel)
         {
             var apiData = new ApiResultModel();
             var responesToken = await new ToKenService().GetTokenAsync(authModel);

@@ -13,6 +13,7 @@ namespace YourWebApiName.Models.RequestModels
     /// </summary>
     public class SysRoleMenuAndRequestModel : SysRoleMenuAndModel
     {
-    
+        [Required]
+        public string[] menu_id_list { get; set; }
     }
 }

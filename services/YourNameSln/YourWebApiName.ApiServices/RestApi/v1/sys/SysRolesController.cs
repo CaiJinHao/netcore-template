@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using YourWebApiName.IServices.IDbServices;
 using YourWebApiName.Models.DbModels;
 using YourWebApiName.Models.RequestModels;
+using System.Linq;
 
 
 namespace YourWebApiName.ApiServices.RestApi.v1
@@ -48,6 +49,13 @@ namespace YourWebApiName.ApiServices.RestApi.v1
                         //获取不分页数据集合
                         var data = await sysRolesService.GetModelsAsync(queryParameter);
                         apiResult.Result = data;
+                        return Ok(apiResult);
+                    }
+                case 10:
+                    {
+                        //角色树
+                        var data = await sysRolesService.GetCurrentModelsAsync(queryParameter, new string[] { "role_id", "role_name" });
+                        apiResult.Result = data.Select(a => new { title = a.role_name, id = a.role_id, data = a, spread = true });
                         return Ok(apiResult);
                     }
                 default:

@@ -18,12 +18,10 @@ namespace YourWebApiName.Models.DbModels
          /// rma_id
          /// </summary>
          [Key]
-         [Required]
          public string rma_id { get; set; }
          /// <summary>
          /// menu_id
          /// </summary>
-         [Required]
          public string menu_id { get; set; }
          /// <summary>
          /// role_id

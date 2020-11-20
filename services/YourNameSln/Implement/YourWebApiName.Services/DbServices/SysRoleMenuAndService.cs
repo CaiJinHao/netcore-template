@@ -12,6 +12,7 @@ using YourWebApiName.Models.ResponeModels;
 using Common.Utility.Autofac;
 using Common.Utility.Models.UiModels;
 using System.Linq;
+using Common.Utility.Models.Config;
 
 namespace YourWebApiName.Services.DbServices
 {
@@ -31,6 +32,11 @@ namespace YourWebApiName.Services.DbServices
 
 
         public async Task<bool> CreateAsync(SysRoleMenuAndModel model)
+        {
+            return await sysRoleMenuAndRepository.CreateAsync(model);
+        }
+
+        public async Task<bool> CreateAsync(SysRoleMenuAndModel[] model)
         {
             return await sysRoleMenuAndRepository.CreateAsync(model);
         }
@@ -75,7 +81,6 @@ namespace YourWebApiName.Services.DbServices
             return await sysRoleMenuAndRepository.UpdateModelAsync(model);
         }
 
-
         public async Task<IEnumerable<LayoutMenusModel>> GetLayoutMenusAsync(string role_id)
         {
             var menuModels = await sysMenusService.GetCurrentModelsAsync(new SysMenusRequestModel()
@@ -84,7 +89,7 @@ namespace YourWebApiName.Services.DbServices
             });
             //获取有权限的菜单
             var auth_menus_id = new List<string>();
-            if (role_id.Equals("-1"))
+            if (role_id.Equals(StaticConfig.SuperadminRoleId))
             {
                 auth_menus_id = menuModels.Select(m => m.menu_id).ToList();
             }
@@ -102,8 +107,6 @@ namespace YourWebApiName.Services.DbServices
                 {
                     id = a.menu_id,
                     icon = a.menu_icon,
-                    //is_leaf = a.,
-                    //is_module = a.,
                     menu_grade=a.menu_grade,
                     parent_id = a.menu_parent_id,
                     sort = a.menu_sort,
@@ -135,5 +138,64 @@ namespace YourWebApiName.Services.DbServices
             }
             return rootNodes;
         }
+
+        public async Task<IEnumerable<MenuTreeModel>> GetMenuTreeAsync(SysRoleMenuAndRequestModel queryParameter)
+        {
+            //获取所有菜单
+            var menuModels = await sysMenusService.GetCurrentModelsAsync(new SysMenusRequestModel()
+            {
+                menu_is_enabled = Common.Utility.Models.EnumIsNot.Yes
+            });
+            //获取有权限的菜单
+            var auth_menus_id = new List<string>();
+            if (queryParameter.role_id != null)
+            {
+                if (queryParameter.role_id.Equals(StaticConfig.SuperadminRoleId))
+                {
+                    auth_menus_id = menuModels.Select(m => m.menu_id).ToList();
+                }
+                else
+                {
+                    var auth_menus = await GetModelsAsync(queryParameter);
+                    auth_menus_id = auth_menus.Select(m => m.menu_id).ToList();
+                }
+            }
+
+            var menu_list = menuModels.Select(a => new MenuTreeModel()
+            {
+                id = a.menu_id,
+                parent_id = a.menu_parent_id,
+                title = a.menu_name,
+                value = a.menu_id,
+                data = new List<MenuTreeModel>(),
+                @checked = auth_menus_id.Contains(a.menu_id),
+                disabled = false
+            });
+
+            //获取子节点菜单
+            async Task<IEnumerable<MenuTreeModel>> GetChildMenus(string menu_id)
+            {
+                //给模块节点赋值子节点
+                var child_list = menu_list.Where(ch => ch.parent_id == menu_id).ToList();
+                //判断子节点是否为叶子节点
+                foreach (var menu_leaf in child_list)
+                {
+                    if (menu_leaf.parent_id.Length != 0)
+                    {
+                        menu_leaf.data = await GetChildMenus(menu_leaf.id);
+                    }
+                }
+                return child_list;
+            }
+
+            //寻找模块节点
+            var rootNodes = menu_list.Where(a => a.parent_id.Length == 0).ToList();
+            foreach (var item in rootNodes)
+            {
+                item.data = await GetChildMenus(item.id);
+            }
+            return rootNodes;
+        }
+
     }
 }

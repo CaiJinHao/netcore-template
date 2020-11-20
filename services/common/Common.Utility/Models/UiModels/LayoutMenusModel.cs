@@ -18,8 +18,6 @@ namespace Common.Utility.Models.UiModels
         /// </summary>
         public dynamic children { get; set; }
         public bool @checked { get; set; }
-        //public EnumIsNot is_module { get; set; }
-        //public EnumIsNot is_leaf { get; set; }
         public string parent_id { get; set; }
         public int sort { get; set; }
         public int menu_grade { get; set; }

@@ -10,6 +10,7 @@ using YourWebApiName.IServices.IDbServices;
 using YourWebApiName.Models.DbModels;
 using YourWebApiName.Models.RequestModels;
 using Common.Utility.Models.Config;
+using System.Collections.Generic;
 
 namespace YourWebApiName.ApiServices.RestApi.v1
 {
@@ -52,8 +53,15 @@ namespace YourWebApiName.ApiServices.RestApi.v1
                     }
                 case 10:
                     {
+                        //菜单导航
                         var roleid = UserHttpInfo.GetValueByToken(TokenInfoType.RoleId);
                         apiResult.Result = await sysRoleMenuAndService.GetLayoutMenusAsync(roleid);
+                        return Ok(apiResult);
+                    }
+                case 11:
+                    {
+                        //权限 tree
+                        apiResult.Result = await sysRoleMenuAndService.GetMenuTreeAsync(queryParameter);
                         return Ok(apiResult);
                     }
                 default:
@@ -90,10 +98,25 @@ namespace YourWebApiName.ApiServices.RestApi.v1
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]SysRoleMenuAndRequestModel parameter)
         {
+            var _now = DateTime.Now;
             var apiResult = new ApiResultModel(ErrorCodeType.Success);
-            var model = new SysRoleMenuAndModel();
-            parameter.CloneTo(model);
-            if (await sysRoleMenuAndService.CreateAsync(model))
+            var modelList = new List<SysRoleMenuAndModel>();
+            foreach (var mid in parameter.menu_id_list)
+            {
+                modelList.Add(new SysRoleMenuAndModel()
+                {
+                    rma_id = StaticConfig.GetId().ToString(),
+                    menu_id = mid,
+                    role_id = parameter.role_id,
+                    rma_time = _now
+                });
+            }
+            //先删除，再添加
+            await sysRoleMenuAndService.DeleteAsync(new SysRoleMenuAndRequestModel()
+            {
+                role_id = parameter.role_id
+            });
+            if (await sysRoleMenuAndService.CreateAsync(modelList.ToArray()))
             {
                 return Created($"{route}/{parameter.rma_id}", apiResult);
             }

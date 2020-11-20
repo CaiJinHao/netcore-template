@@ -9,6 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="DbServices\SysRoleMenuAndService.cs~RF2a12b7d5.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\YourWebApiName.IRepository\YourWebApiName.IRepository.csproj" />
     <ProjectReference Include="..\..\YourWebApiName.IServices\YourWebApiName.IServices.csproj" />
   </ItemGroup>

@@ -17,7 +17,9 @@ namespace YourWebApiName.IServices.IDbServices
     /// </summary>
     public interface ISysRoleMenuAndService : IDbServicesBase<SysRoleMenuAndModel,SysRoleMenuAndResponeModel,SysRoleMenuAndRequestModel, string, PagingModel>
     {
+        Task<bool> CreateAsync(SysRoleMenuAndModel[] model);
         Task<IEnumerable<LayoutMenusModel>> GetLayoutMenusAsync(string role_id);
+        Task<IEnumerable<MenuTreeModel>> GetMenuTreeAsync(SysRoleMenuAndRequestModel queryParameter);
     }
 }
 

@@ -1,4 +1,5 @@
 ﻿using Common.Utility.Models.AppConfig;
+using Snowflake.Core;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -22,5 +23,22 @@ namespace Common.Utility.Models.Config
         /// 预警配置实体
         /// </summary>
         public static WarningConfigModel WarningConfigModel { get; set; }
+        /// <summary>
+        /// 超级管理员角色ID
+        /// </summary>
+        public const string SuperadminRoleId = "-1";
+        private static IdWorker idWorker;
+        /// <summary>
+        /// 获取唯一ID
+        /// </summary>
+        /// <returns></returns>
+        public static long GetId()
+        {
+            if (idWorker==null)
+            {
+                idWorker = new IdWorker(1, 1);
+            }
+            return idWorker.NextId();
+        }
     }
 }

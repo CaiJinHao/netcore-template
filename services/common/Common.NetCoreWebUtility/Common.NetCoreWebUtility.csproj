@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <PackageProjectUrl>https://github.com/CaiJinHao/netcore-api-template/tree/master/services/common/Common.NetCoreWebUtility</PackageProjectUrl>
     <RepositoryUrl>https://github.com/CaiJinHao/netcore-api-template</RepositoryUrl>
     <PackageReleaseNotes>This is a complete template project that contains the entire project dependent reference and use</PackageReleaseNotes>
@@ -16,7 +16,7 @@
   </PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="IdentityModel" Version="4.4.0" />
+		<PackageReference Include="IdentityModel" Version="4.5.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="5.0.0" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />

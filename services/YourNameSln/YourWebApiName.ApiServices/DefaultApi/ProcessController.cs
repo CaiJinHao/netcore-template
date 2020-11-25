@@ -37,7 +37,7 @@ namespace YourWebApiName.ApiServices.DefaultApi
                 /*
                  新增数据删除策略
                  */
-                CurrentVersion = 1.10
+                CurrentVersion = 1.10,
             });
         }
     }

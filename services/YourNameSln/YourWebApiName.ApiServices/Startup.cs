@@ -59,22 +59,18 @@ namespace YourWebApiName.ApiServices
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IHost host
             , IApiVersionDescriptionProvider provider)
         {
-
-            app.UseSwaggerMiddleware(provider)
-               .UseMiddleware();
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseSwaggerMiddleware(provider);
             }
+
+            app.UseMiddleware();
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapControllers();
             });
-
 
             /*
              * // 使用服务提供者获取服务

@@ -51,8 +51,12 @@ namespace CodeGenerator.App.BuildFiles
             var _template = StaticConfig.AppSettings.Template;
             foreach (var t in tables.ToArray())
             {
-                var cols = await columnRepsitory.GetModelsAsync(t.table_name);
-                foreach (var c in cols.ToArray())
+                var cols = (await columnRepsitory.GetModelsAsync(t.table_name)).ToArray();
+                if (cols.Length <= 0)
+                {
+                    continue;
+                }
+                foreach (var c in cols)
                 {
                     c.data_type = c.data_type.ConvertType();
                 }
